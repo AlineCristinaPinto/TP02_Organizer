@@ -818,7 +818,7 @@ body.page-container-boxed .page-container {
   border-left: 0px;
 }
 .x-navigation.x-navigation-custom > li.xn-logo > a:hover {
-  background-color: #0c0d10;
+  background-color: #1d2127;
 }
 .x-navigation.x-navigation-custom.x-navigation-minimized > li > a {
   padding: 15px 10px 15px 7px;
@@ -897,10 +897,10 @@ body.page-container-boxed .page-container {
  color: #FFF;
  height: 50px;
  text-align: center;
- background: #1caf9a;
+ background: #1d2127;
 }
 .x-navigation > li.xn-logo > a:first-child:hover {
-  background-color: #1caf9a;
+  background-color: #1d2127;
 }
 .x-navigation > li.xn-profile {
   padding: 0px;
@@ -1050,7 +1050,7 @@ body.page-container-boxed .page-container {
   float: left;
   padding: 15px 10px;
   position: relative;
-  background: #080a0e;
+  background: #1d2127;
 }
 .profile .profile-image {
   float: left;

@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="css/theme-default.css"/>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <div class="page-container">
@@ -37,17 +38,47 @@
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-adjust"></span> <span class="xn-text">Temas</span></a>
                         <ul>
-                            <li><a href="#"> Tema 1</a></li>
-                            <li><a href="#"> Tema 2</a></li>
-                            <li><a href="#"> Tema 3</a></li>
+                            <li><a href="#">
+                              <label class="container">Tema 1
+                                <input type="radio" name="tema" value="tema1">
+                                <span class="checkmark"></span>
+                              </label>
+                            </a></li>
+                            <li><a href="#">
+                              <label class="container">Tema 2
+                                <input type="radio" name="tema" value="tema2">
+                                <span class="checkmark"></span>
+                              </label>
+                            </a></li>
+                            <li><a href="#">
+                              <label class="container">Tema 3
+                                <input type="radio" name="tema" value="tema3">
+                                <span class="checkmark"></span>
+                              </label>
+                            </a></li>
                         </ul>
                     </li>
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Tipos</span></a>
                         <ul>
-                            <li><a href="#">Simples</a></li>
-                            <li><a href="#">Tarefa</a></li>
-                            <li><a href="#">Lembrete</a></li>
+                            <li><a href="#">
+                              <label class="container">Simples
+                                <input type="checkbox" name="tipo" value="simples">
+                                <span class="checkmarkSimples"></span>
+                              </label>
+                            </a></li>
+                            <li><a href="#">
+                              <label class="container">Tarefa
+                                <input type="checkbox" name="tipo" value="tarefa">
+                                <span class="checkmarkTarefa"></span>
+                              </label>
+                            </a></li>
+                            <li><a href="#">
+                              <label class="container">Lembrete
+                                <input type="checkbox" name="tipo" value="lembrete">
+                                <span class="checkmarkLembrete"></span>
+                              </label>
+                            </a></li>
                         </ul>
                     </li>
                     <li class="xn-openable">
@@ -80,7 +111,42 @@
                             <input type="text" name="pesquisar" placeholder="Perquisar..."/>
                         </form>
                     </li>
+                </ul>
+
+                <!-- Botão de escolha de visualização de lista -->
+                <div class="page-title">
+                  <button class="button">
+                    <img id="asc" class="imgSeta" src="imgs/seta1.png">
+                    <img id="dsc" class="imgSeta" style="display: none" src="imgs/seta2.png">
+                  </button>
+                  <select id="modoLista">
+                    <option value="dataDeCriacao">Data de Criação</option>
+                    <option value="nome">Nome</option>
+                  </select>
+                </div>
+
+                <div class="page-content-wrap">
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="panel panel-default">
+
+                                <div class="panel-body accordion-menu">
+
+                                    <ul id="ulItens">
+                                        <script src="js/scriptInsercaoItem.js"></script>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
+        </div>
 
         <!-- Importação dos Scripts -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
@@ -88,6 +154,7 @@
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/plugins.js"></script>
         <script type="text/javascript" src="js/actions.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
 
     </body>
 </html>
