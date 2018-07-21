@@ -5,7 +5,6 @@ class Tag {
 };
 
 let arrTags = new Array();
-let arrTagsJaSelecionadas = new Array();
 
 arrTags.push(new Tag("Tag 1"), new Tag("Tag 2"), new Tag("Tag 3"), new Tag("Tag 4"),
             new Tag("Tag 5"), new Tag("Tag 6"), new Tag("Tag 7"), new Tag("Tag 8"));
@@ -36,9 +35,35 @@ for(let count =  0; count < arrCheckTags.length; count++) {
       if($('.checkTags').is(':checked')){
         addTagInputSelecionados(arrCheckTags[count].value);
       }
+      confereLista();
     });
 }
 
-function addTagInputSelecionados(){
+function addTagInputSelecionados(tagSelecionada){
+
+  let listaTags = $("#tagSelecionada").val();
+  listaTags += " #"+tagSelecionada+";";
+
+  document.querySelector('#tagSelecionada').value = listaTags;
+
+}
+
+function confereLista(){
+  let listaTags = $("#tagSelecionada").val();
+  let arrCheckTagsAtuais = $('.checkTags:checked');
+  let listaTagsAtual="";
+
+  for (var i = 0; i < arrCheckTagsAtuais.length; i++) {
+    listaTagsAtual += " #"+arrCheckTagsAtuais[i].value+";";
+  }
+
+  listaTags = listaTags.split(";");
+
+  // remove o espaço do final
+  listaTags.pop();
+
+  if(listaTags.length != arrCheckTagsAtuais.length){
+    document.querySelector('#tagSelecionada').value = listaTagsAtual;
+  }
 
 }
