@@ -167,3 +167,12 @@
 .dropdownlink{
   margin-left: 4%;
 }
+
+#scroll {
+  height:200px;
+  overflow:auto;
+}
+
+.checkTags{
+  float: left;
+}
