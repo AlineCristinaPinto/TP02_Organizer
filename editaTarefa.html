@@ -131,33 +131,61 @@
                     </li>
                 </ul>
 
-                <!-- Botão de escolha de visualização de lista -->
-                <div class="page-title">
-                  <button class="button">
-                    <img id="asc" class="imgSeta" src="imgs/seta1.png">
-                    <img id="dsc" class="imgSeta" style="display: none" src="imgs/seta2.png">
-                  </button>
-                  <select id="modoLista">
-                    <option value="dataDeCriacao">Data de Criação</option>
-                    <option value="nome">Nome</option>
-                  </select>
-                </div>
-
                 <div class="page-content-wrap">
 
                     <div class="row">
                         <div class="col-md-12">
+                          <p></p>
+                          <!-- Form -->
+                          <form class="form-horizontal">
 
-                            <div class="panel panel-default">
+                        <div class="panel panel-default">
 
-                                <div class="panel-body accordion-menu">
+                            <div class="panel-body" id="formTarefa">
 
-                                    <ul id="ulItens">
-                                        <script src="js/scriptInsercaoItem.js"></script>
-                                    </ul>
+                              <h1 style="text-align:center">Tarefa</h1>
 
+                              <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Nome: </label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text" class="form-control"/>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
+                                    <div class="col-md-6 col-xs-12">
+                                      <textarea class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Data: </label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                      <label class="col-md-3 col-xs-12 control-label">Tags: </label>
+                                      <div class="col-md-6 col-xs-12">
+                                          <div class="input-group">
+                                              <span class="input-group-addon"><span class="fa fa-tag"></span></span>
+                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal"/>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                <button class="btn btn-primary pull-right">Salvar</button>
                             </div>
+                        </div>
+                        </form>
 
                         </div>
                     </div>
@@ -166,32 +194,70 @@
             </div>
         </div>
 
-        <!-- Modal de Inserir Tags no menu-->
-        <div class="modal fade" id="tagsMenu" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Adicionar Tags:</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                      <label>Nome: </label>
-                          <div class="input-group">
-                              <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                              <input type="text" class="form-control">
-                          </div>
+  <!-- Modal de Inserir Tags durante a criação de um item-->
+  <div class="modal fade" id="tagsModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Adicionar Tags:</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+                <label>Selecionados: </label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-tag"></span></span>
+                        <input id="tagSelecionada" type="text" class="form-control" disabled>
+                    </div>
+          </div>
+          <hr>
+          <label>Existentes: </label>
+          <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-body" id="scroll">
+                  <ul id="ulTags">
+                      <script type="text/javascript" src="js/tags.js"></script>
+                  </ul>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" >Cancelar</button>
-                  <button type="button" class="btn btn-primary">OK</button>
-                </div>
-                </div>
-              </div>
             </div>
-
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" >Cancelar</button>
+            <button type="button" class="btn btn-primary">OK</button>
+          </div>
           </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de Inserir Tags no menu-->
+  <div class="modal fade" id="tagsMenu" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Adicionar Tags:</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+                <label>Nome: </label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><span class="fa fa-tag"></span></span>
+                        <input type="text" class="form-control">
+                    </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" >Cancelar</button>
+            <button type="button" class="btn btn-primary">OK</button>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
         <!-- Importação dos Scripts -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>

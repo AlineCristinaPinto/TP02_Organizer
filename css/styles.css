@@ -176,3 +176,15 @@
 .checkTags{
   float: left;
 }
+
+#formLembrete{
+  border-right: 6px solid #00471a;
+}
+
+#formSimples{
+  border-right: 6px solid #012a7c;
+}
+
+#formTarefa{
+  border-right: 6px solid #b23601;
+}
