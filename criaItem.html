@@ -111,7 +111,7 @@
                         <a href="#"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
                     </li>
                     <li>
-                        <a href="#"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
+                        <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
                     </li>
                 </ul>
             </div>
@@ -268,7 +268,25 @@
       </div>
 
     </div>
-  </div>
+
+    <!-- Modal de logout-->
+    <div class="modal fade" id="logoutModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Logout:</h4>
+          </div>
+          <div class="modal-body">
+            <p>Até logo! Deseja sair da sua conta? </p>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" >Cancelar</button>
+              <button type="button" class="btn btn-primary">Sair</button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
         <!-- Importação dos Scripts -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
@@ -278,6 +296,7 @@
         <script type="text/javascript" src="js/actions.js"></script>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/tagMenu.js"></script>
+        <script type="text/javascript" src="js/configuracoes.js"></script>
 
     </body>
 </html>
