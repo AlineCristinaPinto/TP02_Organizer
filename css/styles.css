@@ -209,3 +209,21 @@
   color: red;
   font-size: 12px;
 }
+
+/* CSS para botão de opições de item */
+
+.opcoesItem{
+  float: right;
+  background: white;
+  margin-top: -0.4%;
+  border: none;
+}
+
+.opcoesItem:hover{
+  background: #f7f7f7;
+}
+
+.opItemModal{
+  text-decoration: none;
+  color: black;
+}
