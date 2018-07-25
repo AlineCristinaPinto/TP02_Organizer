@@ -45,7 +45,7 @@ public class ItemDAO implements IItemDAO{
             } else {
                 preparedStatement.setString(5, null);
             }
-            //preparedStatement.setString(5, user.getCodEmail());
+            preparedStatement.setString(5, item.getUser().getCodEmail());
             
             preparedStatement.execute();
             preparedStatement.close();
@@ -86,11 +86,11 @@ public class ItemDAO implements IItemDAO{
                 preparedStatement.setString(4, null);
             }
             
-            //preparedStatement.setString(5, user.getCodEmail());
+            preparedStatement.setString(5, item.getUser().getCodEmail());
             preparedStatement.setString(6, item.getNameItem());
             preparedStatement.setString(7, item.getIdentifierItem());
                                     
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
             
@@ -111,7 +111,7 @@ public class ItemDAO implements IItemDAO{
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
-            //preparedStatement.setString(1, user.getCodEmail());            
+            preparedStatement.setString(1, item.getUser().getCodEmail());            
             preparedStatement.setString(2, item.getNameItem());
 
             preparedStatement.execute();
@@ -175,7 +175,7 @@ public class ItemDAO implements IItemDAO{
            PreparedStatement preparedStatement = connection.prepareStatement(sql);
            preparedStatement.setString(1, item.getNameItem());
            preparedStatement.setString(2, item.getIdentifierItem());
-           //preparedStatement.setString(3, user.getCodEmail());            
+           preparedStatement.setString(3, item.getUser().getCodEmail());            
            
            ResultSet result = preparedStatement.executeQuery();
            

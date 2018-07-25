@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public class Item {
     
+    private User user;
     private String nameItem;
     private String descriptionItem;
     private Date dateItem;
@@ -39,6 +40,10 @@ public class Item {
         this.identifierStatus = identifierStatus;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     public String getNameItem() {
         return nameItem;
     }
@@ -57,6 +62,10 @@ public class Item {
 
     public String getIdentifierStatus() {
         return identifierStatus;
+    }
+
+    public User getUser() {
+        return user;
     }
     
 }
