@@ -19,7 +19,7 @@ CREATE TABLE usuario
   cod_email character varying(64) NOT NULL,
   nom_usuario character varying(40) NOT NULL,
   txt_senha character varying(32) NOT NULL,
-  blb_imagem bytea NOT NULL DEFAULT ''::bytea,
+  blb_imagem bytea DEFAULT ''::bytea,
   seq_tema integer NOT NULL DEFAULT 1,
   CONSTRAINT usuario_pkey PRIMARY KEY (cod_email)
 );

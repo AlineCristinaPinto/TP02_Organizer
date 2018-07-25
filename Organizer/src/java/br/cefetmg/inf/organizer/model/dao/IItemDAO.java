@@ -5,10 +5,19 @@
  */
 package br.cefetmg.inf.organizer.model.dao;
 
+import br.cefetmg.inf.organizer.model.domain.Item;
+import java.util.ArrayList;
+
 /**
  *
  * @author aline
  */
-public class IItemDAO {
+public interface IItemDAO {
+    
+    boolean createItem (Item item);
+    boolean updateItem(Item item);
+    boolean deleteItem(Item item);
+    ArrayList<Item> listAllItem();
+    boolean checkIfItemAlreadyExists(Item item);
     
 }
