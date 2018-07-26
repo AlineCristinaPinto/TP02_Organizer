@@ -192,5 +192,39 @@ public class ItemDAO implements IItemDAO{
         
         return false;
     }
+
+    @Override
+    public Item searchItemByName(String nomeItem) {
+        
+        try {
+            Connection connection = ConnectionManager.getInstance().getConnection();
+            String sql = "SELECT * FROM item WHERE nom_item=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nomeItem);            
+            
+            ResultSet result = preparedStatement.executeQuery();
+            
+            Item item = new Item();
+            
+            item.setNameItem(result.getString("nom_item"));
+            item.setDescriptionItem(result.getString("des_item"));
+            item.setIdentifierItem(result.getString("idt_item"));
+            item.setDateItem(result.getDate("dat_item"));
+            item.setIdentifierStatus(result.getString("idt_estado"));
+        
+            result.close();
+            preparedStatement.close();
+            connection.close();
+            
+            return item;
+                       
+        } catch (Exception ex) {
+           //Adicionar Exceção 
+        }
+        
+        return null; // temporario
+    
+    }
     
 }
