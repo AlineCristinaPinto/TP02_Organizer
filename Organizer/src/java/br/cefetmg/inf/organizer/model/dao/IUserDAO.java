@@ -9,9 +9,10 @@ import java.util.ArrayList;
  */
 public interface IUserDAO {
     
-    void createUser(User user);
+    boolean createUser(User user);
     User readUser(User user); //temp, não sei se vou usar
-    void updateUser(User user);
+    boolean updateUser(User user);
     boolean deleteUser(User user);
+    User getUserLogin(String email, String password);
 
 }
