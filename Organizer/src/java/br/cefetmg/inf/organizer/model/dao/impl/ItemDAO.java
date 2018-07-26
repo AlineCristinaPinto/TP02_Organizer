@@ -179,12 +179,12 @@ public class ItemDAO implements IItemDAO{
            
            ResultSet result = preparedStatement.executeQuery();
            
-           if(result.getString("nom_item") == null)
-               return true;
-           
            result.close();
            preparedStatement.close();
            connection.close();
+           
+           if(result.getString("nom_item") == null)
+               return true;
            
         } catch (Exception ex) {
            //Adicionar Exceção 

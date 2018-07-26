@@ -5,10 +5,16 @@
  */
 package br.cefetmg.inf.organizer.model.service;
 
+import br.cefetmg.inf.organizer.model.domain.Item;
+
 /**
  *
  * @author aline
  */
-public class IKeepItem {
+public interface IKeepItem {
+    
+    boolean create (Item item);
+    boolean update(Item item);
+    boolean delete(Item item);
     
 }

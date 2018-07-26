@@ -10,5 +10,4 @@ package br.cefetmg.inf.organizer.model.domain;
  * @author aline
  */
 public class Tag {
-    
 }

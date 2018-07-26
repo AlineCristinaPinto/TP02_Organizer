@@ -14,12 +14,17 @@ import java.util.Date;
 public class Item {
     
     private User user;
+    private Long seqItem;
     private String nameItem;
     private String descriptionItem;
     private Date dateItem;
     private String identifierItem;
     private String identifierStatus;
 
+    public void setSeqItem(Long seqItem) {
+        this.seqItem = seqItem;
+    }
+    
     public void setNameItem(String nameItem) {
         this.nameItem = nameItem;
     }
@@ -42,6 +47,10 @@ public class Item {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getSeqItem() {
+        return seqItem;
     }
     
     public String getNameItem() {
