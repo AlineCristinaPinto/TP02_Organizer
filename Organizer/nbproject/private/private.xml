@@ -3,19 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
-            <file>file:/home/aline/Desktop/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/dao/impl/ItemDAO.java</file>
-            <file>file:/home/aline/Desktop/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/domain/Item.java</file>
-            <file>file:/home/aline/Desktop/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/dao/IItemDAO.java</file>
-
-            <file>file:/C:/Users/7/Desktop/Organizer%20-%20Reps/Organizer0/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/util/db/ConnectionManager.java</file>
-            <file>file:/C:/Users/7/Desktop/Organizer%20-%20Reps/Organizer0/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/dao/IUserDAO.java</file>
-            <file>file:/C:/Users/7/Desktop/Organizer%20-%20Reps/Organizer0/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/util/db/PostgresSQLConnector.java</file>
-            <file>file:/C:/Users/7/Desktop/Organizer%20-%20Reps/Organizer0/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/util/db/ConnectionFactory.java</file>
-            <file>file:/C:/Users/7/Desktop/Organizer%20-%20Reps/Organizer0/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/dao/impl/UserDAO.java</file>
-            <file>file:/C:/Users/7/Desktop/Organizer%20-%20Reps/Organizer0/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/controller/ServletController.java</file>
-            <file>file:/C:/Users/7/Desktop/Organizer%20-%20Reps/Organizer0/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/domain/User.java</file>
-
+            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/sql/organizer.sql</file>
         </group>
     </open-files>
 </project-private>
