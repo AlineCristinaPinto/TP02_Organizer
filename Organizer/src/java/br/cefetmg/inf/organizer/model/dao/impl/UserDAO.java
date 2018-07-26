@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class UserDAO implements IUserDAO {
 
     @Override
-    public void createUser(User user) {
+    public boolean createUser(User user) {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
             String sql = "INSERT INTO usuario VALUES (?, ?, ?, ?, ?)";
@@ -44,7 +44,9 @@ public class UserDAO implements IUserDAO {
             preparedStatement.close();
             connection.close();
 
+            return true;
         } catch (Exception ex) {
+            return false;//remover
             //Adicionar Exceção da Aline
         }
     }
@@ -70,20 +72,20 @@ public class UserDAO implements IUserDAO {
                     byte[] buf = rs.getBytes("blb_Imagem");
                     fos.write(buf, 0, len);
                 }
-                
+
                 user.setUserPhoto(tempFile);
-                 
+
                 IThemeDAO themeDAO = new ThemeDAO();
-                Theme newTheme = themeDAO.readTheme(rs.getInt("seq_Tema"));
+                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
                 user.setCurrentTheme(newTheme);
-                
+
             } else {
                 user = null;
             }
             rs.close();
             preparedStatement.close();
             connection.close();
-            
+
             return user;
         } catch (Exception ex) {
             //Adicionar Exceção da Aline
@@ -92,7 +94,7 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public void updateUser(User user) {
+    public boolean updateUser(User user) {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
             String sql = "UPDATE usuario SET cod_Email=?, nom_Usuario=?, txt_Senha=?, blb_Imagem=?, seq_Tema=? WHERE cod_Email=?";
@@ -117,7 +119,10 @@ public class UserDAO implements IUserDAO {
             preparedStatement.execute();
             preparedStatement.close();
             connection.close();
+
+            return true;
         } catch (Exception ex) {
+            return false; //remover
             //Adicionar Exceção da Aline
         }
     }
@@ -141,6 +146,50 @@ public class UserDAO implements IUserDAO {
             //Adicionar Exceção da Aline
         }
         return false;//temporario
+    }
+
+    @Override
+    public User getUserLogin(String email, String password) {
+        try {
+            Connection connection = ConnectionManager.getInstance().getConnection();
+            String sql = "SELECT cod_Email,nom_Usuario,txt_Senha,blb_Imagem,seq_Tema, len(blb_Imagem) tamanho FROM usuario WHERE cod_Email=? and txt_Senha=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            User user = null;
+            if (rs.next()) {
+                user = new User();
+                user.setCodEmail(rs.getString("cod_Email"));
+                user.setUserName(rs.getString("nom_Usuario"));
+                user.setUserPassword(rs.getString("txt_Senha"));
+
+                File tempFile = new File("src/java/br/cefetmg/inf/resources/temp1.jpg");
+                try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                    int len = rs.getInt("tamanho");
+                    byte[] buf = rs.getBytes("blb_Imagem");
+                    fos.write(buf, 0, len);
+                }
+
+                user.setUserPhoto(tempFile);
+
+                IThemeDAO themeDAO = new ThemeDAO();
+                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
+                user.setCurrentTheme(newTheme);
+            }
+            
+            rs.close();
+            preparedStatement.close();
+            connection.close();
+
+            return user;
+        } catch (Exception ex) {
+            //Adicionar Exceção da Aline
+        }
+        return null; //temp
     }
 
 }
