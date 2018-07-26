@@ -5,10 +5,67 @@
  */
 package br.cefetmg.inf.organizer.model.domain;
 
+import java.util.Date;
+
 /**
  *
  * @author aline
  */
 public class Item {
+    
+    private User user;
+    private String nameItem;
+    private String descriptionItem;
+    private Date dateItem;
+    private String identifierItem;
+    private String identifierStatus;
+
+    public void setNameItem(String nameItem) {
+        this.nameItem = nameItem;
+    }
+
+    public void setDescriptionItem(String descriptionItem) {
+        this.descriptionItem = descriptionItem;
+    }
+
+    public void setDateItem(Date dateItem) {
+        this.dateItem = dateItem;
+    }
+
+    public void setIdentifierItem(String identifierItem) {
+        this.identifierItem = identifierItem;
+    }
+
+    public void setIdentifierStatus(String identifierStatus) {
+        this.identifierStatus = identifierStatus;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
+    public String getNameItem() {
+        return nameItem;
+    }
+
+    public String getDescriptionItem() {
+        return descriptionItem;
+    }
+
+    public Date getDateItem() {
+        return dateItem;
+    }
+
+    public String getIdentifierItem() {
+        return identifierItem;
+    }
+
+    public String getIdentifierStatus() {
+        return identifierStatus;
+    }
+
+    public User getUser() {
+        return user;
+    }
     
 }
