@@ -6,6 +6,7 @@
 package br.cefetmg.inf.organizer.model.service.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IItemTagDAO;
+import br.cefetmg.inf.organizer.model.dao.impl.ItemTagDAO;
 import br.cefetmg.inf.organizer.model.domain.ItemTag;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.service.IKeepItemTag;
@@ -17,12 +18,8 @@ import java.util.List;
  */
 public class KeepItemTag implements IKeepItemTag {
     
-    private IItemTagDAO itemTagDAO;
+    private final IItemTagDAO itemTagDAO = new ItemTagDAO();
 
-    public KeepItemTag(IItemTagDAO itemTagDAO) {
-        this.itemTagDAO = itemTagDAO;
-    }
-    
     @Override
     public boolean createTagInItem(ItemTag itemTag) {
         

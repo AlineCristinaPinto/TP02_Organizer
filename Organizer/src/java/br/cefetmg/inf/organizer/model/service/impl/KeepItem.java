@@ -6,6 +6,7 @@
 package br.cefetmg.inf.organizer.model.service.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IItemDAO;
+import br.cefetmg.inf.organizer.model.dao.impl.ItemDAO;
 import br.cefetmg.inf.organizer.model.domain.Item;
 import br.cefetmg.inf.organizer.model.service.IKeepItem;
 import java.util.List;
@@ -16,12 +17,8 @@ import java.util.List;
  */
 public class KeepItem implements IKeepItem{
     
-    private IItemDAO itemDAO;
+    private final IItemDAO itemDAO = new ItemDAO();
 
-    public KeepItem(IItemDAO itemDAO) {
-        this.itemDAO = itemDAO;
-    }
-    
     @Override
     public boolean createItem(Item item) {
         

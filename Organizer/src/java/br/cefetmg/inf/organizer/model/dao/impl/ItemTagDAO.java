@@ -6,7 +6,6 @@
 package br.cefetmg.inf.organizer.model.dao.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IItemTagDAO;
-import br.cefetmg.inf.organizer.model.domain.Item;
 import br.cefetmg.inf.organizer.model.domain.ItemTag;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.util.db.ConnectionManager;
@@ -31,12 +30,12 @@ public class ItemTagDAO implements IItemTagDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             
-           /* for(Tag t : itemTag.getListTags()){
+            for(Tag t : itemTag.getListTags()){
             
                 preparedStatement.setLong(1, itemTag.getItem().getSeqItem());
-                preparedStatement.setString(2, t.getSeqTag());
+                preparedStatement.setLong(2, t.getSeqTag());
             
-            }*/
+            }
             
             preparedStatement.execute();
             preparedStatement.close();
@@ -61,12 +60,12 @@ public class ItemTagDAO implements IItemTagDAO{
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
          
-           /* for(Tag t : itemTag.getListTags()){
+            for(Tag t : itemTag.getListTags()){
                 
-                preparedStatement.setString(1, t.getSeqTag());
+                preparedStatement.setLong(1, t.getSeqTag());
                 preparedStatement.setLong(2, itemTag.getItem().getSeqItem());
             
-            }*/
+            }
            
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -89,12 +88,12 @@ public class ItemTagDAO implements IItemTagDAO{
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
-            /* for(Tag t : itemTag.getListTags()){
+             for(Tag t : itemTag.getListTags()){
                 
-                preparedStatement.setString(1, t.getSeqTag());
+                preparedStatement.setLong(1, t.getSeqTag());
                 preparedStatement.setLong(2, itemTag.getItem().getSeqItem());
             
-            }*/
+            }
            
             preparedStatement.execute();
             preparedStatement.close();
@@ -130,12 +129,8 @@ public class ItemTagDAO implements IItemTagDAO{
                 do {
                     Tag tag = new Tag();
  
-                    /*
-                    
                     tag.setSeqTag(result.getLong("seq_Tag"));
-                    tag.setNameTag(result.getString("nom_Tag"));
-                    
-                    */
+                    tag.setTagName(result.getString("nom_Tag"));
         
                     listAllTag.add(tag);
                 } while (result.next());
@@ -152,5 +147,6 @@ public class ItemTagDAO implements IItemTagDAO{
         
         return null; // temporario
     }
+
         
 }
