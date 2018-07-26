@@ -19,5 +19,6 @@ public interface IItemDAO {
     boolean deleteItem(Item item);
     ArrayList<Item> listAllItem();
     boolean checkIfItemAlreadyExists(Item item);
+    Item searchItemByName(String nomeItem);
     
 }

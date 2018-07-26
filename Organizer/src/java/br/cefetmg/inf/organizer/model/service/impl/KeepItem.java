@@ -8,6 +8,7 @@ package br.cefetmg.inf.organizer.model.service.impl;
 import br.cefetmg.inf.organizer.model.dao.IItemDAO;
 import br.cefetmg.inf.organizer.model.domain.Item;
 import br.cefetmg.inf.organizer.model.service.IKeepItem;
+import java.util.List;
 
 /**
  *
@@ -22,7 +23,7 @@ public class KeepItem implements IKeepItem{
     }
     
     @Override
-    public boolean create(Item item) {
+    public boolean createItem(Item item) {
         
         if(itemDAO.checkIfItemAlreadyExists(item) == false){
             // exceção
@@ -37,7 +38,7 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public boolean update(Item item) {
+    public boolean updateItem(Item item) {
         
         if(itemDAO.checkIfItemAlreadyExists(item) == false){
             // exceção
@@ -53,11 +54,27 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public boolean delete(Item item) {
+    public boolean deleteItem(Item item) {
         
-        boolean result = itemDAO.updateItem(item);
+        boolean result = itemDAO.deleteItem(item);
         return result;
     
+    }
+
+    @Override
+    public List<Item> listAllItem() {
+        
+        List<Item> result = itemDAO.listAllItem();
+        return result;
+        
+    }
+
+    @Override
+    public Item searchItemByName(String nomeItem) {
+        
+        Item result = itemDAO.searchItemByName(nomeItem);
+        return result;
+        
     }
     
 }
