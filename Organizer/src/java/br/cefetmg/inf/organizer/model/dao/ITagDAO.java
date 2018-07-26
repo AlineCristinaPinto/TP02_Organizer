@@ -13,4 +13,6 @@ public interface ITagDAO {
     boolean deleteTag(Tag tag);
 
     List<Tag> listAlltag(User user);
+
+    Long searchTagByName(String nomeTag);
 }
