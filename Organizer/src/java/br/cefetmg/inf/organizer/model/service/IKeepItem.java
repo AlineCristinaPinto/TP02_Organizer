@@ -5,10 +5,19 @@
  */
 package br.cefetmg.inf.organizer.model.service;
 
+import br.cefetmg.inf.organizer.model.domain.Item;
+import java.util.List;
+
 /**
  *
  * @author aline
  */
-public class IKeepItem {
+public interface IKeepItem {
+    
+    boolean createItem (Item item);
+    boolean updateItem(Item item);
+    boolean deleteItem(Item item);
+    List<Item> listAllItem();
+    Item searchItemByName(String nomeItem);
     
 }

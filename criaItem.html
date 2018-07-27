@@ -149,9 +149,9 @@
                                   <label class="col-md-3 col-xs-12 control-label">Tipo: </label>
                                   <div class="col-md-6 col-xs-12">
                                       <select class="form-control select">
-                                          <option>Simples</option>
-                                          <option>Lembrete</option>
-                                          <option>Tarefa</option>
+                                          <option name="selectType" value="SIM">Simples</option>
+                                          <option name="selectType" value="LEM">Lembrete</option>
+                                          <option name="selectType" value="TAR">Tarefa</option>
                                       </select>
                                   </div>
                               </div>
@@ -161,7 +161,7 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input type="text" class="form-control"/>
+                                            <input type="text" class="form-control" name="nameItem"/>
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +169,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
                                     <div class="col-md-6 col-xs-12">
-                                      <textarea class="form-control" rows="5"></textarea>
+                                      <textarea class="form-control" rows="5" name="descriptionItem"></textarea>
                                     </div>
                                 </div>
 
@@ -178,7 +178,7 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                            <input type="date" class="form-control">
+                                            <input type="date" class="form-control" name="dateItem">
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                                       <div class="col-md-6 col-xs-12">
                                           <div class="input-group">
                                               <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal"/>
+                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal" name="inputTag"/>
                                           </div>
                                       </div>
                                   </div>
