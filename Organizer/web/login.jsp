@@ -1,6 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@page import="br.cefetmg.inf.organizer.controller.UserValidation"%>
 
-<html lang="en" class="body-full-height">
+<c:if test="${UserValidation.validate(request,response)}"> 
+    <jsp:forward page="index.jsp"></jsp:forward>
+</c:if>
+
+<html class="body-full-height">
     <head>
         <title>Organizer</title>
         <meta charset="utf-8">
@@ -18,25 +24,25 @@
                 <div class="login-logo"></div>
                 <div class="login-body">
                     <div class="login-title"><strong>Bem Vindo(a) ao Organizer!</strong></div>
-                    <form action="" class="form-horizontal" method="post" name="formLogin">
-                    <div class="form-group">
+                    <form id="formLogin" action="/organizer/servletcontroller?process=UserLogin" class="form-horizontal" method="post">
+                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="Email"/>
+                            <input name="email" type="text" class="form-control" placeholder="Email" required/>
                         </div>
-                    </div>
-                    <div class="form-group">
+                     </div>
+                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="password" class="form-control" placeholder="Senha"/>
+                            <input name="password" type="password" class="form-control" placeholder="Senha" required/>
                         </div>
-                    </div>
-                    <div class="form-group">
+                     </div>
+                     <div class="form-group">
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-info btn-block" onclick="" >Logar</button>
+                            <button class="btn btn-info btn-block">Logar</button>
                         </div>
-                    </div>
+                     </div>
                     </form>
                     <div class="login-subtitle">
-                        NÃ£o possui uma conta ainda? <a href="cadastrar.html">Crie uma conta</a>
+                        Não possui uma conta ainda? <a href="cadastrar.html">Crie uma conta</a>
                     </div>
                 </div>
             </div>
