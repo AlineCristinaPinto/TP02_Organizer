@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="css/theme-default.css"/>
         <link rel="stylesheet" href="css/styles.css">
-        <script src="js/register.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/register.js"></script>
     </head>
     <body>
 

@@ -22,7 +22,7 @@ public class ServletController extends HttpServlet {
    protected void service(HttpServletRequest request,HttpServletResponse response) throws ServletException{
        
        String parameter = request.getParameter("process");//nome do campo que deve-se passar no form, seja por js ou html
-       String className = "br.cefetmg.inf.organizer.controller" + parameter;
+       String className = "br.cefetmg.inf.organizer.controller." + parameter;
        
        try{
            Class classReference = Class.forName(className);
@@ -33,7 +33,7 @@ public class ServletController extends HttpServlet {
            
        }catch(Exception ex){
            ex.printStackTrace();
-           throw new ServletException("Ocorreu um erro na execução"+ex.getMessage()); 
+           throw new ServletException("Ocorreu um erro na execução "+ex.getMessage()); 
        }
    }
 

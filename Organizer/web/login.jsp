@@ -42,7 +42,7 @@
                      </div>
                     </form>
                     <div class="login-subtitle">
-                        Não possui uma conta ainda? <a href="cadastrar.html">Crie uma conta</a>
+                        Não possui uma conta ainda? <a href="cadastrar.jsp">Crie uma conta</a>
                     </div>
                 </div>
             </div>

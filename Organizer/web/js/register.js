@@ -11,8 +11,8 @@ function validateFields(){
     }
     if(password.value != confirmPassword.value){
         alert("As senhas devem ser iguais!");
-        password.style.border-color = "#fc1616";
-        confirmPassword.style.border-color = "#fc1616";
+        password.style.borderColor = "#fc1616";
+        confirmPassword.style.borderColor = "#fc1616";
         return false;
     }else{
         let formRegister = document.querySelector("#formRegister");
