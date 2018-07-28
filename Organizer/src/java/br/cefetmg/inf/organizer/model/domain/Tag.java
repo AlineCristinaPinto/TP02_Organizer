@@ -2,16 +2,16 @@ package br.cefetmg.inf.organizer.model.domain;
 
 public class Tag {
 
-    private User user;
-    private Long seqTag;
     private String tagName;
+    private Long seqTag;
+    private User user;
 
-    public User getUser() {
-        return user;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public Long getSeqTag() {
@@ -22,11 +22,11 @@ public class Tag {
         this.seqTag = seqTag;
     }
 
-    public String getTagName() {
-        return tagName;
+    public User getUser() {
+        return user;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
-    }    
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
