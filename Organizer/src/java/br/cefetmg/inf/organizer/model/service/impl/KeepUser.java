@@ -6,6 +6,7 @@
 package br.cefetmg.inf.organizer.model.service.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IUserDAO;
+import br.cefetmg.inf.organizer.model.dao.impl.TagDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.UserDAO;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
@@ -16,7 +17,11 @@ import br.cefetmg.inf.organizer.model.service.IKeepUser;
  */
 public class KeepUser implements IKeepUser {
 
-    private final IUserDAO userDAO = new UserDAO();
+    private final IUserDAO userDAO;
+    
+    public KeepUser() {
+        userDAO = new UserDAO();
+    }
     
     @Override
     public boolean registerUser(User user) {
