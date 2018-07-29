@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.cefetmg.inf.organizer.model.dao.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IThemeDAO;
@@ -22,10 +18,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author aline
- */
+
 public class UserDAO implements IUserDAO {
 
     @Override
@@ -177,17 +170,19 @@ public class UserDAO implements IUserDAO {
                 user.setUserName(rs.getString("nom_Usuario"));
                 user.setUserPassword(rs.getString("txt_Senha"));
 
-                File tempFile = new File("src/java/br/cefetmg/inf/resources/temp1.jpg");
+                File tempFile = null;
+                /*
                 try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                     int len = rs.getInt("tamanho");
                     byte[] buf = rs.getBytes("blb_Imagem");
                     fos.write(buf, 0, len);
-                }
+                }*/
 
                 user.setUserPhoto(tempFile);
 
-                IThemeDAO themeDAO = new ThemeDAO();
-                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
+                //IThemeDAO themeDAO = new ThemeDAO();
+                //Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
+                Theme newTheme = new Theme();
                 user.setCurrentTheme(newTheme);
             }
 
