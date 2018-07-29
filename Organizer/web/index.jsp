@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
+<%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepItem"%>
+<%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id='listItem' class='java.util.ArrayList' scope="page"/>
+<jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
+
 <html>
     <head>
         <title>Organizer</title>
@@ -27,7 +34,7 @@
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do Usuário</div>
+                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
                                 <div class="profile-data-title">email_usuario@gmail.com</div>
                             </div>
                         </div>
@@ -108,7 +115,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
+                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
                     </li>
                     <li>
                         <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
@@ -131,7 +138,7 @@
                     </li>
                 </ul>
 
-                <!-- Botão de escolha de visualização de lista -->
+                <!-- Botão de visualização de lista -->
                 <div class="page-title">
                   <button class="button">
                     <img id="asc" class="imgSeta" src="imgs/seta1.png">
@@ -150,34 +157,63 @@
 
                             <div class="panel panel-default">
 
-                                <div class="panel-body accordion-menu">
+                                <dihv class="panel-body accordion-menu">
 
-                                    <ul id="ulItens">
-					<li>
-						<a>Criar Item</a>
+                                    
+                                        <li>
+                                            <a href="createItem.jsp">Criar Item</a>
 					</li>
-					<li id="liLembrete" class="open">
-						<button class="opcoesItem" data-toggle="modal" data-target="#btaoOpcaoModalLembrete"><i class="fa fa-ellipsis-v"></i></button>
-						<div class="dropdownlink">Lembrete 1</div>
-							<ul class="submenuItems" style="display: none;">
-								<li id="subItem" class="liDescricao">Lembrete 1 de teste</li>
-								<li class="liDescricao" style="text-align: right">20/07/2018</li>
-							</ul>
-					</li>
-                                        
-					<li id="liTarefa" class="open">
-						<label class="container" style="float:left">
-							<input type="checkbox" name="tarefa" value="Tarefa1">
-							<span class="checkmark"></span>
-						</label>
-						<button class="opcoesItem" data-toggle="modal" data-target="#btaoOpcaoModalTarefa"><i class="fa fa-ellipsis-v"></i></button>
-						<div class="dropdownlink">Tarefa 1</div>
-							<ul class="submenuItems" style="display: none;">
-								<li id="subItem" class="liDescricao">Tarefa 1 de teste</li>
-								<li class="liDescricao">#Tag 1 | #Tag 2 | #Tag 3 | </li>
-							</ul>
-					</li>
-                                    </ul>
+                                        <% 
+                                            User user = new User();
+
+                                            user.setCodEmail("ninanerd15@gmail.com");
+                                            user.setUserName("Aline Cristina");
+
+                                            KeepItem keepItem = new KeepItem();
+                                            listItem = keepItem.listAllItem(user);
+                                                                                        
+                                            pageContext.setAttribute("listItemUser", listItem);
+                                        %>
+                                    
+                                        <c:forEach items='${listItemUser}' var='list'>
+                                            <c:choose>
+                                                <c:when test = "${list.identifierItem == 'TAR'}">
+                                                    <li id="${list.identifierItem}" class="open">
+                                                        <label class="container" style="float:left">
+                                                            <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                        <button id="${list.seqItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <div class="dropdownlink">${list.nameItem}</div>
+                                                            <ul class="submenuItems" style="display: none;">
+                                                                <c:if test = "${list.descriptionItem != ''}">
+                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                                </c:if>                                                                
+                                                                <!-- tag <li class="liDescricao"></li>-->
+                                                                <c:if test = "${list.dateItem != null}">
+                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                                </c:if>                                                                
+                                                            </ul>
+                                                    </li>                                            
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li id="${list.identifierItem}" class="open">
+                                                        <button id="${list.seqItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <div class="dropdownlink">${list.nameItem}</div>
+                                                            <ul class="submenuItems" style="display: none;">
+                                                                <c:if test = "${list.descriptionItem != ''}">
+                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                                </c:if>                                                                
+                                                                <!-- tag <li class="liDescricao"></li>-->
+                                                                <c:if test = "${list.dateItem != null}">
+                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                                </c:if> 
+                                                            </ul>
+                                                    </li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach> 
+                                    
 
                                 </div>
                             </div>
@@ -224,7 +260,7 @@
                   <h4 class="modal-title">Logout:</h4>
                 </div>
                 <div class="modal-body">
-                  <p>Até logo! Deseja sair da sua conta? </p>
+                  <p>AtÃ© logo! Deseja sair da sua conta? </p>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" >Cancelar</button>
                     <button type="button" class="btn btn-primary">Sair</button>
@@ -234,8 +270,8 @@
               </div>
             </div>
 
-            <!-- Modais de botão de opção de item -->
-            <div class="modal fade" id="btaoOpcaoModalTarefa" role="dialog">
+            <!-- Modal de botão de opção de item -->
+            <div class="modal fade" id="btaoOpcaoModal" role="dialog">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -243,57 +279,23 @@
                     <h4 class="modal-title">Opções de Item</h4>
                   </div>
                   <div class="modal-body">
-                    <a href="editaTarefa.html" class="opItemModal" id="editar">
-                      <span class="fa fa-edit"></span> Editar</span>
-                    </a>
+                    <form id="updateItem" method="post">
+                        <input type="hidden" id="takeIdU" name="takeId">
+                        <a class="opItemModal edit">
+                          <span class="fa fa-edit"></span> Editar</span>
+                        </a>
+                    </form>
                     <hr>
-                    <a href="#" class="opItemModal">
-                      <span class="fa fa-trash-o"></span> Excluir</span>
-                    </a>
+                    <form id="deleteItem" method="post">
+                        <input type="hidden" id="takeId" name="takeId">
+                        <a href="#" class="opItemModal delItem">                        
+                          <span class="fa fa-trash-o"></span> Excluir</span>
+                        </a>
+                    </form>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <div class="modal fade" id="btaoOpcaoModalLembrete" role="dialog">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Opções de Item</h4>
-                    </div>
-                    <div class="modal-body">
-                      <a href="editaLembrete.html" class="opItemModal" id="editar">
-                        <span class="fa fa-edit"></span> Editar</span>
-                      </a>
-                      <hr>
-                      <a href="#" class="opItemModal">
-                        <span class="fa fa-trash-o"></span> Excluir</span>
-                      </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="modal fade" id="btaoOpcaoModalSimples" role="dialog">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Opções de Item</h4>
-                      </div>
-                      <div class="modal-body">
-                        <a href="editaSimples.html" class="opItemModal" id="editar">
-                          <span class="fa fa-edit"></span> Editar</span>
-                        </a>
-                        <hr>
-                        <a href="#" class="opItemModal">
-                          <span class="fa fa-trash-o"></span> Excluir</span>
-                        </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
         <!-- Importação dos Scripts -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
@@ -304,6 +306,7 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/tagMenu.js"></script>
         <script type="text/javascript" src="js/configuracoes.js"></script>
+        <script type="text/javascript" src="js/modalOptions.js"></script>
 
     </body>
 </html>

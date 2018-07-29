@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TagDAO implements ITagDAO {
 
@@ -65,16 +64,16 @@ public class TagDAO implements ITagDAO {
     }
 
     @Override
-    public List<Tag> listAlltag(User user) {
+    public ArrayList<Tag> listAlltag(User user) {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "SELECT * FROM tag WHERE cod_email=?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, user.getCodEmail());
-
+                
                 try (ResultSet result = preparedStatement.executeQuery()) {
-                    List<Tag> listAllTag = null;
-
+                    ArrayList<Tag> listAllTag = null;
+                    
                     if (result.next()) {
                         listAllTag = new ArrayList<>();
 
@@ -96,18 +95,21 @@ public class TagDAO implements ITagDAO {
     }
 
     @Override
-    public Long searchTagByName(String nomeTag) {
+    public Long searchTagByName(String nomeTag, User user) {
 
         try {
-            Long id;
+            Long id=null;
             try (Connection connection = ConnectionManager.getInstance().getConnection()) {
-                String sql = "SELECT seq_Tag FROM Tag WHERE nom_tag=?";
+                String sql = "SELECT seq_tag FROM Tag WHERE nom_tag=? and cod_email=?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     preparedStatement.setString(1, nomeTag);
+                    preparedStatement.setString(2, user.getCodEmail());
                     
-                    ResultSet result = preparedStatement.executeQuery();
-                    id = result.getLong("seq_Tag");
-                    preparedStatement.executeUpdate();
+                    try (ResultSet result = preparedStatement.executeQuery()) {
+                        if(result.next()){
+                            id = result.getLong("seq_tag");
+                        }  
+                    }
                 }
             }
 

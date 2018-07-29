@@ -141,9 +141,9 @@
 
                         <div class="panel panel-default">
 
-                            <div class="panel-body" id="formSimples">
+                            <div class="panel-body" id="formLembrete">
 
-                              <h1 style="text-align:center">Simples</h1>
+                              <h1 style="text-align:center">Lembrete</h1>
 
                               <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Nome: </label>
@@ -159,6 +159,16 @@
                                     <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
                                     <div class="col-md-6 col-xs-12">
                                       <textarea class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Data: </label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="date" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
 

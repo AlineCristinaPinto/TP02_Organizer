@@ -7,7 +7,7 @@ package br.cefetmg.inf.organizer.model.service;
 
 import br.cefetmg.inf.organizer.model.domain.ItemTag;
 import br.cefetmg.inf.organizer.model.domain.Tag;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,6 +18,7 @@ public interface IKeepItemTag {
     boolean createTagInItem (ItemTag itemTag);
     boolean updateTagInItem(ItemTag itemTag);
     boolean deleteTagInItem(ItemTag itemTag);
-    List<Tag> listAllTagInItem(ItemTag itemTag);
+    ArrayList<Tag> listAllTagInItem(Long seqItem);
+    boolean deleteTagByItemId(Long idItem);
     
 }

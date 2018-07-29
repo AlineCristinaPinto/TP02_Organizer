@@ -109,15 +109,15 @@
   float: none;
 }
 
-.panel-body #liSimples {
+.panel-body #SIM {
   border-right: 4px solid #012a7c;
 }
 
-.panel-body #liLembrete {
+.panel-body #LEM {
   border-right: 4px solid #00471a;
 }
 
-.panel-body #liTarefa {
+.panel-body #TAR {
   border-right: 4px solid #b23601;
 }
 
@@ -227,3 +227,4 @@
   text-decoration: none;
   color: black;
 }
+

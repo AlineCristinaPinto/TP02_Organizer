@@ -6,7 +6,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletController</servlet-name>
-        <url-pattern>/ServletController</url-pattern>
+        <url-pattern>/servletcontroller</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -15,7 +15,7 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>
-            login.jsp
+            index.jsp
         </welcome-file>
     </welcome-file-list>
 </web-app>

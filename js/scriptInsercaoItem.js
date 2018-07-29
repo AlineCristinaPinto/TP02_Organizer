@@ -8,15 +8,8 @@ class Item {
     }
 };
 
-let arrItens = new Array();
-let arrT = ["Tag 1", "Tag 2", "Tag 3"];
-
-arrItens.push(new Item("tarefa", "Tarefa 1", "Tarefa 1 de teste", "", arrT),
-              new Item("lembrete", "Lembrete 1", "Lembrete 1 de teste", "20/07/2018", ""),
-              new Item("simples", "Simples 1", "Simples 1 de teste", "", ""));
-
 function insereItem(item) {
-	let ulItem = document.querySelector('#ulItens');
+  let ulItem = document.querySelector('#ulItens');
   let liNome = document.createElement('li');
   let pEspaco = document.createElement('p');
 

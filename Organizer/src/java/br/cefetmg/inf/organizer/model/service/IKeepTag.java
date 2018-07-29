@@ -1,7 +1,8 @@
 package br.cefetmg.inf.organizer.model.service;
 
 import br.cefetmg.inf.organizer.model.domain.Tag;
-import java.util.List;
+import br.cefetmg.inf.organizer.model.domain.User;
+import java.util.ArrayList;
 
 public interface IKeepTag {
 
@@ -11,5 +12,7 @@ public interface IKeepTag {
 
     boolean deleteTag(Tag tag);
 
-    List<Tag> listAlltag();
+    ArrayList<Tag> listAlltag(User user);
+    
+    Long searchTagByName(String nomeTag, User user);
 }

@@ -6,7 +6,8 @@
 package br.cefetmg.inf.organizer.model.service;
 
 import br.cefetmg.inf.organizer.model.domain.Item;
-import java.util.List;
+import br.cefetmg.inf.organizer.model.domain.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,8 +17,8 @@ public interface IKeepItem {
     
     boolean createItem (Item item);
     boolean updateItem(Item item);
-    boolean deleteItem(Item item);
-    List<Item> listAllItem();
+    boolean deleteItem(Long idItem, User user);
+    ArrayList<Item> listAllItem(User user);
     Item searchItemByName(String nomeItem);
     
 }

@@ -10,4 +10,15 @@ $(function() {
   $("#logout").click(function() {
     $("#logoutModal").modal();
   });
+
+  $("#selectOfItemType").click(function() {
+    if($('#selectOfItemType option:selected').val() == 'SIM'){
+	document.querySelector('#dateOfItem').readOnly = true;
+	$('#helpItem').show();
+    } else {
+    	document.querySelector('#dateOfItem').readOnly = false;
+	$('#helpItem').hide();
+    }
+  });
+
 })

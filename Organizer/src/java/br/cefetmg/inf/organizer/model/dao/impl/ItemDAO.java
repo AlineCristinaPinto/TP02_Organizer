@@ -7,7 +7,9 @@ package br.cefetmg.inf.organizer.model.dao.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IItemDAO;
 import br.cefetmg.inf.organizer.model.domain.Item;
+import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.util.db.ConnectionManager;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,32 +22,25 @@ import java.util.ArrayList;
 public class ItemDAO implements IItemDAO{
 
     @Override
-    public boolean createItem(Item item) {
+    public boolean createItem(Item item) throws PersistenceException {
         
         try{
             Connection connection = ConnectionManager.getInstance().getConnection();            
-            String sql = "INSERT INTO item VALUES(?,?,?,?,?,?)";
+            String sql = "INSERT INTO item (nom_item, des_item, dat_item, idt_item, idt_estado, cod_email)" +
+                     "VALUES(?, ?, ?, ?, ?, ?)";
             
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             preparedStatement.setString(1, item.getNameItem());
-            if (item.getDescriptionItem() != null) {
-                preparedStatement.setString(2, item.getDescriptionItem());
-            } else {
-                preparedStatement.setString(2, null);
-            }
-            if (item.getDateItem() != null) {
-                preparedStatement.setDate(3, new java.sql.Date(item.getDateItem().getTime()));
-            } else {
+            preparedStatement.setString(2, item.getDescriptionItem());
+            if(item.getDateItem() == null){
                 preparedStatement.setDate(3, null);
+            } else {
+                preparedStatement.setDate(3, new java.sql.Date(item.getDateItem().getTime()));
             }
             preparedStatement.setString(4, item.getIdentifierItem());
-            if (item.getIdentifierStatus() != null) {
-                preparedStatement.setString(5, item.getIdentifierStatus());
-            } else {
-                preparedStatement.setString(5, null);
-            }
-            preparedStatement.setString(5, item.getUser().getCodEmail());
+            preparedStatement.setString(5, item.getIdentifierStatus());
+            preparedStatement.setString(6, item.getUser().getCodEmail());
             
             preparedStatement.execute();
             preparedStatement.close();
@@ -54,9 +49,8 @@ public class ItemDAO implements IItemDAO{
             return true;
             
         }catch (Exception e) {
+            throw new PersistenceException(e.getMessage());
         }
-        
-        return false;
     }
 
     @Override
@@ -103,16 +97,16 @@ public class ItemDAO implements IItemDAO{
     }
 
     @Override
-    public boolean deleteItem(Item item) {
+    public boolean deleteItem(Long idItem, User user) throws PersistenceException{
     
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "DELETE FROM item WHERE cod_email=? and nom_item=?";
+            String sql = "DELETE FROM item WHERE cod_email=? and seq_item=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
-            preparedStatement.setString(1, item.getUser().getCodEmail());            
-            preparedStatement.setString(2, item.getNameItem());
+            preparedStatement.setString(1, user.getCodEmail());            
+            preparedStatement.setLong(2, idItem);
 
             preparedStatement.execute();
             preparedStatement.close();
@@ -121,28 +115,30 @@ public class ItemDAO implements IItemDAO{
             return true;
             
         } catch (Exception ex) {
-           //Adicionar Exceção 
+           throw new PersistenceException(ex.getMessage()); 
         }
-        
-        return false;
     }
 
     @Override
-    public ArrayList<Item> listAllItem() {
+    public ArrayList<Item> listAllItem(User user) throws PersistenceException{
         
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "SELECT * FROM item ORDER BY dat_item";
+            String sql = "SELECT * FROM item WHERE cod_email=? ORDER BY dat_item";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet result = preparedStatement.executeQuery();
             
+            preparedStatement.setString(1, user.getCodEmail());
+           
+            ResultSet result = preparedStatement.executeQuery();
+           
             ArrayList<Item> listAllItem = null;
             
             if (result.next()) {
                 listAllItem = new ArrayList<>();
                 do {
                     Item item = new Item();
+                    item.setSeqItem(result.getLong("seq_item"));
                     item.setNameItem(result.getString("nom_item"));
                     item.setDescriptionItem(result.getString("des_item"));
                     item.setIdentifierItem(result.getString("idt_item"));
@@ -159,10 +155,9 @@ public class ItemDAO implements IItemDAO{
                        
             return listAllItem;
         } catch (Exception ex) {
-           //Adicionar Exceção 
+           throw new PersistenceException(ex.getMessage());
         }
         
-        return null; // temporario
     }
     
     @Override
@@ -194,7 +189,7 @@ public class ItemDAO implements IItemDAO{
     }
 
     @Override
-    public Item searchItemByName(String nomeItem) {
+    public Item searchItemByName(String nomeItem) throws PersistenceException{
         
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
@@ -207,12 +202,17 @@ public class ItemDAO implements IItemDAO{
             
             Item item = new Item();
             
-            item.setNameItem(result.getString("nom_item"));
-            item.setDescriptionItem(result.getString("des_item"));
-            item.setIdentifierItem(result.getString("idt_item"));
-            item.setDateItem(result.getDate("dat_item"));
-            item.setIdentifierStatus(result.getString("idt_estado"));
-        
+            if(result.next()){
+                
+                item.setSeqItem(result.getLong("seq_item"));
+                item.setNameItem(result.getString("nom_item"));
+                item.setDescriptionItem(result.getString("des_item"));
+                item.setIdentifierItem(result.getString("idt_item"));
+                item.setDateItem(result.getDate("dat_item"));
+                item.setIdentifierStatus(result.getString("idt_estado"));
+
+            }
+            
             result.close();
             preparedStatement.close();
             connection.close();
@@ -220,11 +220,8 @@ public class ItemDAO implements IItemDAO{
             return item;
                        
         } catch (Exception ex) {
-           //Adicionar Exceção 
-        }
-        
-        return null; // temporario
-    
+           throw new PersistenceException(ex.getMessage());
+        }        
     }
     
 }
