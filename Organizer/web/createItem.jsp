@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<%@page import="java.util.ArrayList"%>
+<%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
+<%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:useBean id='tagItem' class='java.util.ArrayList' scope="page"/>
+
 <html>
     <head>
         <title>Organizer</title>
@@ -27,7 +33,7 @@
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do Usuário</div>
+                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
                                 <div class="profile-data-title">email_usuario@gmail.com</div>
                             </div>
                         </div>
@@ -108,7 +114,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
+                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
                     </li>
                     <li>
                         <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
@@ -137,20 +143,31 @@
                         <div class="col-md-12">
                           <p></p>
                           <!-- Form -->
-                          <form class="form-horizontal">
+                          <form class="form-horizontal" action="/organizer/servletcontroller?process=CreateItem" method="post">
 
                         <div class="panel panel-default">
 
-                            <div class="panel-body" id="formSimples">
+                            <div class="panel-body">
 
-                              <h1 style="text-align:center">Simples</h1>
+                              <h1 style="text-align:center">Criar Item</h1>
+
+                              <div class="form-group">
+                                  <label class="col-md-3 col-xs-12 control-label">Tipo: </label>
+                                  <div class="col-md-6 col-xs-12">
+                                      <select class="form-control select" id="selectOfItemType" name="selectType">
+                                          <option value="SIM">Simples</option>
+                                          <option value="LEM">Lembrete</option>
+                                          <option value="TAR">Tarefa</option>
+                                      </select>
+                                  </div>
+                              </div>
 
                               <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Nome: </label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input type="text" class="form-control"/>
+                                            <input type="text" class="form-control" name="nameItem" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +175,18 @@
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
                                     <div class="col-md-6 col-xs-12">
-                                      <textarea class="form-control" rows="5"></textarea>
+                                      <textarea class="form-control" rows="5" name="descriptionItem"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Data: </label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="date" class="form-control" name="dateItem" id="dateOfItem" readonly>
+                                        </div>
+                                        <span class="help-block" id="helpItem">Itens de tipo simples não possuem data.</span>
                                     </div>
                                 </div>
 
@@ -167,12 +195,12 @@
                                       <div class="col-md-6 col-xs-12">
                                           <div class="input-group">
                                               <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal"/>
+                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal" name="inputTag" readonly/>
                                           </div>
                                       </div>
                                   </div>
 
-                                <button class="btn btn-primary pull-right">Salvar</button>
+                              <button class="btn btn-primary pull-right" type="submit">Criar</button>
                             </div>
                         </div>
                         </form>
@@ -197,7 +225,7 @@
                 <label>Selecionados: </label>
                     <div class="input-group">
                         <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                        <input id="tagSelecionada" type="text" class="form-control" disabled>
+                        <input id="tagSelected" type="text" class="form-control" disabled>
                     </div>
           </div>
           <hr>
@@ -206,14 +234,32 @@
             <div class="panel panel-default">
                 <div class="panel-body" id="scroll">
                   <ul id="ulTags">
+                     
+                      <% 
+                       User user = new User();
+       
+                       user.setCodEmail("ninanerd15@gmail.com");
+                       user.setUserName("Aline Cristina");
+                       
+                       KeepTag keepTag = new KeepTag();
+                       tagItem = keepTag.listAlltag(user);
+                       
+                       pageContext.setAttribute("list", tagItem);
+                      %>
+                      
+                    <c:forEach	items='${list}' var='listTag' >
+                      <li>&nbsp #${listTag.tagName}
+                          <input type="checkbox" class="checkTags" value='${listTag.tagName}'>
+                      </li>
+                    </c:forEach> 
                       <script type="text/javascript" src="js/tags.js"></script>
                   </ul>
                 </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" >Cancelar</button>
-            <button type="button" class="btn btn-primary">OK</button>
+            <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="insertTagsOnInput()" class="close" data-dismiss="modal">OK</button>
           </div>
           </div>
         </div>

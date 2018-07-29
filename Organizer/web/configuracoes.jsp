@@ -339,6 +339,7 @@ ${user = request.getSession().getAttribute("user")}
         <script type="text/javascript" src="js/actions.js"></script>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/tagMenu.js"></script>
+        <script type="text/javascript" src="js/configuracoes.js"></script>
         <script type="text/javascript" src="js/settings.js"></script>
         <script type="text/javascript" src="js/CryptoJSMD5/core-min.js"></script>
         <script type="text/javascript" src="js/CryptoJSMD5/md5.js"></script>

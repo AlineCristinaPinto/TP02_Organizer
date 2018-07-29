@@ -9,6 +9,7 @@ import br.cefetmg.inf.organizer.model.dao.IItemTagDAO;
 import br.cefetmg.inf.organizer.model.domain.ItemTag;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.util.db.ConnectionManager;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,33 +22,28 @@ import java.util.ArrayList;
 public class ItemTagDAO implements IItemTagDAO{
 
     @Override
-    public boolean createTagInItem(ItemTag itemTag) {
+    public boolean createTagInItem(ItemTag itemTag) throws PersistenceException{
         
         try{
             Connection connection = ConnectionManager.getInstance().getConnection();            
             String sql = "INSERT INTO Item_Tag VALUES(?,?)";
-           
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
-            
-            for(Tag t : itemTag.getListTags()){
-            
-                preparedStatement.setLong(1, itemTag.getItem().getSeqItem());
-                preparedStatement.setLong(2, t.getSeqTag());
-            
+            for (int i = 0; i < itemTag.getListTags().size(); i++) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setLong(1, itemTag.getItem().getSeqItem());
+                    preparedStatement.setLong(2, itemTag.getListTags().get(i).getSeqTag());
+                    
+                    preparedStatement.execute();
+                }
             }
             
-            preparedStatement.execute();
-            preparedStatement.close();
             connection.close();
             
             return true;
             
         }catch (Exception e) {
+            throw new PersistenceException(e.getMessage());
         }
-        
-        return false;
-
     }
 
     @Override
@@ -109,16 +105,16 @@ public class ItemTagDAO implements IItemTagDAO{
     }
 
     @Override
-    public ArrayList<Tag> listAllTagInItem(ItemTag itemTag) {
+    public ArrayList<Tag> listAllTagInItem(Long seqItem) throws PersistenceException{
         
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "SELECT A.seq_Tag, B.nom_Tag FROM Item_Tag A"
-                    + "JOIN Tag B ON A.seq_Tag = B.seq_Tag"
-                    + "WHERE A.seq_Item=?";
+            String sql = "SELECT A.seq_tag, B.nom_tag FROM item_tag A"
+                    + "JOIN tag B ON A.seq_tag = B.seq_tag"
+                    + "WHERE A.seq_item=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, itemTag.getItem().getSeqItem());
+            preparedStatement.setLong(1, seqItem);
             
             ResultSet result = preparedStatement.executeQuery();
             
@@ -129,8 +125,8 @@ public class ItemTagDAO implements IItemTagDAO{
                 do {
                     Tag tag = new Tag();
  
-                    tag.setSeqTag(result.getLong("seq_Tag"));
-                    tag.setTagName(result.getString("nom_Tag"));
+                    tag.setSeqTag(result.getLong("seq_tag"));
+                    tag.setTagName(result.getString("nom_tag"));
         
                     listAllTag.add(tag);
                 } while (result.next());
@@ -142,10 +138,31 @@ public class ItemTagDAO implements IItemTagDAO{
                        
             return listAllTag;
         } catch (Exception ex) {
-           //Adicionar Exceção 
+           throw new PersistenceException(ex.getMessage()); 
         }
+    }
+
+    @Override
+    public boolean deleteTagByItemId(Long idItem) throws PersistenceException {
         
-        return null; // temporario
+        try {
+            Connection connection = ConnectionManager.getInstance().getConnection();
+            String sql = "DELETE FROM item_tag WHERE seq_item=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+           
+            preparedStatement.setLong(1, idItem);
+            
+            preparedStatement.execute();
+            preparedStatement.close();
+            connection.close();
+            
+            return true;
+            
+        } catch (Exception ex) {
+           throw new PersistenceException(ex.getMessage()); 
+        }
+
     }
 
         

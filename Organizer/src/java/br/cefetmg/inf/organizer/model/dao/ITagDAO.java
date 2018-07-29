@@ -2,7 +2,7 @@ package br.cefetmg.inf.organizer.model.dao;
 
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
-import java.util.List;
+import java.util.ArrayList;
 
 public interface ITagDAO {
 
@@ -16,7 +16,8 @@ public interface ITagDAO {
 
     boolean deleteTag(Tag tag);
 
-    List<Tag> listAlltag(User user);
+    ArrayList<Tag> listAlltag(User user);
 
     Long searchTagByName(String nomeTag, User user);
+
 }

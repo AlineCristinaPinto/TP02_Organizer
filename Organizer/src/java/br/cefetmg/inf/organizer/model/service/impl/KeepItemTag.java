@@ -10,7 +10,10 @@ import br.cefetmg.inf.organizer.model.dao.impl.ItemTagDAO;
 import br.cefetmg.inf.organizer.model.domain.ItemTag;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.service.IKeepItemTag;
-import java.util.List;
+import br.cefetmg.inf.util.exception.PersistenceException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,7 +34,12 @@ public class KeepItemTag implements IKeepItemTag {
             //exceção
         }
         
-        boolean result = itemTagDAO.createTagInItem(itemTag);
+        boolean result=false;
+        try {
+            result = itemTagDAO.createTagInItem(itemTag);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(KeepItemTag.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return result;
         
     }
@@ -61,9 +69,27 @@ public class KeepItemTag implements IKeepItemTag {
     }
 
     @Override
-    public List<Tag> listAllTagInItem(ItemTag itemTag) {
+    public ArrayList<Tag> listAllTagInItem(Long seqItem){
         
-        List<Tag> result = itemTagDAO.listAllTagInItem(itemTag);
+        ArrayList<Tag> result=null;
+        try {
+            result = itemTagDAO.listAllTagInItem(seqItem);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(KeepItemTag.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+        
+    }
+
+    @Override
+    public boolean deleteTagByItemId(Long idItem) {
+        
+        boolean result=false;
+        try {
+            result = itemTagDAO.deleteTagByItemId(idItem);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(KeepItemTag.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return result;
         
     }

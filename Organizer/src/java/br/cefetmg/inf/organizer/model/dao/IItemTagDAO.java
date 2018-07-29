@@ -7,6 +7,7 @@ package br.cefetmg.inf.organizer.model.dao;
 
 import br.cefetmg.inf.organizer.model.domain.ItemTag;
 import br.cefetmg.inf.organizer.model.domain.Tag;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.util.ArrayList;
 
 /**
@@ -15,9 +16,9 @@ import java.util.ArrayList;
  */
 public interface IItemTagDAO {
     
-    boolean createTagInItem (ItemTag itemTag);
+    boolean createTagInItem (ItemTag itemTag) throws PersistenceException;
     boolean updateTagInItem(ItemTag itemTag);
     boolean deleteTagInItem(ItemTag itemTag);
-    ArrayList<Tag> listAllTagInItem(ItemTag itemTag);
-    
+    ArrayList<Tag> listAllTagInItem(Long seqItem) throws PersistenceException;
+    boolean deleteTagByItemId(Long idItem) throws PersistenceException;
 }
