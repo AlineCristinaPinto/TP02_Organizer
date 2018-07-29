@@ -8,6 +8,7 @@ package br.cefetmg.inf.organizer.model.dao.impl;
 import br.cefetmg.inf.organizer.model.dao.IItemDAO;
 import br.cefetmg.inf.organizer.model.domain.Item;
 import br.cefetmg.inf.organizer.model.domain.Tag;
+import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.util.db.ConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -230,7 +231,7 @@ public class ItemDAO implements IItemDAO{
     }
     
     @Override
-    public ArrayList<Item> searchItemByTag(List<Tag> tagList){
+    public ArrayList<Item> searchItemByTag(List<Tag> tagList, User user){
         
         try {
             //conditions of the sql's WHERE clause
@@ -240,7 +241,7 @@ public class ItemDAO implements IItemDAO{
             int countConditions = tagList.size();
             
             //user's email
-            String userEmail = tagList.get(0).getUser().getCodEmail();
+            String userEmail = user.getCodEmail();
             
             for(Tag tag : tagList){
                 //conditions in the format "seq_tag = ? OR seq_tag = ? OR ..."
@@ -295,7 +296,7 @@ public class ItemDAO implements IItemDAO{
     }
 
     @Override
-    public ArrayList<Item> searchItemByType(List<String> typeList) {
+    public ArrayList<Item> searchItemByType(List<String> typeList, User user) {
         try (Connection connection = ConnectionManager.getInstance().getConnection()){
             
             //conditions of the sql's WHERE clause
@@ -303,6 +304,9 @@ public class ItemDAO implements IItemDAO{
             
             //number of conditions (also number of types in the ArrayList)
             int countConditions = typeList.size();
+            
+            //user's email
+            String userEmail = user.getCodEmail();
             
             for(String type : typeList){
                 //filling the sqlConditions with a String in the format
@@ -312,12 +316,15 @@ public class ItemDAO implements IItemDAO{
             //removing the last " OR " from the string
             sqlConditions = sqlConditions.substring(0, sqlConditions.lastIndexOf(" OR "));
             
-            String sql = "SELECT * FROM item WHERE " +sqlConditions +" ORDER BY dat_item";
+            String sql = "SELECT * FROM item WHERE " +sqlConditions 
+                    +" AND cod_email = ? ORDER BY dat_item";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-                for(int i = 1; i <= countConditions; i++){
+                int i;
+                for(i = 1; i <= countConditions; i++){
                     preparedStatement.setString(i, typeList.get(i - 1));
                 }
+                preparedStatement.setString(i, userEmail);
                 
                 try(ResultSet result = preparedStatement.executeQuery()){
                     
@@ -347,7 +354,7 @@ public class ItemDAO implements IItemDAO{
     }
     
     @Override
-    public ArrayList<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList){
+    public ArrayList<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user){
         
         try {
             //conditions of the sql's WHERE clause
@@ -359,7 +366,7 @@ public class ItemDAO implements IItemDAO{
             int countTypeConditions = typeList.size();
             
             //user's email
-            String userEmail = tagList.get(0).getUser().getCodEmail();
+            String userEmail = user.getCodEmail();
             
             for(Tag tag : tagList){
                 //conditions in the format "seq_tag = ? OR seq_tag = ? OR ..."

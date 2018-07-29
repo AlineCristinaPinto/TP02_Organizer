@@ -9,6 +9,7 @@ import br.cefetmg.inf.organizer.model.dao.IItemDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.ItemDAO;
 import br.cefetmg.inf.organizer.model.domain.Item;
 import br.cefetmg.inf.organizer.model.domain.Tag;
+import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepItem;
 import java.util.List;
 
@@ -76,23 +77,23 @@ public class KeepItem implements IKeepItem{
     }
     
     @Override
-    public List<Item> searchItemByTag(List<Tag> tagList){
+    public List<Item> searchItemByTag(List<Tag> tagList, User user){
         
-        List<Item> result = itemDAO.searchItemByTag(tagList);
+        List<Item> result = itemDAO.searchItemByTag(tagList, user);
         return result;
     }
     
     @Override
-    public List<Item> searchItemByType(List<String> typeList){
+    public List<Item> searchItemByType(List<String> typeList, User user){
         
-        List<Item> result = itemDAO.searchItemByType(typeList);
+        List<Item> result = itemDAO.searchItemByType(typeList, user);
         return result;
     }
     
     @Override
-    public List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList){
+    public List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user){
         
-        List<Item> result = itemDAO.searchItemByTagAndType(tagList, typeList);
+        List<Item> result = itemDAO.searchItemByTagAndType(tagList, typeList, user);
         return result;
     }
 }

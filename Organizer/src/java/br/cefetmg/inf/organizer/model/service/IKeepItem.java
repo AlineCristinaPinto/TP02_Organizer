@@ -7,6 +7,7 @@ package br.cefetmg.inf.organizer.model.service;
 
 import br.cefetmg.inf.organizer.model.domain.Item;
 import br.cefetmg.inf.organizer.model.domain.Tag;
+import br.cefetmg.inf.organizer.model.domain.User;
 import java.util.List;
 
 /**
@@ -20,8 +21,8 @@ public interface IKeepItem {
     boolean deleteItem(Item item);
     List<Item> listAllItem();
     Item searchItemByName(String nomeItem);
-    List<Item> searchItemByTag(List<Tag> tagList);
-    List<Item> searchItemByType(List<String> typeList);
-    List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList);
+    List<Item> searchItemByTag(List<Tag> tagList, User user);
+    List<Item> searchItemByType(List<String> typeList, User user);
+    List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user);
     
 }
