@@ -7,38 +7,62 @@ import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepTag;
 import java.util.ArrayList;
 
-public class KeepTag  implements IKeepTag{
+public class KeepTag implements IKeepTag {
 
     private final ITagDAO tagDAO;
-    
+
     public KeepTag() {
         tagDAO = new TagDAO();
     }
-    
+
     @Override
     public boolean createTag(Tag tag) {
-        if((tag.getTagName() == null) || (tag.getTagName().isEmpty()))
-        {
-        //exception    
+        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
+            //exception    
         }
-                          
+         Tag temp = tagDAO.readTag(tag);
+        
+        if(temp != null){
+            //exception
+        }
+        
         boolean result = tagDAO.createTag(tag);
         return result;
     }
 
     @Override
-    public boolean updateTag(Tag tag) {
-        if((tag.getTagName() == null) || (tag.getTagName().isEmpty()))
-        {
-        //exception    
+    public Tag readTag(Tag tag) {
+        
+        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
+            //exception    
         }
-                          
-        boolean result = tagDAO.updateTag(tag);
-        return result;
+        
+        Tag temp = tagDAO.readTag(tag);
+        return temp;
     }
 
     @Override
-    public boolean deleteTag(Tag tag) {                          
+    public boolean updateTag(Tag tag) {
+        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
+            //exception    
+        }
+
+        boolean result = tagDAO.updateTag(tag);
+        return result;
+    }
+    
+    @Override
+    public boolean updateTagId(Tag tag, Long id) {
+        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
+            //exception    
+        }
+
+        boolean result = tagDAO.updateTagId(tag, id);
+        return result;
+    }
+    
+    @Override
+    public boolean deleteTag(Tag tag) {
         boolean result = tagDAO.createTag(tag);
         return result;
     }

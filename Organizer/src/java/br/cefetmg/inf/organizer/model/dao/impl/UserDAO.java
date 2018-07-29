@@ -10,6 +10,7 @@ import br.cefetmg.inf.organizer.model.dao.IUserDAO;
 import br.cefetmg.inf.organizer.model.domain.Theme;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.util.db.ConnectionManager;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,17 +29,16 @@ import java.util.logging.Logger;
 public class UserDAO implements IUserDAO {
 
     @Override
-    public boolean createUser(User user) {
+    public boolean createUser(User user) throws PersistenceException {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "INSERT INTO usuario VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO usuario(cod_Email,nom_Usuario,txt_Senha,seq_Tema) VALUES (?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getCodEmail());
             preparedStatement.setString(2, user.getUserName());
             preparedStatement.setString(3, user.getUserPassword());
-            preparedStatement.setBinaryStream(4, null);
-            preparedStatement.setInt(5, user.getCurrentTheme().getIdTheme());
+            preparedStatement.setInt(4, user.getCurrentTheme().getIdTheme());
 
             preparedStatement.execute();
             preparedStatement.close();
@@ -46,16 +46,16 @@ public class UserDAO implements IUserDAO {
 
             return true;
         } catch (Exception ex) {
-            return false;//remover
-            //Adicionar Exceção da Aline
+            ex.printStackTrace();
+            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
         }
     }
 
     @Override
-    public User readUser(User user) {
+    public User readUser(User user) throws PersistenceException {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "SELECT nom_Usuario,txt_Senha,blb_Imagem,seq_Tema, len(blb_Imagem) tamanho FROM usuario WHERE cod_Email=?";
+            String sql = "SELECT nom_Usuario,txt_Senha,blb_Imagem,seq_Tema, length(blb_Imagem) tamanho FROM usuario WHERE cod_Email=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getCodEmail());
@@ -88,33 +88,44 @@ public class UserDAO implements IUserDAO {
 
             return user;
         } catch (Exception ex) {
-            //Adicionar Exceção da Aline
+            ex.printStackTrace();
+            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
         }
-        return null; // temporário
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public boolean updateUser(User user) throws PersistenceException {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "UPDATE usuario SET cod_Email=?, nom_Usuario=?, txt_Senha=?, blb_Imagem=?, seq_Tema=? WHERE cod_Email=?";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, user.getCodEmail());
-            preparedStatement.setString(2, user.getUserName());
-            preparedStatement.setString(3, user.getUserPassword());
+            PreparedStatement preparedStatement;
+            
             if (user.getUserPhoto() != null) {
+                String sql = "UPDATE usuario SET cod_Email=?, nom_Usuario=?, txt_Senha=?, blb_Imagem=?, seq_Tema=? WHERE cod_Email=?";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, user.getCodEmail());
+                preparedStatement.setString(2, user.getUserName());
+                preparedStatement.setString(3, user.getUserPassword());
+
                 try (FileInputStream fin = new FileInputStream(user.getUserPhoto())) {
                     preparedStatement.setBinaryStream(4, fin, user.getUserPhoto().length());
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     throw new IOException(ex.getMessage());
                 }
-            } else {
-                preparedStatement.setBinaryStream(4, null);
+
+                preparedStatement.setInt(5, user.getCurrentTheme().getIdTheme());
+                preparedStatement.setString(6, user.getCodEmail());
+            }else{
+                String sql = "UPDATE usuario SET cod_Email=?, nom_Usuario=?, txt_Senha=?, seq_Tema=? WHERE cod_Email=?";
+
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, user.getCodEmail());
+                preparedStatement.setString(2, user.getUserName());
+                preparedStatement.setString(3, user.getUserPassword());
+                preparedStatement.setInt(4, user.getCurrentTheme().getIdTheme());
+                preparedStatement.setString(5, user.getCodEmail());
             }
-            preparedStatement.setInt(5, user.getCurrentTheme().getIdTheme());
-            preparedStatement.setString(6, user.getCodEmail());
 
             preparedStatement.execute();
             preparedStatement.close();
@@ -122,13 +133,13 @@ public class UserDAO implements IUserDAO {
 
             return true;
         } catch (Exception ex) {
-            return false; //remover
-            //Adicionar Exceção da Aline
+            ex.printStackTrace();
+            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
         }
     }
 
     @Override
-    public boolean deleteUser(User user) {
+    public boolean deleteUser(User user) throws PersistenceException {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
             String sql = "DELETE FROM usuario WHERE cod_Email=?";
@@ -142,24 +153,23 @@ public class UserDAO implements IUserDAO {
 
             return true;
         } catch (Exception ex) {
-            //throw new Exception();
-            //Adicionar Exceção da Aline
+            ex.printStackTrace();
+            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
         }
-        return false;//temporario
     }
 
     @Override
-    public User getUserLogin(String email, String password) {
+    public User getUserLogin(String email, String password) throws PersistenceException {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "SELECT cod_Email,nom_Usuario,txt_Senha,blb_Imagem,seq_Tema, len(blb_Imagem) tamanho FROM usuario WHERE cod_Email=? and txt_Senha=?";
+            String sql = "SELECT cod_Email,nom_Usuario,txt_Senha,blb_Imagem,seq_Tema, length(blb_Imagem) tamanho FROM usuario WHERE cod_Email=? and txt_Senha=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
 
             ResultSet rs = preparedStatement.executeQuery();
-            
+
             User user = null;
             if (rs.next()) {
                 user = new User();
@@ -180,16 +190,16 @@ public class UserDAO implements IUserDAO {
                 Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
                 user.setCurrentTheme(newTheme);
             }
-            
+
             rs.close();
             preparedStatement.close();
             connection.close();
 
             return user;
         } catch (Exception ex) {
-            //Adicionar Exceção da Aline
+            ex.printStackTrace();
+            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
         }
-        return null; //temp
     }
 
 }

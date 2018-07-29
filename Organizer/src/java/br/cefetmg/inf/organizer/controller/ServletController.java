@@ -33,7 +33,7 @@ public class ServletController extends HttpServlet {
            
        }catch(Exception ex){
            ex.printStackTrace();
-           throw new ServletException("Ocorreu um erro na execução"+ex.getMessage()); 
+           throw new ServletException("Ocorreu um erro na execução "+ex.getMessage()); 
        }
    }
 

@@ -7,9 +7,13 @@ import java.util.ArrayList;
 public interface IKeepTag {
 
     boolean createTag(Tag tag);
-
+    
+    Tag readTag(Tag tag);
+    
     boolean updateTag(Tag tag);
-
+    
+    boolean updateTagId(Tag tag, Long id);
+    
     boolean deleteTag(Tag tag);
 
     ArrayList<Tag> listAlltag(User user);
