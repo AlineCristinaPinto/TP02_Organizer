@@ -8,6 +8,7 @@ package br.cefetmg.inf.organizer.model.service.impl;
 import br.cefetmg.inf.organizer.model.dao.IItemDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.ItemDAO;
 import br.cefetmg.inf.organizer.model.domain.Item;
+import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.service.IKeepItem;
 import java.util.List;
 
@@ -74,4 +75,24 @@ public class KeepItem implements IKeepItem{
         
     }
     
+    @Override
+    public List<Item> searchItemByTag(List<Tag> tagList){
+        
+        List<Item> result = itemDAO.searchItemByTag(tagList);
+        return result;
+    }
+    
+    @Override
+    public List<Item> searchItemByType(List<String> typeList){
+        
+        List<Item> result = itemDAO.searchItemByType(typeList);
+        return result;
+    }
+    
+    @Override
+    public List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList){
+        
+        List<Item> result = itemDAO.searchItemByTagAndType(tagList, typeList);
+        return result;
+    }
 }
