@@ -19,7 +19,7 @@ import java.util.List;
 public interface IItemDAO {
     
     boolean createItem (Item item) throws PersistenceException;
-    boolean updateItem(Item item);
+    boolean updateItem(Item item)throws PersistenceException;
     boolean deleteItem(Long idItem, User user) throws PersistenceException;
     ArrayList<Item> listAllItem(User user) throws PersistenceException;
     boolean checkIfItemAlreadyExists(Item item);

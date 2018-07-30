@@ -27,24 +27,23 @@ import javax.servlet.http.HttpSession;
  *
  * @author aline
  */
-public class CreateItem implements GenericProcess{
+public class UpdateItem implements GenericProcess{
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-    
+        
         String pageJSP = "";
         
         // Pegando usuário
-       // HttpSession session = req.getSession();
-       // User user = (User) session.getAttribute("user");
+       //HttpSession session = req.getSession();
+       //User user = (User) session.getAttribute("user");
                 
-       User user = new User();
+        User user = new User();
        
-       user.setCodEmail("ninanerd15@gmail.com");
-       user.setUserName("Aline Cristina");
-       
+        user.setCodEmail("ninanerd15@gmail.com");
+        user.setUserName("Aline Cristina");
+        
         // Pega os dados dos inputs
-        String selectType = req.getParameter("selectType");
         String name = req.getParameter("nameItem");
         String description = req.getParameter("descriptionItem");
         
@@ -58,9 +57,9 @@ public class CreateItem implements GenericProcess{
             dateItem = formatter.parse(datItem);
         }
         
-        // Pega as tags e inserem no arrayList buscando o id delas para
-        // conseguir inserir no itemtag
+        // Tratamento de Tag
         String tag = req.getParameter("inputTag");
+        
         ArrayList<Tag> tagItem = new ArrayList();
             
         if(!tag.isEmpty()){
@@ -83,66 +82,75 @@ public class CreateItem implements GenericProcess{
             }
         }
         
-        // Instanciando item para inserir
+        IKeepItemTag keepItemTag = new KeepItemTag();
+        ArrayList<Tag> oldTags;
+        
+        // Pega as tags adicionadas anteriormente a atualização
+        oldTags = keepItemTag.listAllTagInItem(Long.MIN_VALUE);
+        
+        ArrayList<Tag> keepTag = new ArrayList();
+        ArrayList<Tag> deleteTag = new ArrayList();
+        ArrayList<Tag> newTag = new ArrayList();
+        
+        // Adiciona as tags antigas que permanecem em keepTag e as novas em newTag
+        for(int i=0;i<tagItem.size();i++){
+            for(int j=0;j<oldTags.size();j++){
+                if(tagItem.get(i).getTagName().equals(oldTags.get(j).getTagName())){
+                    keepTag.add(tagItem.get(i));
+                } else {
+                    newTag.add(tagItem.get(i));
+                }                
+            }
+        }
+        
+        // Adiciona as tags que não existem mais apos a atualização em deleteTag
+        for(int i=0;i<oldTags.size();i++){
+            for(int j=0;j<keepTag.size();j++){
+                if(!(keepTag.get(j).getTagName().equals(oldTags.get(i).getTagName()))){
+                    deleteTag.add(oldTags.get(i));
+                }
+            }
+        }
+        
+        // Instanciando item para update
         Item item = new Item();
         
         item.setNameItem(name);
         item.setDescriptionItem(description);
-        item.setIdentifierItem(selectType);
         item.setDateItem(dateItem);
         item.setUser(user);
         
-        // se o item for uma tarefa o status não pode ser null
-        if(selectType.equals("TAR")){
-            item.setIdentifierStatus("A");
-        } else {
-            item.setIdentifierStatus(null);
-        }
-        
-        // Inserção do item mas sem a tag
         IKeepItem keepItem = new KeepItem();
-        boolean result = keepItem.createItem(item);
+        boolean result = keepItem.updateItem(item);
         
         if(result == false){
             //exceção
         } else {
             
-            if(!tag.isEmpty()){
-                // busca a pk de item já que ela é uma seq e necessária para
-                // inserir as tags relacionadas ao item em itemtag
-                Item itemWithId = keepItem.searchItemByName(name);
+            // Deleta as tags que foram retiradas
+            result = keepItemTag.deleteTagInItem(deleteTag, Long.MIN_VALUE);
             
-                if(itemWithId == null){
-                    //Exceção
-                } else {
-                
-                    // Adicionando os dados do item e tag a tabela itemtag
-                    ItemTag itemTag = new ItemTag();
-                
-                    itemTag.setItem(itemWithId);
-                    // inserindo o array list de tag aqui
-                    itemTag.setListTags(tagItem);
-                
-                    // enfim adicionando as tags do item
-                    IKeepItemTag keepItemTag = new KeepItemTag();
-                
-                    result = keepItemTag.createTagInItem(itemTag);
-                
-                    if(result == false){
-                        //exceção
-                    } else {
-                        pageJSP = "/index.jsp";
-                    }
-                }    
+            if(result == false){
+            //exceção
             } else {
-                pageJSP = "/index.jsp";
-            }
+            
+                // Adiciona as novas tags
+                ItemTag itemTag = new ItemTag();
+                itemTag.setItem(item);
+                itemTag.setListTags(newTag);
                 
+                result = keepItemTag.createTagInItem(itemTag);
+                
+                if(result == false){
+                //exceção
+                } else {
+                    pageJSP = "/index.jsp";
+                }
             }
+        }
         
         return pageJSP;
-        
     }
+    
 }
-
 

@@ -76,32 +76,28 @@ public class ItemTagDAO implements IItemTagDAO{
     }
 
     @Override
-    public boolean deleteTagInItem(ItemTag itemTag) {
+    public boolean deleteTagInItem(ArrayList<Tag> itemTag, Long id) throws PersistenceException{
         
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
             String sql = "DELETE FROM Item_Tag WHERE seq_tag=? and seq_item=?";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            
-             for(Tag t : itemTag.getListTags()){
-                
-                preparedStatement.setLong(1, t.getSeqTag());
-                preparedStatement.setLong(2, itemTag.getItem().getSeqItem());
-            
+            for(Tag t : itemTag){
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setLong(1, t.getSeqTag());
+                    preparedStatement.setLong(2, id);
+                    
+                    preparedStatement.execute();
+                }            
             }
-           
-            preparedStatement.execute();
-            preparedStatement.close();
+
             connection.close();
             
             return true;
             
         } catch (Exception ex) {
-           //Adicionar Exceção 
+           throw new PersistenceException(ex.getMessage());
         }
-        
-        return false;
     }
 
     @Override

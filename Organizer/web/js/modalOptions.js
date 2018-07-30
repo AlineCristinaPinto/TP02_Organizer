@@ -4,6 +4,7 @@ $(function() {
       let idItem = $(this).attr('id');
       document.querySelector("#takeId").value=idItem;
       document.querySelector("#takeIdU").value=idItem;
+      document.querySelector("#takeTypeU").value=$(this).attr('value');
   });
 
   $(".delItem").click(function() {
@@ -21,9 +22,9 @@ $(function() {
   });
 
   $(".edit").click(function() {
-      //let formRegister = document.querySelector("#updateItem");
-      //formRegister.action = "/organizer/servletcontroller?process=";
-      //formRegister.submit();
+      let formRegister = document.querySelector("#updateItem");
+      formRegister.action = "/organizer/servletcontroller?process=showUpdateItem";
+      formRegister.submit();
   });
 
 })
