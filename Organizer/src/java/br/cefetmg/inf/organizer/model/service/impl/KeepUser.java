@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.cefetmg.inf.organizer.model.service.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IUserDAO;
@@ -12,10 +8,7 @@ import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
 import br.cefetmg.inf.util.exception.PersistenceException;
 
-/**
- *
- * @author aline
- */
+
 public class KeepUser implements IKeepUser {
 
     private final IUserDAO userDAO;

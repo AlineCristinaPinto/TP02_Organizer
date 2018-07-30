@@ -4,10 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Eduardo Cotta
- */
+
 public class UserLogout implements GenericProcess{
 
     @Override
@@ -16,12 +13,13 @@ public class UserLogout implements GenericProcess{
          
         HttpSession session = req.getSession(false);
         
-        if(session != null){
-          session.invalidate();
+        if(session == null){
+          //erro
+        }else{
+           session.invalidate();
+           pageJSP = "/login.jsp";
         }
-        
-        pageJSP = "/login.jsp";
-        
+
         return pageJSP;
     }
     

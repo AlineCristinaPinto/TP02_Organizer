@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author Eduardo Cotta
- */
+
 public class PostgresSQLConnector implements ConnectionFactory{
     public final String databaseDriver = "org.postgresql.Driver";
     private final static String databaseURL = "jdbc:postgresql://localhost:5432/organizer";

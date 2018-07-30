@@ -1,6 +1,5 @@
 package br.cefetmg.inf.organizer.controller;
 
-
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
 import br.cefetmg.inf.organizer.model.service.impl.KeepUser;
@@ -10,24 +9,28 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-public class UserLogin implements GenericProcess{
+public class DeleteUser implements GenericProcess {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         String pageJSP = "";
         
-        String email = req.getParameter("email");
         String password = PasswordCriptography.generateMd5(req.getParameter("password"));
         
-        IKeepUser keepUser = new KeepUser();
-        User user = keepUser.getUserLogin(email, password);
+        User user = (User) req.getSession().getAttribute("user");
         
-        if(user == null){
-            //Tratamento de erros (COMO FAZER?)
+        if(!(password.equals(user.getUserPassword()))){
+            //erro, tratar depois
         }else{
-            HttpSession session = req.getSession();
-            session.setAttribute("user", user);
-            pageJSP = "/configuracoes.jsp";
+            IKeepUser keepUser = new KeepUser();
+            boolean success = keepUser.deleteAccount(user);
+            if(!success){
+                //erro
+            }else{
+                HttpSession session = req.getSession();
+                session.invalidate();
+                pageJSP = "/login.jsp";
+            }
         }
         
         return pageJSP;

@@ -8,10 +8,6 @@ import br.cefetmg.inf.util.PasswordCriptography;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Eduardo Cotta
- */
 
 public class CreateUser implements GenericProcess{
 

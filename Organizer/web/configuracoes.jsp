@@ -1,4 +1,16 @@
-<!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user1" scope="session" ></jsp:useBean>
+<%user1 = (User) request.getSession().getAttribute("user");%>
+
+<%-- 
+Querido Professor,
+Tentei de todas as formas usar as Expressions Language para realizar atribuições e pegar valores de objetos, porém não funcionou de jeito algum mesmo 
+eu seguindo vários tutoriais online, gostaria de saber quando elas funcionam e quando não, pois tento fazer a atribuição acima por EL e não aceita.
+Tento fazer um value="${user.userName}" e também não funciona. Por isso, infelizmente, tive que recorrer a scriplets em algumas partes do código.
+--%>
 <html>
     <head>
         <title>Organizer</title>
@@ -136,8 +148,8 @@
                     <div class="row">
                         <div class="col-md-12">
                           <p></p>
-                          <!-- Form -->
-                          <form class="form-horizontal">
+                        <!-- Form -->
+                        <form class="form-horizontal" id="formSettings" method="post">
 
                         <div class="panel panel-default">
 
@@ -145,14 +157,14 @@
 
                               <h1 style="text-align:center">Configurações</h1>
 
-                              <img class="perfil" src="imgs/icon.jpg"/>
+                              <img id="profileIcon" name="profileIcon" class="perfil" src="imgs/icon.jpg"/>
                               <p></p>
                               <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Nome: </label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input type="text" class="form-control"/>
+                                            <input id="name" name="name" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -162,12 +174,13 @@
                                     <div class="col-md-6 col-xs-12">
                                       <div class="input-group">
                                           <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                                          <input type="password" class="form-control" data-toggle="modal" data-target="#sennhaModal"/>
+                                          <input id="password" name="password" type="password" class="form-control" data-toggle="modal" data-target="#sennhaModal"/>
                                       </div>
                                     </div>
                                 </div>
+                                <input id="oldPassword" type="hidden" value="<%=user1.getUserPassword()%>"/>
                                 <button type="button" class="btn btn-secondary" >Cancelar</button>
-                                <button class="btn btn-primary pull-right">Salvar</button>
+                                <button type="button" class="btn btn-primary pull-right" onclick="validateSettingFields()" >Salvar</button>
                             </div>
                         </div>
                         </form>
@@ -221,7 +234,7 @@
                 <label>Senha atual:</label>
                   <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                      <input type="password" class="form-control"/>
+                      <input id="currentPassword" type="password" class="form-control"/>
                   </div>
             </div>
             <hr>
@@ -229,7 +242,7 @@
                 <label>Nova senha:</label>
                   <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                      <input type="password" class="form-control"/>
+                      <input id="newPassword" type="password" class="form-control"/>
                   </div>
             </div>
             <hr>
@@ -237,12 +250,12 @@
                 <label>Confirmar nova senha:</label>
                   <div class="input-group">
                       <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                      <input type="password" class="form-control"/>
+                      <input id="confirmNewPassword" type="password" class="form-control"/>
                   </div>
             </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" >Cancelar</button>
-          <button type="button" class="btn btn-primary">OK</button>
+          <button type="button" class="btn btn-primary" onclick="validateFieldsChangePassword()">OK</button>
         </div>
         </form>
         </div>
@@ -277,7 +290,7 @@
       </div>
     </div>
 
-    <!-- Modal de exclusão de conta-->
+    <!-- Modal de exclusÃ£o de conta-->
     <div class="modal fade" id="excluirModal" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -287,17 +300,19 @@
           </div>
           <div class="modal-body">
             <p>Você tem certeza que deseja excluir sua conta? </p>
-            <div class="form-group">
+            <form  id="formDelete" method="post">
+             <div class="form-group">
                   <label>Senha :</label>
                     <div class="input-group">
                         <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                        <input type="password" class="form-control"/>
+                        <input id="deleteAccountPassword" name="password" type="password" class="form-control"/>
                     </div>
               </div>
-            <div class="modal-footer">
+             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" >Cancelar</button>
-              <button type="button" class="btn btn-primary">Excluir</button>
-            </div>
+              <button type="button" class="btn btn-primary" onclick="validateFieldsDeleteAccount()">Excluir</button>
+             </div>
+            </form>
             </div>
           </div>
         </div>
@@ -322,7 +337,7 @@
           </div>
         </div>
 
-        <!-- Importação dos Scripts -->
+        <!-- ImportaÃ§Ã£o dos Scripts -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
@@ -331,5 +346,8 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/tagMenu.js"></script>
         <script type="text/javascript" src="js/configuracoes.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>
+        <script type="text/javascript" src="js/CryptoJSMD5/core-min.js"></script>
+        <script type="text/javascript" src="js/CryptoJSMD5/md5.js"></script>
     </body>
 </html>

@@ -4,10 +4,7 @@ package br.cefetmg.inf.util.db;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- *
- * @author Eduardo Cotta
- */
+
 public class ConnectionManager {
     
     private static ConnectionManager onlyInstance;
