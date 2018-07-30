@@ -255,7 +255,7 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
             </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" >Cancelar</button>
-          <button type="button" class="btn btn-primary" onclick="validateFieldsChangePassword()">OK</button>
+          <button type="button" class="btn btn-primary" class="close" data-miss="modal" onclick="validateFieldsChangePassword()">OK</button>
         </div>
         </form>
         </div>
@@ -327,11 +327,13 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
               <h4 class="modal-title">Logout:</h4>
             </div>
             <div class="modal-body">
-              <p>Até logo! Deseja sair da sua conta? </p>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" >Cancelar</button>
-                <button type="button" class="btn btn-primary">Sair</button>
-              </div>
+              <form method="post" action="/organizer/servletcontroller?process=UserLogout">
+               <p>Até logo! Deseja sair da sua conta? </p>
+               <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" >Cancelar</button>
+                 <button class="btn btn-primary">Sair</button>
+               </div>
+              </form>
               </div>
             </div>
           </div>

@@ -32,6 +32,7 @@ public class KeepUser implements IKeepUser {
     @Override
     public User searchUser(User user) throws PersistenceException {
         User temp = userDAO.readUser(user); 
+        
         if(temp==null){
            //adicionar exceção por usuário logado não encontrado (??)
         }
@@ -40,16 +41,10 @@ public class KeepUser implements IKeepUser {
 
     @Override
     public boolean updateUser(User user) throws PersistenceException {
-        User temp = userDAO.readUser(user);
         
-        if(User.compareUser(user, temp)){
-            return true; // Se não houver mudança, nem manda pro BD
+        if(user.getCodEmail() == null || user.getCodEmail().isEmpty()){
+            //adicionar exceção para usuário não achado, (acho que essa clausula é unreachable)
         }
-        if((temp.getCodEmail() == null || temp.getCodEmail().isEmpty()) || (temp.getUserPassword() == null || temp.getUserPassword().isEmpty()) ||
-                (temp.getUserName() == null || temp.getUserName().isEmpty()) || (temp.getCurrentTheme().getIdTheme()== 0)){
-            //adicionar por falta de atributo;
-        }
-        
         return userDAO.updateUser(user);
     }
 
