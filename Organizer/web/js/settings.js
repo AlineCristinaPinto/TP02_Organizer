@@ -34,7 +34,8 @@ function validateFieldsChangePassword(){
         return false;
     }else{
         let password = document.querySelector("#password");
-        password.value = newPassword;
+        password.value = newPassword.value;
+        $("#excluirModal").modal('close');
         return true;
     }
 }
@@ -43,11 +44,11 @@ function validateFieldsDeleteAccount(){
     
     let deleteAccountPassword = document.querySelector("#deleteAccountPassword");
     let oldPassword = document.querySelector("#oldPassword");
-    
-    if(deleteAccountPassword.value = ""){
+    if(deleteAccountPassword.value == ""){
         alert("Os campos devem estar preenchidos!")
         return false;
     }else if(CryptoJS.MD5(deleteAccountPassword.value) != oldPassword.value){
+        alert(deleteAccountPassword.value)
         alert(CryptoJS.MD5(deleteAccountPassword.value))
         alert("As senhas atuais não batem!")
         return false;

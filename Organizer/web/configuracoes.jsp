@@ -2,9 +2,15 @@
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user" scope="session" ></jsp:useBean>
-${user = request.getSession().getAttribute("user")}
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user1" scope="session" ></jsp:useBean>
+<%user1 = (User) request.getSession().getAttribute("user");%>
 
+<%-- 
+Querido Professor,
+Tentei de todas as formas usar as Expressions Language para realizar atribuições e pegar valores de objetos, porém não funcionou de jeito algum mesmo 
+eu seguindo vários tutoriais online, gostaria de saber quando elas funcionam e quando não, pois tento fazer a atribuição acima por EL e não aceita.
+Tento fazer um value="${user.userName}" e também não funciona. Por isso, infelizmente, tive que recorrer a scriplets em algumas partes do código.
+--%>
 <html>
     <head>
         <title>Organizer</title>
@@ -33,7 +39,7 @@ ${user = request.getSession().getAttribute("user")}
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
+                                <div class="profile-data-name">Nome do Usuário</div>
                                 <div class="profile-data-title">email_usuario@gmail.com</div>
                             </div>
                         </div>
@@ -114,7 +120,7 @@ ${user = request.getSession().getAttribute("user")}
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
+                        <a href="#"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
                     </li>
                     <li>
                         <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
@@ -143,7 +149,7 @@ ${user = request.getSession().getAttribute("user")}
                         <div class="col-md-12">
                           <p></p>
                         <!-- Form -->
-                        <form class="form-horizontal" id="formSettings">
+                        <form class="form-horizontal" id="formSettings" method="post">
 
                         <div class="panel panel-default">
 
@@ -172,7 +178,7 @@ ${user = request.getSession().getAttribute("user")}
                                       </div>
                                     </div>
                                 </div>
-                                <input id="oldPassword" type="hidden" value="${user.userPassword}"/>
+                                <input id="oldPassword" type="hidden" value="<%=user1.getUserPassword()%>"/>
                                 <button type="button" class="btn btn-secondary" >Cancelar</button>
                                 <button type="button" class="btn btn-primary pull-right" onclick="validateSettingFields()" >Salvar</button>
                             </div>
@@ -294,7 +300,7 @@ ${user = request.getSession().getAttribute("user")}
           </div>
           <div class="modal-body">
             <p>Você tem certeza que deseja excluir sua conta? </p>
-            <form  id="formDelete">
+            <form  id="formDelete" method="post">
              <div class="form-group">
                   <label>Senha :</label>
                     <div class="input-group">
