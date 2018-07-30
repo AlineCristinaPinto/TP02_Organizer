@@ -54,9 +54,4 @@ public class User {
         this.userPhoto = userPhoto;
     }
     
-    public static boolean compareUser(User user1, User user2){
-        return (user1.getUserName().equals(user2.getUserName())) && (user1.getUserPassword().equals(user2.getUserPassword())) && 
-                (user1.getCurrentTheme().getIdTheme() == user2.getCurrentTheme().getIdTheme()) && (user1.getUserPhoto().equals(user2.getUserPhoto()));
-    }
-    
 }

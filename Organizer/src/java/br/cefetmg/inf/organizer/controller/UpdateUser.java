@@ -20,10 +20,7 @@ public class UpdateUser implements GenericProcess {
         User user = (User) req.getSession().getAttribute("user");
         User tempUser = new User();
 
-        if (name.isEmpty()) {
-            //erro
-        }
-        if (password.isEmpty()) {
+        if (password.isEmpty() || password == null) {
             password = user.getUserPassword();
         } else {
             password = PasswordCriptography.generateMd5(password);
@@ -40,6 +37,7 @@ public class UpdateUser implements GenericProcess {
         if (!success) {
             //erro
         } else {
+            req.getSession().setAttribute("user",tempUser);
             pageJSP = "/configuracoes.jsp";
         }
         

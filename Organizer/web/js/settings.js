@@ -35,7 +35,7 @@ function validateFieldsChangePassword(){
     }else{
         let password = document.querySelector("#password");
         password.value = newPassword.value;
-        $("#excluirModal").modal('close');
+        
         return true;
     }
 }

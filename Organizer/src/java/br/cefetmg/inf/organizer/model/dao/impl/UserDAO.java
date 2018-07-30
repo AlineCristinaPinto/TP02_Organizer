@@ -59,17 +59,20 @@ public class UserDAO implements IUserDAO {
                 user.setUserName(rs.getString("nom_Usuario"));
                 user.setUserPassword(rs.getString("txt_Senha"));
 
-                File tempFile = new File("src/java/br/cefetmg/inf/resources/temp1.jpg");
+                File tempFile = null;
+                /*
                 try (FileOutputStream fos = new FileOutputStream(tempFile)) {
                     int len = rs.getInt("tamanho");
                     byte[] buf = rs.getBytes("blb_Imagem");
                     fos.write(buf, 0, len);
                 }
-
+                */
                 user.setUserPhoto(tempFile);
 
-                IThemeDAO themeDAO = new ThemeDAO();
-                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
+                //IThemeDAO themeDAO = new ThemeDAO();
+                //Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema")); LEMBRAR DE TROCAR!!!
+                Theme newTheme = new Theme();
+                newTheme.setIdTheme(1);
                 user.setCurrentTheme(newTheme);
 
             } else {
@@ -183,6 +186,7 @@ public class UserDAO implements IUserDAO {
                 //IThemeDAO themeDAO = new ThemeDAO();
                 //Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
                 Theme newTheme = new Theme();
+                newTheme.setIdTheme(1);
                 user.setCurrentTheme(newTheme);
             }
 
