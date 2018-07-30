@@ -56,7 +56,12 @@ public class KeepItem implements IKeepItem{
             //exceção
         }
                 
-        boolean result = itemDAO.updateItem(item);
+        boolean result=false;
+        try {
+            result = itemDAO.updateItem(item);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(KeepItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return result;
     
     }

@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -137,8 +139,12 @@
                         <div class="col-md-12">
                           <p></p>
                           <!-- Form -->
-                          <form class="form-horizontal">
-
+                          <form class="form-horizontal" action="/organizer/servletcontroller?process=UpdateItem" method="post">
+                        
+                              <% 
+                                Long id = Long.parseLong(request.getSession().getAttribute("idItem").toString());        
+                              %>
+                              
                         <div class="panel panel-default">
 
                             <div class="panel-body" id="formSimples">
@@ -150,15 +156,15 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input type="text" class="form-control"/>
+                                            <input type="text" class="form-control" name="nameItem" required/>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">DescriÃ§Ã£o: </label>
+                                    <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
                                     <div class="col-md-6 col-xs-12">
-                                      <textarea class="form-control" rows="5"></textarea>
+                                      <textarea class="form-control" rows="5" name="descriptionItem"></textarea>
                                     </div>
                                 </div>
 
@@ -167,7 +173,7 @@
                                       <div class="col-md-6 col-xs-12">
                                           <div class="input-group">
                                               <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal"/>
+                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal" name="inputTag" readonly/>
                                           </div>
                                       </div>
                                   </div>

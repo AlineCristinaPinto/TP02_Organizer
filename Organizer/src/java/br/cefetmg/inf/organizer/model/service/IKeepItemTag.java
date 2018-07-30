@@ -17,7 +17,7 @@ public interface IKeepItemTag {
     
     boolean createTagInItem (ItemTag itemTag);
     boolean updateTagInItem(ItemTag itemTag);
-    boolean deleteTagInItem(ItemTag itemTag);
+    boolean deleteTagInItem(ArrayList<Tag> itemTag, Long id);
     ArrayList<Tag> listAllTagInItem(Long seqItem);
     boolean deleteTagByItemId(Long idItem);
     

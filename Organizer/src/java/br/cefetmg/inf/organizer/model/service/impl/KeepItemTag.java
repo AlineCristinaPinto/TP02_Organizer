@@ -61,9 +61,14 @@ public class KeepItemTag implements IKeepItemTag {
     }
 
     @Override
-    public boolean deleteTagInItem(ItemTag itemTag) {
+    public boolean deleteTagInItem(ArrayList<Tag> itemTag, Long id) {
         
-        boolean result = itemTagDAO.deleteTagInItem(itemTag);
+        boolean result=false;
+        try {
+            result = itemTagDAO.deleteTagInItem(itemTag, id);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(KeepItemTag.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return result;
         
     }

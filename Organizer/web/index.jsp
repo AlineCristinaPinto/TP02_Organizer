@@ -183,7 +183,7 @@
                                                             <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">
                                                             <span class="checkmark"></span>
                                                         </label>
-                                                        <button id="${list.seqItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <button id="${list.seqItem}" class="opcoesItem btOption" value="${list.identifierItem}" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
                                                         <div class="dropdownlink">${list.nameItem}</div>
                                                             <ul class="submenuItems" style="display: none;">
                                                                 <c:if test = "${list.descriptionItem != ''}">
@@ -198,7 +198,7 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <li id="${list.identifierItem}" class="open">
-                                                        <button id="${list.seqItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <button id="${list.seqItem}" value="${list.identifierItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
                                                         <div class="dropdownlink">${list.nameItem}</div>
                                                             <ul class="submenuItems" style="display: none;">
                                                                 <c:if test = "${list.descriptionItem != ''}">
@@ -280,7 +280,8 @@
                   </div>
                   <div class="modal-body">
                     <form id="updateItem" method="post">
-                        <input type="hidden" id="takeIdU" name="takeId">
+                        <input type="hidden" id="takeIdU" name="takeIdU">
+                        <input type="hidden" id="takeTypeU" name="takeTypeU">
                         <a class="opItemModal edit">
                           <span class="fa fa-edit"></span> Editar</span>
                         </a>

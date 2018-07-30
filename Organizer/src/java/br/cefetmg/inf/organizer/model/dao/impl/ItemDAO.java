@@ -56,35 +56,25 @@ public class ItemDAO implements IItemDAO{
     }
 
     @Override
-    public boolean updateItem(Item item) {
+    public boolean updateItem(Item item) throws PersistenceException{
     
          try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "UPDATE item SET nom_item=?, des_item=?, dat_item=?, idt_estado=?"
-                    + " WHERE cod_email=? and nom_item=? and idt_item=?";
+            String sql = "UPDATE item SET nom_item=?, des_item=?, dat_item=?"
+                    + " WHERE cod_email=? and seq_item=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             preparedStatement.setString(1, item.getNameItem());
-            if (item.getDescriptionItem() != null) {
-                preparedStatement.setString(2, item.getDescriptionItem());
-            } else {
-                preparedStatement.setString(2, null);
-            }
-            if (item.getDateItem() != null) {
-                preparedStatement.setDate(3, new java.sql.Date(item.getDateItem().getTime()));
-            } else {
+            preparedStatement.setString(2, item.getDescriptionItem());
+            if(item.getDateItem() == null){
                 preparedStatement.setDate(3, null);
-            }
-            if (item.getIdentifierStatus() != null) {
-                preparedStatement.setString(4, item.getIdentifierStatus());
             } else {
-                preparedStatement.setString(4, null);
+                preparedStatement.setDate(3, new java.sql.Date(item.getDateItem().getTime()));
             }
             
-            preparedStatement.setString(5, item.getUser().getCodEmail());
-            preparedStatement.setString(6, item.getNameItem());
-            preparedStatement.setString(7, item.getIdentifierItem());
+            preparedStatement.setString(4, item.getUser().getCodEmail());
+            preparedStatement.setLong(5, item.getSeqItem());
                                     
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -92,10 +82,8 @@ public class ItemDAO implements IItemDAO{
             
             return true;
         } catch (Exception ex) {
-            //Adicionar Exceção 
+            throw new PersistenceException(ex.getMessage());
         }
-         
-         return false;
     }
 
     @Override
