@@ -49,8 +49,6 @@ public class ItemFilter implements GenericProcess {
         if(types != null){
             typeFiltering = true;
             for(String type : types){
-                //Formatting type to "sim", "lem" or "tar"
-                type = type.substring(0, 3);
                 typeList.add(type);
             }
         }

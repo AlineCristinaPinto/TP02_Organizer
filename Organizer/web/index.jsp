@@ -99,19 +99,19 @@
 
                         <ul id="ulTypes">
                             <c:forEach items='${listTypes}' var='list'>
-                                <li><a href="#">
-                                        <label class="container">${list}
-                                            <input type="checkbox" name="tipo" value="${fn:toUpperCase(list)}"
-                                                   <c:forEach items='${usedTypes}' var='usedType'>
-                                                       <c:if test='${fn:toUpperCase(list) == usedType}'>
-                                                           checked="true"
-                                                       </c:if>
-                                                   </c:forEach>
-                                                   >
-                                            <span class="checkmarkTarefa"></span>
-                                        </label>
-                                    </a></li>
-                                </c:forEach>
+                                <li><a href="#">                                        
+                                    <label class="container">${list}
+                                        <input type="checkbox" name="tipo" value="${fn:substring(fn:toUpperCase(list), 0, 3)}"
+                                               <c:forEach items='${usedTypes}' var='usedType'>
+                                                   <c:if test='${fn:substring(fn:toUpperCase(list), 0, 3) == usedType}'>
+                                                       checked="true"
+                                                   </c:if>
+                                               </c:forEach>
+                                        >
+                                        <span class="checkmarkTarefa"></span>
+                                    </label>
+                                </a></li>
+                            </c:forEach>
                         </ul>
                     </li>
                     <li class="xn-openable">
@@ -290,21 +290,6 @@
         <!-- Modal de logout-->
         <div class="modal fade" id="logoutModal" role="dialog">
             <div class="modal-dialog">
-                <<<<<<< HEAD
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Logout:</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Deseja sair da sua conta? </p>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" >Cancelar</button>
-                            <button type="button" class="btn btn-primary">Sair</button>
-                        </div>
-                    </div>
-                    =======
-
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -319,7 +304,6 @@
                                 </div>
                             </form>
                         </div>
-                        >>>>>>> c55059d87198068932c8c806c1c80ad6ec1b27c5
                     </div>
                 </div>
             </div>
