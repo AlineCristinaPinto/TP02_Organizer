@@ -146,7 +146,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
+                        <a href="configuracoes.jsp"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
                     </li>
                     <li>
                         <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
@@ -291,7 +291,7 @@
         <!-- Modal de logout-->
         <div class="modal fade" id="logoutModal" role="dialog">
             <div class="modal-dialog">
-<<<<<<< HEAD
+
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -306,20 +306,6 @@
                        </div>
                   </form>
                   </div>
-=======
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Logout:</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>AtÃ© logo! Deseja sair da sua conta? </p>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" >Cancelar</button>
-                            <button type="button" class="btn btn-primary">Sair</button>
-                        </div>
-                    </div>
->>>>>>> d4d9d5a11dd953a860a052988211b7fe11b3d6d1
                 </div>
             </div>
         </div>
