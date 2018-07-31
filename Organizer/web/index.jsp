@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepItem"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
@@ -5,9 +6,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id='listItem' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
-<jsp:useBean id='keepTag' class='br.cefetmg.inf.organizer.model.service.impl.KeepTag' scope="session"></jsp:useBean>
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user1" scope="session" ></jsp:useBean>
-<%user1 = (User) request.getSession().getAttribute("user");%>
+
+<jsp:useBean id="keepTag" class="br.cefetmg.inf.organizer.model.service.impl.KeepTag" scope="page"/>
+<jsp:useBean id="keepItem" class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" scope="page"/>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user" scope="session"/>
+
+<%
+    user = (User) request.getSession().getAttribute("user");
+    
+%>
 
 <html>
     <head>
@@ -165,8 +172,18 @@
 
                             <div class="panel panel-default">
 
-                                <dihv class="panel-body accordion-menu">
+                                <div class="panel-body accordion-menu">
 
+<<<<<<< HEAD
+=======
+                                    <ul id="ulItens">
+                                        <li>
+                                            <a href="createItem.jsp">Criar Item</a>
+					</li>
+                                        <% 
+                                            /*
+                                            User user = new User();
+>>>>>>> 8211314288ca4bf33ca0a41acfa14fe3ddfeea3e
 
                                     <li>
                                         <a href="createItem.jsp">Criar Item</a>
@@ -174,8 +191,63 @@
                                     <%
                                         User user = new User();
 
+<<<<<<< HEAD
                                         user.setCodEmail("ninanerd15@gmail.com");
                                         user.setUserName("Aline Cristina");
+=======
+                                            
+                                            KeepItem keepItem = new KeepItem();
+                                            */
+                                            
+                                            if(request.getAttribute("itemList") == null){
+                                                listItem = keepItem.listAllItem(user);
+                                            }else{
+                                                listItem = (ArrayList) request.getAttribute("itemList");
+                                            }
+                                                                                        
+                                            pageContext.setAttribute("listItemUser", listItem);
+                                        %>
+                                    
+                                        <c:forEach items='${listItemUser}' var='list'>
+                                            <c:choose>
+                                                <c:when test = "${list.identifierItem == 'TAR'}">
+                                                    <li id="${list.identifierItem}" class="open">
+                                                        <label class="container" style="float:left">
+                                                            <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                        <button id="${list.seqItem}" class="opcoesItem btOption" value="${list.identifierItem}" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <div class="dropdownlink">${list.nameItem}</div>
+                                                            <ul class="submenuItems" style="display: none;">
+                                                                <c:if test = "${list.descriptionItem != ''}">
+                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                                </c:if>                                                                
+                                                                <!-- tag <li class="liDescricao"></li>-->
+                                                                <c:if test = "${list.dateItem != null}">
+                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                                </c:if>                                                                
+                                                            </ul>
+                                                    </li>                                            
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li id="${list.identifierItem}" class="open">
+                                                        <button id="${list.seqItem}" value="${list.identifierItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <div class="dropdownlink">${list.nameItem}</div>
+                                                            <ul class="submenuItems" style="display: none;">
+                                                                <c:if test = "${list.descriptionItem != ''}">
+                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                                </c:if>                                                                
+                                                                <!-- tag <li class="liDescricao"></li>-->
+                                                                <c:if test = "${list.dateItem != null}">
+                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                                </c:if> 
+                                                            </ul>
+                                                    </li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach> 
+                                    </ul>
+>>>>>>> 8211314288ca4bf33ca0a41acfa14fe3ddfeea3e
 
                                         KeepItem keepItem = new KeepItem();
                                         listItem = keepItem.listAllItem(user);
@@ -306,6 +378,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Importação dos Scripts -->
     <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
@@ -316,6 +389,19 @@
     <script type="text/javascript" src="js/tagMenu.js"></script>
     <script type="text/javascript" src="js/configuracoes.js"></script>
     <script type="text/javascript" src="js/modalOptions.js"></script>
+=======
+        <!-- Importação dos Scripts -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/plugins.js"></script>
+        <script type="text/javascript" src="js/actions.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript" src="js/tagMenu.js"></script>
+        <script type="text/javascript" src="js/configuracoes.js"></script>
+        <script type="text/javascript" src="js/modalOptions.js"></script>
+        <script type="text/javascript" src="js/filter.js"></script>
+>>>>>>> 8211314288ca4bf33ca0a41acfa14fe3ddfeea3e
 
 </body>
 </html>

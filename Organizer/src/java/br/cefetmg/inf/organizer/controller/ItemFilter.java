@@ -31,6 +31,8 @@ public class ItemFilter implements GenericProcess {
         
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
+        //User user = new User();
+        //user.setCodEmail("lgthxt@gmail.com");
         
         //checking if there is any tag to filter
         if(tags != null){
@@ -67,7 +69,11 @@ public class ItemFilter implements GenericProcess {
         
         //maybe swap this to response if using ajax
         //or session (?)
-        req.setAttribute("itemList", itemList);
+        if(itemList == null){
+            req.setAttribute("itemList", new ArrayList());
+        }else{
+            req.setAttribute("itemList", itemList);
+        }
         
         pageJSP = "/index.jsp";
         
