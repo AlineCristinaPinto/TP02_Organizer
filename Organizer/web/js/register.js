@@ -6,7 +6,7 @@ function validateFields(){
     let confirmPassword = document.querySelector("#confirm-password");
     
     if((email.value == "") || (name.value == "") || (password.value == "") || (confirmPassword.value == "")){
-        alert("Por gentiliza, preencha todos os campos!")
+        alert("Por gentileza, preencha todos os campos!")
         return false;
     }
     if(password.value != confirmPassword.value){

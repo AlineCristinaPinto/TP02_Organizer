@@ -20,7 +20,11 @@ public class UpdateUser implements GenericProcess {
 
         User user = (User) req.getSession().getAttribute("user");
         User tempUser = new User();
-
+        
+        if (name.isEmpty() || name == null) {
+            name = user.getUserName();
+        }
+        
         if (password.isEmpty() || password == null) {
             password = user.getUserPassword();
         } else {

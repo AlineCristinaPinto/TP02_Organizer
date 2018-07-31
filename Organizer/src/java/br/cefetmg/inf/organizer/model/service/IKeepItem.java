@@ -9,6 +9,7 @@ import br.cefetmg.inf.organizer.model.domain.Item;
 import java.util.ArrayList;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.util.List;
 
 /**
@@ -22,8 +23,9 @@ public interface IKeepItem {
     boolean deleteItem(Long idItem, User user);
     ArrayList<Item> listAllItem(User user);
     Item searchItemByName(String nomeItem);
-    List<Item> searchItemByTag(List<Tag> tagList, User user);
-    List<Item> searchItemByType(List<String> typeList, User user);
-    List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user);
+    List<Item> searchItemByTag(List<Tag> tagList, User user) throws PersistenceException;
+    List<Item> searchItemByType(List<String> typeList, User user) throws PersistenceException;
+    List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user) 
+            throws PersistenceException;
     
 }

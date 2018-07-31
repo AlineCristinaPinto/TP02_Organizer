@@ -27,7 +27,7 @@ public class UserLogin implements GenericProcess{
         }else{
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            pageJSP = "/configuracoes.jsp";
+            pageJSP = "/index.jsp";
         }
         
         return pageJSP;
