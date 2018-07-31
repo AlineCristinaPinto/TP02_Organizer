@@ -6,6 +6,10 @@
 <jsp:useBean id='listItem' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
 
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
+<%userSessao = (User) request.getSession().getAttribute("user");%>
+
+
 <html>
     <head>
         <title>Organizer</title>
@@ -260,11 +264,13 @@
                   <h4 class="modal-title">Logout:</h4>
                 </div>
                 <div class="modal-body">
-                  <p>AtÃ© logo! Deseja sair da sua conta? </p>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" >Cancelar</button>
-                    <button type="button" class="btn btn-primary">Sair</button>
-                  </div>
+                  <form method="post" action="/organizer/servletcontroller?process=UserLogout">
+                    <p>Até logo! Deseja sair da sua conta? </p>
+                       <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" >Cancelar</button>
+                        <button class="btn btn-primary">Sair</button>
+                       </div>
+                  </form>
                   </div>
                 </div>
               </div>

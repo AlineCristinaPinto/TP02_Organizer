@@ -2,7 +2,7 @@
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user1" scope="session" ></jsp:useBean>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user1" scope="page" ></jsp:useBean>
 <%user1 = (User) request.getSession().getAttribute("user");%>
 
 <%-- 

@@ -6,6 +6,7 @@ import br.cefetmg.inf.organizer.model.dao.impl.TagDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.UserDAO;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
+import br.cefetmg.inf.util.exception.BusinessException;
 import br.cefetmg.inf.util.exception.PersistenceException;
 
 
@@ -18,40 +19,44 @@ public class KeepUser implements IKeepUser {
     }
     
     @Override
-    public boolean registerUser(User user) throws PersistenceException {
+    public boolean registerUser(User user) throws PersistenceException, BusinessException {
         
         User temp = userDAO.readUser(user);
         
-        if(temp != null || (user.getCodEmail() == null || user.getCodEmail().isEmpty()) || (user.getUserPassword() == null || user.getUserPassword().isEmpty()) ||
+        if(temp != null){
+            throw new BusinessException("O cadastro não pode ser realizado: Usuário já existente");
+        }
+            
+        if((user.getCodEmail() == null || user.getCodEmail().isEmpty()) || (user.getUserPassword() == null || user.getUserPassword().isEmpty()) ||
                 (user.getUserName() == null || user.getUserName().isEmpty()) || (user.getCurrentTheme().getIdTheme()== 0)){
-            //adicionar exceção por usuário já registrado ou falta de atributo;
+            throw new BusinessException("O cadastro não pode ser realizado: Campos faltando");
         }
         return userDAO.createUser(user);
     }
 
     @Override
-    public User searchUser(User user) throws PersistenceException {
+    public User searchUser(User user) throws PersistenceException, BusinessException {
         User temp = userDAO.readUser(user); 
         
         if(temp==null){
-           //adicionar exceção por usuário logado não encontrado (??)
+           throw new BusinessException("Não foi possível encontrar o usuário");
         }
         return temp;
     }
 
     @Override
-    public boolean updateUser(User user) throws PersistenceException {
+    public boolean updateUser(User user) throws PersistenceException, BusinessException {
         
         if(user.getCodEmail() == null || user.getCodEmail().isEmpty()){
-            //adicionar exceção para usuário não achado, (acho que essa clausula é unreachable)
+            throw new BusinessException("As alterações não puderam ser realizadas: Email não informado");
         }
         return userDAO.updateUser(user);
     }
 
     @Override
-    public boolean deleteAccount(User user) throws PersistenceException {
+    public boolean deleteAccount(User user) throws PersistenceException, BusinessException {
         if(user.getCodEmail() == null || user.getCodEmail().isEmpty()){
-            //adicionar exceção para usuário não achado, (acho que essa clausula é unreachable)
+            throw new BusinessException("A exclusão não pode ser realizada: Email não informado");
         }
         return userDAO.deleteUser(user);
     }
