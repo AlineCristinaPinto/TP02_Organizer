@@ -101,9 +101,9 @@
                             <c:forEach items='${listTypes}' var='list'>
                                 <li><a href="#">
                                     <label class="container">${list}
-                                        <input type="checkbox" name="tipo" value="${fn:toUpperCase(list)}"
+                                        <input type="checkbox" name="tipo" value="${fn:substring(fn:toUpperCase(list), 0, 3)}"
                                                <c:forEach items='${usedTypes}' var='usedType'>
-                                                   <c:if test='${fn:toUpperCase(list) == usedType}'>
+                                                   <c:if test='${fn:substring(fn:toUpperCase(list), 0, 3) == usedType}'>
                                                        checked="true"
                                                    </c:if>
                                                </c:forEach>
