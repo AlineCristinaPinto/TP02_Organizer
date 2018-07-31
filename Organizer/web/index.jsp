@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepItem"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
@@ -5,6 +6,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id='listItem' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
+<jsp:useBean id="keepTag" class="br.cefetmg.inf.organizer.model.service.impl.KeepTag" scope="page"/>
+<jsp:useBean id="keepItem" class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" scope="page"/>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user" scope="session"/>
+
+<%
+    user = (User) request.getSession().getAttribute("user");
+    
+%>
 
 <html>
     <head>
@@ -157,20 +166,28 @@
 
                             <div class="panel panel-default">
 
-                                <dihv class="panel-body accordion-menu">
+                                <div class="panel-body accordion-menu">
 
-                                    
+                                    <ul id="ulItens">
                                         <li>
                                             <a href="createItem.jsp">Criar Item</a>
 					</li>
                                         <% 
+                                            /*
                                             User user = new User();
 
                                             user.setCodEmail("ninanerd15@gmail.com");
                                             user.setUserName("Aline Cristina");
 
+                                            
                                             KeepItem keepItem = new KeepItem();
-                                            listItem = keepItem.listAllItem(user);
+                                            */
+                                            
+                                            if(request.getAttribute("itemList") == null){
+                                                listItem = keepItem.listAllItem(user);
+                                            }else{
+                                                listItem = (ArrayList) request.getAttribute("itemList");
+                                            }
                                                                                         
                                             pageContext.setAttribute("listItemUser", listItem);
                                         %>
@@ -213,7 +230,7 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach> 
-                                    
+                                    </ul>
 
                                 </div>
                             </div>
@@ -308,6 +325,7 @@
         <script type="text/javascript" src="js/tagMenu.js"></script>
         <script type="text/javascript" src="js/configuracoes.js"></script>
         <script type="text/javascript" src="js/modalOptions.js"></script>
+        <script type="text/javascript" src="js/filter.js"></script>
 
     </body>
 </html>
