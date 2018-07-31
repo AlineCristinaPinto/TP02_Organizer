@@ -13,7 +13,7 @@
 
 <%
     user = (User) request.getSession().getAttribute("user");
-    
+
 %>
 
 <jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
@@ -81,44 +81,42 @@
                     </li>
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Tipos</span></a>
-                        
+
                         <%
                             String[] listTypes = new String[3];
-                            
+
                             listTypes[0] = "Simples";
                             listTypes[1] = "Lembrete";
                             listTypes[2] = "Tarefa";
-                            
+
                             //pegando os tipos marcados no checkbox antes de recarregar a pagina
                             String[] usedTypes = request.getParameterValues("tipo");
-                                
+
                             pageContext.setAttribute("usedTypes", usedTypes);
                             pageContext.setAttribute("listTypes", listTypes);
-                        
+
                         %>
-                        
+
                         <ul id="ulTypes">
                             <c:forEach items='${listTypes}' var='list'>
                                 <li><a href="#">
-                                    <label class="container">${list}
-                                        <input type="checkbox" name="tipo" value="${fn:toUpperCase(list)}"
-                                               <c:forEach items='${usedTypes}' var='usedType'>
-                                                   <c:if test='${fn:toUpperCase(list) == usedType}'>
-                                                       checked="true"
-                                                   </c:if>
-                                               </c:forEach>
-                                        >
-                                        <span class="checkmarkTarefa"></span>
-                                    </label>
-                                </a></li>
-                            </c:forEach>
+                                        <label class="container">${list}
+                                            <input type="checkbox" name="tipo" value="${fn:toUpperCase(list)}"
+                                                   <c:forEach items='${usedTypes}' var='usedType'>
+                                                       <c:if test='${fn:toUpperCase(list) == usedType}'>
+                                                           checked="true"
+                                                       </c:if>
+                                                   </c:forEach>
+                                                   >
+                                            <span class="checkmarkTarefa"></span>
+                                        </label>
+                                    </a></li>
+                                </c:forEach>
                         </ul>
                     </li>
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-tag"></span> <span class="xn-text">Tags</span></a>
-                        <%
-
-                            listTag = keepTag.listAlltag(user);
+                        <%                            listTag = keepTag.listAlltag(user);
 
                             String[] usedTags = request.getParameterValues("tag");
 
@@ -194,21 +192,20 @@
                                         <li>
                                             <a href="createItem.jsp">Criar Item</a>
                                         </li>
-                                        <% 
+                                        <%
                                             /*
                                             User user = new User();
                                             user.setCodEmail("ninanerd15@gmail.com");
                                             user.setUserName("Aline Cristina");
                                             
                                             KeepItem keepItem = new KeepItem();
-                                            */
-                                            
-                                            if(request.getAttribute("itemList") == null){
+                                             */
+                                            if (request.getAttribute("itemList") == null) {
                                                 listItem = keepItem.listAllItem(user);
-                                            }else{
+                                            } else {
                                                 listItem = (ArrayList) request.getAttribute("itemList");
                                             }
-                                                                                        
+
                                             pageContext.setAttribute("listItemUser", listItem);
                                         %>
 
@@ -270,19 +267,21 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Adicionar Tags:</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Nome: </label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                <input id="name" type="text" class="form-control">
+                    <form method="post" id="formCreateTag">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nome: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-tag"></span></span>
+                                    <input id="name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal" >Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="addTagMenu()" class="close" data-dismiss="modal" >OK</button>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal" >Cancelar</button>
-                            <button type="button" class="btn btn-primary" onclick="addTagMenu()" class="close" data-dismiss="modal" >OK</button>
-                        </div>
-                    </div>
+                    </form>    
                 </div>
             </div>
 
@@ -291,7 +290,7 @@
         <!-- Modal de logout-->
         <div class="modal fade" id="logoutModal" role="dialog">
             <div class="modal-dialog">
-<<<<<<< HEAD
+                <<<<<<< HEAD
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -304,66 +303,66 @@
                             <button type="button" class="btn btn-primary">Sair</button>
                         </div>
                     </div>
-=======
+                    =======
 
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Logout:</h4>
-                </div>
-                <div class="modal-body">
-                  <form method="post" action="/organizer/servletcontroller?process=UserLogout">
-                    <p>Até logo! Deseja sair da sua conta? </p>
-                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" >Cancelar</button>
-                        <button class="btn btn-primary">Sair</button>
-                       </div>
-                  </form>
-                  </div>
->>>>>>> c55059d87198068932c8c806c1c80ad6ec1b27c5
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal de botão de opção de item -->
-        <div class="modal fade" id="btaoOpcaoModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Opções de Item</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="updateItem" method="post">
-                            <input type="hidden" id="takeIdU" name="takeIdU">
-                            <input type="hidden" id="takeTypeU" name="takeTypeU">
-                            <a class="opItemModal edit">
-                                <span class="fa fa-edit"></span> Editar</span>
-                            </a>
-                        </form>
-                        <hr>
-                        <form id="deleteItem" method="post">
-                            <input type="hidden" id="takeId" name="takeId">
-                            <a href="#" class="opItemModal delItem">                        
-                                <span class="fa fa-trash-o"></span> Excluir</span>
-                            </a>
-                        </form>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Logout:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/organizer/servletcontroller?process=UserLogout">
+                                <p>Até logo! Deseja sair da sua conta? </p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" >Cancelar</button>
+                                    <button class="btn btn-primary">Sair</button>
+                                </div>
+                            </form>
+                        </div>
+                        >>>>>>> c55059d87198068932c8c806c1c80ad6ec1b27c5
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Importação dos Scripts -->
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/plugins.js"></script>
-        <script type="text/javascript" src="js/actions.js"></script>
-        <script type="text/javascript" src="js/script.js"></script>
-        <script type="text/javascript" src="js/tagMenu.js"></script>
-        <script type="text/javascript" src="js/configuracoes.js"></script>
-        <script type="text/javascript" src="js/modalOptions.js"></script>
-        <script type="text/javascript" src="js/filter.js"></script>
+            <!-- Modal de botão de opção de item -->
+            <div class="modal fade" id="btaoOpcaoModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Opções de Item</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateItem" method="post">
+                                <input type="hidden" id="takeIdU" name="takeIdU">
+                                <input type="hidden" id="takeTypeU" name="takeTypeU">
+                                <a class="opItemModal edit">
+                                    <span class="fa fa-edit"></span> Editar</span>
+                                </a>
+                            </form>
+                            <hr>
+                            <form id="deleteItem" method="post">
+                                <input type="hidden" id="takeId" name="takeId">
+                                <a href="#" class="opItemModal delItem">                        
+                                    <span class="fa fa-trash-o"></span> Excluir</span>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Importação dos Scripts -->
+            <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+            <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+            <script type="text/javascript" src="js/plugins.js"></script>
+            <script type="text/javascript" src="js/actions.js"></script>
+            <script type="text/javascript" src="js/script.js"></script>
+            <script type="text/javascript" src="js/tagMenu.js"></script>
+            <script type="text/javascript" src="js/configuracoes.js"></script>
+            <script type="text/javascript" src="js/modalOptions.js"></script>
+            <script type="text/javascript" src="js/filter.js"></script>
 
     </body>
 </html>

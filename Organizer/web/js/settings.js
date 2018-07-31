@@ -6,16 +6,15 @@ function validateSettingFields() {
     let name = document.querySelector("#name");
     let password = document.querySelector("#password");
 
-    
-    //if que verifica profileIcon --> PEDRO
-    //if que verifica name --> PEDRO
-   
-    //Dá submit 
-    let formSettings = document.querySelector("#formSettings");
-    formSettings.action = "/organizer/servletcontroller?process=UpdateUser";
-    formSettings.submit();
-    return true;
-
+    if (name.value == "") {
+        alert("O campo namo deve estar preenchido");
+    } else {
+        //Dá submit 
+        let formSettings = document.querySelector("#formSettings");
+        formSettings.action = "/organizer/servletcontroller?process=UpdateUser";
+        formSettings.submit();
+        return true;
+    }
 }
 
 function insertImageOnInput() {
@@ -29,8 +28,8 @@ function validateFieldsChangePassword() {
     let confirmNewPassword = document.querySelector("#confirmNewPassword");
     let oldPassword = document.querySelector("#oldPassword");
 
-    
-    if(currentPassword.value == "" || newPassword.value  == "" || confirmNewPassword.value  == ""){
+
+    if (currentPassword.value == "" || newPassword.value == "" || confirmNewPassword.value == "") {
         alert("Por gentileza, preencha todos os campos!");
 
         return false;
@@ -38,7 +37,7 @@ function validateFieldsChangePassword() {
         alert("As senhas devem ser iguais!");
         return false;
 
-    }else if(CryptoJS.MD5(currentPassword.value) != oldPassword.value ){
+    } else if (CryptoJS.MD5(currentPassword.value) != oldPassword.value) {
         alert("As senhas atuais não são iguais!")
         return false;
     } else {
@@ -54,7 +53,7 @@ function validateFieldsDeleteAccount() {
     let deleteAccountPassword = document.querySelector("#deleteAccountPassword");
     let oldPassword = document.querySelector("#oldPassword");
 
-    if(deleteAccountPassword.value == ""){
+    if (deleteAccountPassword.value == "") {
         alert("Por gentileza, preencha todos os campos!")
         return false;
     } else if (CryptoJS.MD5(deleteAccountPassword.value) != oldPassword.value) {
