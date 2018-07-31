@@ -2,11 +2,12 @@ $(function() {
   $("#novaTag").click(function() {
     $("#tagsMenu").modal();
   });
-})
+});
 
-// Fazer onclick no modal para inserir
-
-function insereTagMenu(nome){
+function addTagMenu(){
+  
+  let name = document.querySelector('#name'); 
+    
   let ulTag = document.querySelector('#ulTagMenu');
   let liNome = document.createElement('li');
   let aNome = document.createElement('a');
@@ -18,10 +19,10 @@ function insereTagMenu(nome){
   label.setAttribute('class', 'container');
   input.setAttribute('type', 'checkbox');
   input.setAttribute('name', 'tag');
-  input.setAttribute("value", nome);
+  input.setAttribute("value", name);
   span.setAttribute('class', 'checkmark');
 
-  label.innerHTML = nome;
+  label.innerHTML = name;
 
   label.appendChild(input);
   label.appendChild(span);

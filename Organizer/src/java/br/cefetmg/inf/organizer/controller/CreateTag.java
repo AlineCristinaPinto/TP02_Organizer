@@ -13,13 +13,16 @@ public class CreateTag implements GenericProcess {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         String pageJSP = "";
+        
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         String nameTag = req.getParameter("");// trocar quando colocar o jsp
+        
         Tag tag = new Tag();
         tag.setTagName(nameTag);
         tag.setUser(user);
         tag.setSeqTag(null);
+        
         IKeepTag keepTag = new KeepTag();
         boolean result = keepTag.createTag(tag);
         if (result == false) {
@@ -28,6 +31,7 @@ public class CreateTag implements GenericProcess {
             keepTag.updateTagId(tag, keepTag.searchTagByName(nameTag, user));
             pageJSP = "/index.jsp";// !!!!
         }
+        
         return pageJSP;
     }
 }

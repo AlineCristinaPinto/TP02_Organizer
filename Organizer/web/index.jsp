@@ -257,12 +257,12 @@
                             <label>Nome: </label>
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                <input type="text" class="form-control">
+                                <input id="name" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" >Cancelar</button>
-                            <button type="button" class="btn btn-primary">OK</button>
+                            <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal" >Cancelar</button>
+                            <button type="button" class="btn btn-primary" onclick="addTagMenu()" class="close" data-dismiss="modal" >OK</button>
                         </div>
                     </div>
                 </div>
@@ -279,7 +279,7 @@
                         <h4 class="modal-title">Logout:</h4>
                     </div>
                     <div class="modal-body">
-                        <p>AtÃ© logo! Deseja sair da sua conta? </p>
+                        <p>Deseja sair da sua conta? </p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" >Cancelar</button>
                             <button type="button" class="btn btn-primary">Sair</button>
