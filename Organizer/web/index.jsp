@@ -4,6 +4,7 @@
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id='listItem' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id="keepTag" class="br.cefetmg.inf.organizer.model.service.impl.KeepTag" scope="page"/>
@@ -43,8 +44,8 @@
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
-                                <div class="profile-data-title">email_usuario@gmail.com</div>
+                                <div class="profile-data-name">${user.userName}</div>
+                                <div class="profile-data-title">${user.codEmail}</div>
                             </div>
                         </div>
                     </li>
@@ -76,25 +77,37 @@
                     </li>
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Tipos</span></a>
-                        <ul>
-                            <li><a href="#">
-                                    <label class="container">Simples
-                                        <input type="checkbox" name="tipo" value="simples">
-                                        <span class="checkmarkSimples"></span>
-                                    </label>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Tarefa
-                                        <input type="checkbox" name="tipo" value="tarefa">
+                        
+                        <%
+                            String[] listTypes = new String[3];
+                            
+                            listTypes[0] = "Simples";
+                            listTypes[1] = "Lembrete";
+                            listTypes[2] = "Tarefa";
+                            
+                            //pegando os tipos marcados no checkbox antes de recarregar a pagina
+                            String[] usedTypes = request.getParameterValues("tipo");
+                                
+                            pageContext.setAttribute("usedTypes", usedTypes);
+                            pageContext.setAttribute("listTypes", listTypes);
+                        
+                        %>
+                        
+                        <ul id="ulTypes">
+                            <c:forEach items='${listTypes}' var='list'>
+                                <li><a href="#">
+                                    <label class="container">${list}
+                                        <input type="checkbox" name="tipo" value="${fn:toUpperCase(list)}"
+                                               <c:forEach items='${usedTypes}' var='usedType'>
+                                                   <c:if test='${fn:toUpperCase(list) == usedType}'>
+                                                       checked="true"
+                                                   </c:if>
+                                               </c:forEach>
+                                        >
                                         <span class="checkmarkTarefa"></span>
                                     </label>
                                 </a></li>
-                            <li><a href="#">
-                                    <label class="container">Lembrete
-                                        <input type="checkbox" name="tipo" value="lembrete">
-                                        <span class="checkmarkLembrete"></span>
-                                    </label>
-                                </a></li>
+                            </c:forEach>
                         </ul>
                     </li>
                     <li class="xn-openable">
@@ -126,6 +139,7 @@
                                         </label>
                                     </a></li>
                                 </c:forEach>
+                        </ul>
                     </li>
                     <li>
                         <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
