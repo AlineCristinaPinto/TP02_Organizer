@@ -105,9 +105,7 @@ public class ItemTagDAO implements IItemTagDAO{
         
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "SELECT A.seq_tag, B.nom_tag FROM item_tag A"
-                    + "JOIN tag B ON A.seq_tag = B.seq_tag"
-                    + "WHERE A.seq_item=?";
+            String sql = "SELECT A.seq_tag, B.nom_tag FROM item_tag A JOIN tag B ON A.seq_tag = B.seq_tag WHERE A.seq_item=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, seqItem);

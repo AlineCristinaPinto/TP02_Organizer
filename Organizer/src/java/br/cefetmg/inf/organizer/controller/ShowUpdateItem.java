@@ -5,6 +5,10 @@
  */
 package br.cefetmg.inf.organizer.controller;
 
+import br.cefetmg.inf.organizer.model.domain.Tag;
+import br.cefetmg.inf.organizer.model.service.IKeepItemTag;
+import br.cefetmg.inf.organizer.model.service.impl.KeepItemTag;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author aline
  */
-public class showUpdateItem implements GenericProcess{
+public class ShowUpdateItem implements GenericProcess{
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -24,9 +28,20 @@ public class showUpdateItem implements GenericProcess{
         
         long seq_item;
         seq_item = Long.parseLong(id);
+        
+        IKeepItemTag keepItemTag = new KeepItemTag();
+        ArrayList<Tag> oldTags = keepItemTag.listAllTagInItem(seq_item);
+        String listTags = "";
+        
+        if(oldTags != null){
+            for(Tag tag : oldTags){
+                listTags += tag.getTagName() + "; ";
+            }        
+        }
       
         // Session
         req.getSession().setAttribute("idItem", seq_item);
+        req.getSession().setAttribute("itemTag", listTags);
         
         switch (typeItem) {
             case "SIM":

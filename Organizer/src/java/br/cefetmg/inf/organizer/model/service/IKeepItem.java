@@ -21,6 +21,7 @@ public interface IKeepItem {
     boolean updateItem(Item item);
     boolean deleteItem(Long idItem, User user);
     ArrayList<Item> listAllItem(User user);
+    Item searchItemById(Long idItem);
     Item searchItemByName(String nomeItem);
     List<Item> searchItemByTag(List<Tag> tagList, User user);
     List<Item> searchItemByType(List<String> typeList, User user);

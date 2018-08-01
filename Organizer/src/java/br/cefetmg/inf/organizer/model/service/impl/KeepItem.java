@@ -126,4 +126,16 @@ public class KeepItem implements IKeepItem{
         return result;
     }
 
+    @Override
+    public Item searchItemById(Long idItem) {
+    
+        Item result=null;
+        try {
+            result = itemDAO.searchItemById(idItem);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(KeepItem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
 }

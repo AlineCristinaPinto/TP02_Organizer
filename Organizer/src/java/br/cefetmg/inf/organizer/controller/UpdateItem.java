@@ -44,6 +44,8 @@ public class UpdateItem implements GenericProcess{
         user.setUserName("Aline Cristina");
         
         // Pega os dados dos inputs
+        String id = req.getParameter("getIdItem");
+        Long idItem = Long.parseLong(id);
         String name = req.getParameter("nameItem");
         String description = req.getParameter("descriptionItem");
         
@@ -86,35 +88,65 @@ public class UpdateItem implements GenericProcess{
         ArrayList<Tag> oldTags;
         
         // Pega as tags adicionadas anteriormente a atualização
-        oldTags = keepItemTag.listAllTagInItem(Long.MIN_VALUE);
+        oldTags = keepItemTag.listAllTagInItem(idItem);        
         
         ArrayList<Tag> keepTag = new ArrayList();
         ArrayList<Tag> deleteTag = new ArrayList();
         ArrayList<Tag> newTag = new ArrayList();
         
-        // Adiciona as tags antigas que permanecem em keepTag e as novas em newTag
-        for(int i=0;i<tagItem.size();i++){
-            for(int j=0;j<oldTags.size();j++){
-                if(tagItem.get(i).getTagName().equals(oldTags.get(j).getTagName())){
-                    keepTag.add(tagItem.get(i));
-                } else {
-                    newTag.add(tagItem.get(i));
-                }                
-            }
-        }
+        if(oldTags == null && !tagItem.isEmpty()){
+            
+            newTag = tagItem;
         
-        // Adiciona as tags que não existem mais apos a atualização em deleteTag
-        for(int i=0;i<oldTags.size();i++){
-            for(int j=0;j<keepTag.size();j++){
-                if(!(keepTag.get(j).getTagName().equals(oldTags.get(i).getTagName()))){
-                    deleteTag.add(oldTags.get(i));
+        } else if (oldTags != null && tagItem.isEmpty()){
+        
+            deleteTag = oldTags;
+        
+        } else if (oldTags != null && !tagItem.isEmpty()){      
+            
+            // Adiciona as tags antigas que permanecem em keepTag
+            for(int i=0;i<tagItem.size();i++){
+                for(int j=0;j<oldTags.size();j++){
+                    if(tagItem.get(i).getTagName().contains(oldTags.get(j).getTagName())){
+                        keepTag.add(tagItem.get(i));
+                        break;
+                    }
                 }
             }
-        }
+            
+            // Adiciona as novas tags em newTag
+            for(int i=0;i<tagItem.size();i++){
+                for(int j=0;j<oldTags.size();j++){
+                    if(!tagItem.get(i).getTagName().contains(oldTags.get(j).getTagName())){
+                        newTag.add(tagItem.get(i));
+                        break;
+                    }
+                }
+            }
+            
+            if(keepTag.isEmpty()){
         
+                deleteTag = oldTags;
+            
+            } else {
+
+                // Adiciona as tags que não existem mais apos a atualização em deleteTag
+                for(int i=0;i<oldTags.size();i++){
+                    for(int j=0;j<keepTag.size();j++){
+                        if(!(keepTag.get(j).getTagName().contains(oldTags.get(i).getTagName()))){
+                            deleteTag.add(oldTags.get(i));
+                            break;
+                        }
+                    }
+                }
+            }
+        
+        }
+                     
         // Instanciando item para update
         Item item = new Item();
         
+        item.setSeqItem(idItem);
         item.setNameItem(name);
         item.setDescriptionItem(description);
         item.setDateItem(dateItem);
@@ -127,26 +159,49 @@ public class UpdateItem implements GenericProcess{
             //exceção
         } else {
             
-            // Deleta as tags que foram retiradas
-            result = keepItemTag.deleteTagInItem(deleteTag, Long.MIN_VALUE);
-            
-            if(result == false){
-            //exceção
-            } else {
-            
-                // Adiciona as novas tags
-                ItemTag itemTag = new ItemTag();
-                itemTag.setItem(item);
-                itemTag.setListTags(newTag);
-                
-                result = keepItemTag.createTagInItem(itemTag);
+            if(!deleteTag.isEmpty()){
+                result = keepItemTag.deleteTagInItem(deleteTag, idItem);
                 
                 if(result == false){
-                //exceção
+                    //exceção
+                } else {
+                    
+                    if(!newTag.isEmpty()){
+                        // Adiciona as novas tags
+                        ItemTag itemTag = new ItemTag();
+                        itemTag.setItem(item);
+                        itemTag.setListTags(newTag);
+
+                        result = keepItemTag.createTagInItem(itemTag);
+
+                        if(result == false){
+                        //exceção
+                        } else {
+                            pageJSP = "/index.jsp";
+                        }
+                    } else {
+                        pageJSP = "/index.jsp";
+                    }
+                }
+            } else {
+                if(!newTag.isEmpty()){
+                    // Adiciona as novas tags
+                    ItemTag itemTag = new ItemTag();
+                    itemTag.setItem(item);
+                    itemTag.setListTags(newTag);
+
+                    result = keepItemTag.createTagInItem(itemTag);
+
+                    if(result == false){
+                       //exceção
+                    } else {
+                        pageJSP = "/index.jsp";
+                    }
                 } else {
                     pageJSP = "/index.jsp";
                 }
-            }
+            }             
+            
         }
         
         return pageJSP;

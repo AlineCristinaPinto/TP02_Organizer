@@ -177,7 +177,7 @@ public class ItemDAO implements IItemDAO{
         
         return false;
     }
-
+    
     @Override
     public Item searchItemByName(String nomeItem) throws PersistenceException{
         
@@ -187,6 +187,42 @@ public class ItemDAO implements IItemDAO{
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, nomeItem);            
+            
+            ResultSet result = preparedStatement.executeQuery();
+            
+            Item item = new Item();
+            
+            if(result.next()){
+                
+                item.setSeqItem(result.getLong("seq_item"));
+                item.setNameItem(result.getString("nom_item"));
+                item.setDescriptionItem(result.getString("des_item"));
+                item.setIdentifierItem(result.getString("idt_item"));
+                item.setDateItem(result.getDate("dat_item"));
+                item.setIdentifierStatus(result.getString("idt_estado"));
+
+            }
+            
+            result.close();
+            preparedStatement.close();
+            connection.close();
+            
+            return item;
+                       
+        } catch (Exception ex) {
+           throw new PersistenceException(ex.getMessage());
+        }        
+    }
+
+    @Override
+    public Item searchItemById(Long idItem) throws PersistenceException{
+        
+        try {
+            Connection connection = ConnectionManager.getInstance().getConnection();
+            String sql = "SELECT * FROM item WHERE seq_item=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, idItem);            
             
             ResultSet result = preparedStatement.executeQuery();
             

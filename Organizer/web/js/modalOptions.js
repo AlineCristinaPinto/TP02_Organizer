@@ -23,7 +23,7 @@ $(function() {
 
   $(".edit").click(function() {
       let formRegister = document.querySelector("#updateItem");
-      formRegister.action = "/organizer/servletcontroller?process=showUpdateItem";
+      formRegister.action = "/organizer/servletcontroller?process=ShowUpdateItem";
       formRegister.submit();
   });
 

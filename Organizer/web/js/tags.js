@@ -41,3 +41,26 @@ function checkList(){
 function insertTagsOnInput(){
   document.querySelector('#tags').value = $("#tagSelected").val();
 }
+
+$('#tags').click(function(){
+  let mainInput = document.querySelector('#tags').value;
+  let selectInput = document.querySelector('#tagSelected').value;
+
+  if(mainInput != '' && selectInput == ''){
+    document.querySelector('#tagSelected').value = $("#tags").val();
+  }  
+
+  let arrOldTags = mainInput.split(";");
+  arrOldTags.pop();
+
+  let allTags = $('.checkTags');
+  
+  for(let i=0; i<allTags.length; i++){
+    for(let j=0; j<arrOldTags.length; j++){
+    	if(allTags[i].value == arrOldTags[j].trim()){
+	  allTags[i].checked = true;
+	}
+    }
+  }
+
+});
