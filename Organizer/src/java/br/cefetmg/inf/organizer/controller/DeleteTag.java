@@ -8,31 +8,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class CreateTag implements GenericProcess {
+public class DeleteTag implements GenericProcess {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         String pageJSP = "";
-        
+
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
         String nameTag = req.getParameter("name");
-        
+
+        IKeepTag keepTag = new KeepTag();
+
         Tag tag = new Tag();
+        tag.setSeqTag(keepTag.searchTagByName(nameTag, user));
         tag.setTagName(nameTag);
         tag.setUser(user);
-        tag.setSeqTag(null);
-        
-        IKeepTag keepTag = new KeepTag();
-        boolean result = keepTag.createTag(tag);
-        
+
+        boolean result = keepTag.deleteTag(tag);
+
         if (result == false) {
-            //exception 
+            //exception
         } else {
-            keepTag.updateTagId(tag, keepTag.searchTagByName(nameTag, user));
             pageJSP = "/index.jsp";
         }
-        
+
         return pageJSP;
     }
+
 }

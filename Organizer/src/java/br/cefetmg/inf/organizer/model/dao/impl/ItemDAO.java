@@ -251,7 +251,7 @@ public class ItemDAO implements IItemDAO{
     }
     
     @Override
-    public ArrayList<Item> searchItemByTag(List<Tag> tagList, User user){
+    public ArrayList<Item> searchItemByTag(List<Tag> tagList, User user) throws PersistenceException {
         
         try {
             //conditions of the sql's WHERE clause
@@ -309,14 +309,13 @@ public class ItemDAO implements IItemDAO{
                     }
                 }
             }
-        } catch(Exception e){
-            //exception
+        } catch(Exception ex){
+            throw new PersistenceException(ex.getMessage());
         }
-        return null;
     }
 
     @Override
-    public ArrayList<Item> searchItemByType(List<String> typeList, User user) {
+    public ArrayList<Item> searchItemByType(List<String> typeList, User user) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()){
             
             //conditions of the sql's WHERE clause
@@ -366,15 +365,14 @@ public class ItemDAO implements IItemDAO{
                     return itemList;
                 }
             }
-        } catch (Exception ex) {
-            //exception
+        } catch(Exception ex){
+            throw new PersistenceException(ex.getMessage());
         }
-        
-        return null;
     }
     
     @Override
-    public ArrayList<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user){
+    public ArrayList<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user) 
+            throws PersistenceException {
         
         try {
             //conditions of the sql's WHERE clause
@@ -445,9 +443,8 @@ public class ItemDAO implements IItemDAO{
                     }
                 }
             }
-        } catch(Exception e){
-            //exception
+        } catch(Exception ex){
+            throw new PersistenceException(ex.getMessage());
         }
-        return null;
     }
 }

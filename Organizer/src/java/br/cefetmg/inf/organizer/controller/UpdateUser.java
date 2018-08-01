@@ -4,6 +4,7 @@ import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
 import br.cefetmg.inf.organizer.model.service.impl.KeepUser;
 import br.cefetmg.inf.util.PasswordCriptography;
+import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,13 +14,17 @@ public class UpdateUser implements GenericProcess {
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         String pageJSP = "";
 
-        //código da foto
         String name = req.getParameter("name");
         String password = req.getParameter("password");
+        File userPhoto = new File(req.getParameter("profileIcon"));
 
         User user = (User) req.getSession().getAttribute("user");
         User tempUser = new User();
-
+        
+        if (name.isEmpty() || name == null) {
+            name = user.getUserName();
+        }
+        
         if (password.isEmpty() || password == null) {
             password = user.getUserPassword();
         } else {
@@ -30,7 +35,7 @@ public class UpdateUser implements GenericProcess {
         tempUser.setUserName(name);
         tempUser.setUserPassword(password);
         tempUser.setCurrentTheme(user.getCurrentTheme());
-        //tempUser.setUserPhoto(userPhoto); PEDRO
+        tempUser.setUserPhoto(userPhoto);
 
         IKeepUser keepUser = new KeepUser();
         boolean success = keepUser.updateUser(tempUser);

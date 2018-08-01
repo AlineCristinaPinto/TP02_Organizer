@@ -69,10 +69,8 @@ public class UserDAO implements IUserDAO {
                 */
                 user.setUserPhoto(tempFile);
 
-                //IThemeDAO themeDAO = new ThemeDAO();
-                //Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema")); LEMBRAR DE TROCAR!!!
-                Theme newTheme = new Theme();
-                newTheme.setIdTheme(1);
+                IThemeDAO themeDAO = new ThemeDAO();
+                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema")); 
                 user.setCurrentTheme(newTheme);
 
             } else {
@@ -183,10 +181,8 @@ public class UserDAO implements IUserDAO {
 
                 user.setUserPhoto(tempFile);
 
-                //IThemeDAO themeDAO = new ThemeDAO();
-                //Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
-                Theme newTheme = new Theme();
-                newTheme.setIdTheme(1);
+                IThemeDAO themeDAO = new ThemeDAO();
+                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
                 user.setCurrentTheme(newTheme);
             }
 

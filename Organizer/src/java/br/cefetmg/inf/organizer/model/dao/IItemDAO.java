@@ -25,8 +25,9 @@ public interface IItemDAO {
     boolean checkIfItemAlreadyExists(Item item);
     Item searchItemById(Long idItem) throws PersistenceException;
     Item searchItemByName(String nomeItem) throws PersistenceException;
-    ArrayList<Item> searchItemByTag(List<Tag> tagList, User user);
-    ArrayList<Item> searchItemByType(List<String> typeList, User user);
-    ArrayList<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user);
+    ArrayList<Item> searchItemByTag(List<Tag> tagList, User user) throws PersistenceException;
+    ArrayList<Item> searchItemByType(List<String> typeList, User user) throws PersistenceException;
+    ArrayList<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user) 
+            throws PersistenceException;
     
 }

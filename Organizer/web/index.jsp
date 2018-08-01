@@ -1,10 +1,24 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepItem"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id='listItem' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
+<jsp:useBean id="keepTag" class="br.cefetmg.inf.organizer.model.service.impl.KeepTag" scope="page"/>
+<jsp:useBean id="keepItem" class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" scope="page"/>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user" scope="session"/>
+
+<%
+    user = (User) request.getSession().getAttribute("user");
+
+%>
+
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
+<%userSessao = (User) request.getSession().getAttribute("user");%>
+
 
 <html>
     <head>
@@ -34,8 +48,8 @@
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
-                                <div class="profile-data-title">email_usuario@gmail.com</div>
+                                <div class="profile-data-name">${user.userName}</div>
+                                <div class="profile-data-title">${user.codEmail}</div>
                             </div>
                         </div>
                     </li>
@@ -46,76 +60,91 @@
                         <a href="#"><span class="fa fa-adjust"></span> <span class="xn-text">Temas</span></a>
                         <ul>
                             <li><a href="#">
-                              <label class="container">Tema 1
-                                <input type="radio" name="tema" value="tema1">
-                                <span class="checkmark"></span>
-                              </label>
-                            </a></li>
+                                    <label class="container">Tema 1
+                                        <input type="radio" name="tema" value="tema1">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </a></li>
                             <li><a href="#">
-                              <label class="container">Tema 2
-                                <input type="radio" name="tema" value="tema2">
-                                <span class="checkmark"></span>
-                              </label>
-                            </a></li>
+                                    <label class="container">Tema 2
+                                        <input type="radio" name="tema" value="tema2">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </a></li>
                             <li><a href="#">
-                              <label class="container">Tema 3
-                                <input type="radio" name="tema" value="tema3">
-                                <span class="checkmark"></span>
-                              </label>
-                            </a></li>
+                                    <label class="container">Tema 3
+                                        <input type="radio" name="tema" value="tema3">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </a></li>
                         </ul>
                     </li>
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Tipos</span></a>
-                        <ul>
-                            <li><a href="#">
-                              <label class="container">Simples
-                                <input type="checkbox" name="tipo" value="simples">
-                                <span class="checkmarkSimples"></span>
-                              </label>
-                            </a></li>
-                            <li><a href="#">
-                              <label class="container">Tarefa
-                                <input type="checkbox" name="tipo" value="tarefa">
-                                <span class="checkmarkTarefa"></span>
-                              </label>
-                            </a></li>
-                            <li><a href="#">
-                              <label class="container">Lembrete
-                                <input type="checkbox" name="tipo" value="lembrete">
-                                <span class="checkmarkLembrete"></span>
-                              </label>
-                            </a></li>
+
+                        <%
+                            String[] listTypes = new String[3];
+
+                            listTypes[0] = "Simples";
+                            listTypes[1] = "Lembrete";
+                            listTypes[2] = "Tarefa";
+
+                            //pegando os tipos marcados no checkbox antes de recarregar a pagina
+                            String[] usedTypes = request.getParameterValues("tipo");
+
+                            pageContext.setAttribute("usedTypes", usedTypes);
+                            pageContext.setAttribute("listTypes", listTypes);
+
+                        %>
+
+                        <ul id="ulTypes">
+                            <c:forEach items='${listTypes}' var='list'>
+                                <li><a href="#">                                        
+                                    <label class="container">${list}
+                                        <input type="checkbox" name="tipo" value="${fn:substring(fn:toUpperCase(list), 0, 3)}"
+                                               <c:forEach items='${usedTypes}' var='usedType'>
+                                                   <c:if test='${fn:substring(fn:toUpperCase(list), 0, 3) == usedType}'>
+                                                       checked="true"
+                                                   </c:if>
+                                               </c:forEach>
+                                        >
+                                        <span class="checkmarkTarefa"></span>
+                                    </label>
+                                </a></li>
+                            </c:forEach>
                         </ul>
                     </li>
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-tag"></span> <span class="xn-text">Tags</span></a>
+                        <%                            listTag = keepTag.listAlltag(user);
+
+                            String[] usedTags = request.getParameterValues("tag");
+
+                            pageContext.setAttribute("listTagUser", listTag);
+                            pageContext.setAttribute("usedTags", usedTags);
+                        %>
                         <ul id="ulTagMenu">
                             <li><a href="#" id="novaTag">
-                              <span class="fa fa-plus-square-o"></span> <span class="xn-text">Nova Tag</span>
-                            </a></li>
-                            <li><a href="#">
-                              <label class="container">Tag 1
-                                <input type="checkbox" name="tag" value="Tag 1">
-                                <span class="checkmarkTarefa"></span>
-                              </label>
-                            </a></li>
-                            <li><a href="#">
-                              <label class="container">Tag 2
-                                <input type="checkbox" name="tag" value="Tag 2">
-                                <span class="checkmarkTarefa"></span>
-                              </label>
-                            </a></li>
-                            <li><a href="#">
-                              <label class="container">Tag 3
-                                <input type="checkbox" name="tag" value="Tag 3">
-                                <span class="checkmarkTarefa"></span>
-                              </label>
-                            </a></li>
+                                    <span class="fa fa-plus-square-o"></span> <span class="xn-text">Nova Tag</span>
+                                </a></li>
+                                <c:forEach items='${listTagUser}' var='list'>
+                                <li><a href="#">
+                                        <label class="container">${list.tagName}
+                                            <input type="checkbox" name="tag" value="${list.tagName}"
+                                                   <c:forEach items='${usedTags}' var='usedTag'>
+                                                       <c:if test='${list.tagName == usedTag}'>
+                                                           checked="true"
+                                                       </c:if>
+                                                   </c:forEach>
+                                                   >
+                                            <span class="checkmarkTarefa"></span>
+                                        </label>
+                                    </a></li>
+                                </c:forEach>
                         </ul>
                     </li>
                     <li>
-                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
+                        <a href="configuracoes.jsp"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
                     </li>
                     <li>
                         <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
@@ -140,14 +169,14 @@
 
                 <!-- Botão de visualização de lista -->
                 <div class="page-title">
-                  <button class="button">
-                    <img id="asc" class="imgSeta" src="imgs/seta1.png">
-                    <img id="dsc" class="imgSeta" style="display: none" src="imgs/seta2.png">
-                  </button>
-                  <select id="modoLista">
-                    <option value="dataDeCriacao">Data de Criação</option>
-                    <option value="nome">Nome</option>
-                  </select>
+                    <button class="button">
+                        <img id="asc" class="imgSeta" src="imgs/seta1.png">
+                        <img id="dsc" class="imgSeta" style="display: none" src="imgs/seta2.png">
+                    </button>
+                    <select id="modoLista">
+                        <option value="dataDeCriacao">Data de Criação</option>
+                        <option value="nome">Nome</option>
+                    </select>
                 </div>
 
                 <div class="page-content-wrap">
@@ -157,24 +186,29 @@
 
                             <div class="panel panel-default">
 
-                                <dihv class="panel-body accordion-menu">
+                                <div class="panel-body accordion-menu">
 
-                                    
+                                    <ul id="ulItens">
                                         <li>
                                             <a href="createItem.jsp">Criar Item</a>
-					</li>
-                                        <% 
+                                        </li>
+                                        <%
+                                            /*
                                             User user = new User();
-
                                             user.setCodEmail("ninanerd15@gmail.com");
                                             user.setUserName("Aline Cristina");
-
+                                            
                                             KeepItem keepItem = new KeepItem();
-                                            listItem = keepItem.listAllItem(user);
-                                                                                        
+                                             */
+                                            if (request.getAttribute("itemList") == null) {
+                                                listItem = keepItem.listAllItem(user);
+                                            } else {
+                                                listItem = (ArrayList) request.getAttribute("itemList");
+                                            }
+
                                             pageContext.setAttribute("listItemUser", listItem);
                                         %>
-                                    
+
                                         <c:forEach items='${listItemUser}' var='list'>
                                             <c:choose>
                                                 <c:when test = "${list.identifierItem == 'TAR'}">
@@ -185,35 +219,35 @@
                                                         </label>
                                                         <button id="${list.seqItem}" class="opcoesItem btOption" value="${list.identifierItem}" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
                                                         <div class="dropdownlink">${list.nameItem}</div>
-                                                            <ul class="submenuItems" style="display: none;">
-                                                                <c:if test = "${list.descriptionItem != ''}">
-                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                        <ul class="submenuItems" style="display: none;">
+                                                            <c:if test = "${list.descriptionItem != ''}">
+                                                                <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
                                                                 </c:if>                                                                
-                                                                <!-- tag <li class="liDescricao"></li>-->
-                                                                <c:if test = "${list.dateItem != null}">
-                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                            <!-- tag <li class="liDescricao"></li>-->
+                                                            <c:if test = "${list.dateItem != null}">
+                                                                <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
                                                                 </c:if>                                                                
-                                                            </ul>
+                                                        </ul>
                                                     </li>                                            
                                                 </c:when>
                                                 <c:otherwise>
                                                     <li id="${list.identifierItem}" class="open">
                                                         <button id="${list.seqItem}" value="${list.identifierItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
                                                         <div class="dropdownlink">${list.nameItem}</div>
-                                                            <ul class="submenuItems" style="display: none;">
-                                                                <c:if test = "${list.descriptionItem != ''}">
-                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                        <ul class="submenuItems" style="display: none;">
+                                                            <c:if test = "${list.descriptionItem != ''}">
+                                                                <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
                                                                 </c:if>                                                                
-                                                                <!-- tag <li class="liDescricao"></li>-->
-                                                                <c:if test = "${list.dateItem != null}">
-                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                            <!-- tag <li class="liDescricao"></li>-->
+                                                            <c:if test = "${list.dateItem != null}">
+                                                                <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
                                                                 </c:if> 
-                                                            </ul>
+                                                        </ul>
                                                     </li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach> 
-                                    
+                                    </ul>
 
                                 </div>
                             </div>
@@ -227,87 +261,92 @@
 
         <!-- Modal de Inserir Tags no menu-->
         <div class="modal fade" id="tagsMenu" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Adicionar Tags:</h4>
-              </div>
-              <div class="modal-body">
-                <div class="form-group">
-                      <label>Nome: </label>
-                          <div class="input-group">
-                              <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                              <input type="text" class="form-control">
-                          </div>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Adicionar Tags:</h4>
+                    </div>
+                    <form method="post" id="formCreateTag">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nome: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-tag"></span></span>
+                                    <input id="name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal" >Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="addTagMenu()" class="close" data-dismiss="modal" >OK</button>
+                            </div>
+                        </div>
+                    </form>    
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" >Cancelar</button>
-                  <button type="button" class="btn btn-primary">OK</button>
-                </div>
-                </div>
-              </div>
             </div>
 
-          </div>
+        </div>
 
-          <!-- Modal de logout-->
-          <div class="modal fade" id="logoutModal" role="dialog">
+        <!-- Modal de logout-->
+        <div class="modal fade" id="logoutModal" role="dialog">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Logout:</h4>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Logout:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="/organizer/servletcontroller?process=UserLogout">
+                                <p>Até logo! Deseja sair da sua conta? </p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" >Cancelar</button>
+                                    <button class="btn btn-primary">Sair</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                  <p>AtÃ© logo! Deseja sair da sua conta? </p>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" >Cancelar</button>
-                    <button type="button" class="btn btn-primary">Sair</button>
-                  </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <!-- Modal de botão de opção de item -->
             <div class="modal fade" id="btaoOpcaoModal" role="dialog">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Opções de Item</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form id="updateItem" method="post">
-                        <input type="hidden" id="takeIdU" name="takeIdU">
-                        <input type="hidden" id="takeTypeU" name="takeTypeU">
-                        <a class="opItemModal edit">
-                          <span class="fa fa-edit"></span> Editar</span>
-                        </a>
-                    </form>
-                    <hr>
-                    <form id="deleteItem" method="post">
-                        <input type="hidden" id="takeId" name="takeId">
-                        <a href="#" class="opItemModal delItem">                        
-                          <span class="fa fa-trash-o"></span> Excluir</span>
-                        </a>
-                    </form>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Opções de Item</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateItem" method="post">
+                                <input type="hidden" id="takeIdU" name="takeIdU">
+                                <input type="hidden" id="takeTypeU" name="takeTypeU">
+                                <a class="opItemModal edit">
+                                    <span class="fa fa-edit"></span> Editar</span>
+                                </a>
+                            </form>
+                            <hr>
+                            <form id="deleteItem" method="post">
+                                <input type="hidden" id="takeId" name="takeId">
+                                <a href="#" class="opItemModal delItem">                        
+                                    <span class="fa fa-trash-o"></span> Excluir</span>
+                                </a>
+                            </form>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
 
-        <!-- Importação dos Scripts -->
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/plugins.js"></script>
-        <script type="text/javascript" src="js/actions.js"></script>
-        <script type="text/javascript" src="js/script.js"></script>
-        <script type="text/javascript" src="js/tagMenu.js"></script>
-        <script type="text/javascript" src="js/configuracoes.js"></script>
-        <script type="text/javascript" src="js/modalOptions.js"></script>
+            <!-- Importação dos Scripts -->
+            <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+            <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+            <script type="text/javascript" src="js/plugins.js"></script>
+            <script type="text/javascript" src="js/actions.js"></script>
+            <script type="text/javascript" src="js/script.js"></script>
+            <script type="text/javascript" src="js/tagMenu.js"></script>
+            <script type="text/javascript" src="js/configuracoes.js"></script>
+            <script type="text/javascript" src="js/modalOptions.js"></script>
+            <script type="text/javascript" src="js/filter.js"></script>
 
     </body>
 </html>
