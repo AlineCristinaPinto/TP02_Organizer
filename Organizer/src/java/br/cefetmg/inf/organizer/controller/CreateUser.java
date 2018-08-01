@@ -1,8 +1,11 @@
 package br.cefetmg.inf.organizer.controller;
 
+import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.Theme;
 import br.cefetmg.inf.organizer.model.domain.User;
+import br.cefetmg.inf.organizer.model.service.IKeepTag;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
+import br.cefetmg.inf.organizer.model.service.impl.KeepTag;
 import br.cefetmg.inf.organizer.model.service.impl.KeepUser;
 import br.cefetmg.inf.util.PasswordCriptography;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +40,21 @@ public class CreateUser implements GenericProcess{
         if(!success){
             //trata erros
         }else{
-            pageJSP = "/login.jsp";
+            
+            IKeepTag keepTag = new KeepTag();
+            Tag concludeTag = new Tag ();
+            concludeTag.setUser(user);
+            concludeTag.setTagName("Concluidos");
+            
+            success = keepTag.createTag(concludeTag);
+            
+            if(!success){
+            //trata erros
+            }else{
+            
+                pageJSP = "/login.jsp";
+            
+            }
         }
         
         return pageJSP;

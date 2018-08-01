@@ -164,5 +164,29 @@ public class TagDAO implements ITagDAO {
 
         return null;
     }
+    
+    @Override
+    public Tag searchTagById(Long idTag) {
+        try (Connection connection = ConnectionManager.getInstance().getConnection()) {
+            String sql = "SELECT * FROM tag WHERE seq_tag=?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setLong(1, idTag);
+                
+                try (ResultSet result = preparedStatement.executeQuery()) {
+                    Tag tag = new Tag();
+                    
+                    if (result.next()) {
+                        tag.setTagName(result.getString("nom_tag"));
+                        tag.setSeqTag(result.getLong("seq_tag"));
+                    }
+                    return tag;
+                }
+            }
+        } catch (Exception ex) {
+            //exception
+        }
+        return null;
+    }
 
 }

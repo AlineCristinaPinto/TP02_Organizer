@@ -78,4 +78,10 @@ public class KeepTag implements IKeepTag {
         Long result = tagDAO.searchTagByName(nomeTag, user);
         return result;
     }
+
+    @Override
+    public Tag searchTagById(Long idTag) {
+        Tag result = tagDAO.searchTagById(idTag);
+        return result;
+    }
 }

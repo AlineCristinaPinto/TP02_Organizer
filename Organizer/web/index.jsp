@@ -199,23 +199,25 @@
                                         <c:forEach items='${listItemUser}' var='list'>
                                             <c:choose>
                                                 <c:when test = "${list.identifierItem == 'TAR'}">
-                                                    <li id="${list.identifierItem}" class="open">
-                                                        <label class="container" style="float:left">
-                                                            <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                        <button id="${list.seqItem}" class="opcoesItem btOption" value="${list.identifierItem}" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
-                                                        <div class="dropdownlink">${list.nameItem}</div>
-                                                        <ul class="submenuItems" style="display: none;">
-                                                            <c:if test = "${list.descriptionItem != ''}">
-                                                                <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
-                                                                </c:if>                                                                
-                                                            <!-- tag <li class="liDescricao"></li>-->
-                                                            <c:if test = "${list.dateItem != null}">
-                                                                <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
-                                                                </c:if>                                                                
-                                                        </ul>
-                                                    </li>                                            
+                                                    <c:if test="${list.identifierStatus != 'C'}">
+                                                        <li id="${list.identifierItem}" class="open">
+                                                            <label class="container" style="float:left">
+                                                                <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            <button id="${list.seqItem}" class="opcoesItem btOption" value="${list.identifierItem}" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                            <div class="dropdownlink">${list.nameItem}</div>
+                                                            <ul class="submenuItems" style="display: none;">
+                                                                <c:if test = "${list.descriptionItem != ''}">
+                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                                    </c:if>                                                                
+                                                                <!-- tag <li class="liDescricao"></li>-->
+                                                                <c:if test = "${list.dateItem != null}">
+                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                                    </c:if>                                                                
+                                                            </ul>
+                                                        </li>        
+                                                    </c:if>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <li id="${list.identifierItem}" class="open">

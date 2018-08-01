@@ -19,4 +19,6 @@ public interface IKeepTag {
     ArrayList<Tag> listAlltag(User user);
     
     Long searchTagByName(String nomeTag, User user);
+    
+    Tag searchTagById(Long idTag);
 }

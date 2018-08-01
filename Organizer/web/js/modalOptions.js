@@ -17,7 +17,7 @@ $(function() {
       let idItem = $(this).attr('id');
       document.querySelector("#takeId").value=idItem;
       let formRegister = document.querySelector("#deleteItem");
-      formRegister.action = "/organizer/servletcontroller?process=DeleteItem";
+      formRegister.action = "/organizer/servletcontroller?process=ConcludeTarefa";
       formRegister.submit();
   });
 

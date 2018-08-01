@@ -20,4 +20,5 @@ public interface ITagDAO {
 
     Long searchTagByName(String nomeTag, User user);
 
+    Tag searchTagById(Long idTag);
 }

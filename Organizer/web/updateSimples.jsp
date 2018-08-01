@@ -228,9 +228,11 @@
                 <div class="panel-body" id="scroll">
                   <ul id="ulTags">
                     <c:forEach	items='${list}' var='listTag' >
-                      <li>&nbsp #${listTag.tagName}
+                      <c:if test="${listTag.tagName != 'Concluidos'}">
+                        <li>&nbsp #${listTag.tagName}
                           <input type="checkbox" class="checkTags" value='${listTag.tagName}'>
-                      </li>
+                        </li>
+                      </c:if>
                     </c:forEach> 
                   </ul>
                 </div>
