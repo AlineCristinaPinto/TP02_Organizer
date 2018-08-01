@@ -12,6 +12,7 @@ import br.cefetmg.inf.organizer.model.service.impl.KeepItem;
 import br.cefetmg.inf.organizer.model.service.impl.KeepItemTag;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,14 +26,9 @@ public class DeleteItem implements GenericProcess{
         String pageJSP = "";
         
         // Pegando usuário
-       // HttpSession session = req.getSession();
-       // User user = (User) session.getAttribute("user");
-                
-        User user = new User();
-       
-        user.setCodEmail("ninanerd15@gmail.com");
-        user.setUserName("Aline Cristina");
-       
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
+      
         String idItemString = req.getParameter("takeId");
         Long idItem = Long.parseLong(idItemString); 
        

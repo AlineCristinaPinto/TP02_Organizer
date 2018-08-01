@@ -7,13 +7,8 @@
  arrItemTag = request.getSession().getAttribute("itemTag").toString();%>
 <jsp:useBean class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" id="keepItem" scope="page" ></jsp:useBean>
 <jsp:useBean id='tagItem' class='java.util.ArrayList' scope="page"/>
-    
-<% 
-    User user = new User();
-    user.setCodEmail("ninanerd15@gmail.com");
-    user.setUserName("Aline Cristina");
-%>
-
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
+<%userSessao = (User) request.getSession().getAttribute("user");%>   
 
 <!DOCTYPE html>
 <html>
@@ -226,7 +221,7 @@
         <div class="modal-body">
           <% 
             KeepTag keepTag = new KeepTag();
-            tagItem = keepTag.listAlltag(user);
+            tagItem = keepTag.listAlltag(userSessao);
                        
             pageContext.setAttribute("list", tagItem);
           %>

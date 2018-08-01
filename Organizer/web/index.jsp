@@ -9,13 +9,6 @@
 <jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id="keepTag" class="br.cefetmg.inf.organizer.model.service.impl.KeepTag" scope="page"/>
 <jsp:useBean id="keepItem" class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" scope="page"/>
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user" scope="session"/>
-
-<%
-    user = (User) request.getSession().getAttribute("user");
-
-%>
-
 <jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
 <%userSessao = (User) request.getSession().getAttribute("user");%>
 
@@ -116,7 +109,8 @@
                     </li>
                     <li class="xn-openable">
                         <a href="#"><span class="fa fa-tag"></span> <span class="xn-text">Tags</span></a>
-                        <%                            listTag = keepTag.listAlltag(user);
+                        <%                            
+                            listTag = keepTag.listAlltag(userSessao);
 
                             String[] usedTags = request.getParameterValues("tag");
 
@@ -193,15 +187,8 @@
                                             <a href="createItem.jsp">Criar Item</a>
                                         </li>
                                         <%
-                                            /*
-                                            User user = new User();
-                                            user.setCodEmail("ninanerd15@gmail.com");
-                                            user.setUserName("Aline Cristina");
-                                            
-                                            KeepItem keepItem = new KeepItem();
-                                             */
                                             if (request.getAttribute("itemList") == null) {
-                                                listItem = keepItem.listAllItem(user);
+                                                listItem = keepItem.listAllItem(userSessao);
                                             } else {
                                                 listItem = (ArrayList) request.getAttribute("itemList");
                                             }

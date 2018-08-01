@@ -35,13 +35,9 @@ public class CreateItem implements GenericProcess{
         String pageJSP = "";
         
         // Pegando usuário
-       // HttpSession session = req.getSession();
-       // User user = (User) session.getAttribute("user");
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
                 
-       User user = new User();
-       
-       user.setCodEmail("ninanerd15@gmail.com");
-       user.setUserName("Aline Cristina");
        
         // Pega os dados dos inputs
         String selectType = req.getParameter("selectType");

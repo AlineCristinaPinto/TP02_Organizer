@@ -35,13 +35,8 @@ public class UpdateItem implements GenericProcess{
         String pageJSP = "";
         
         // Pegando usuário
-       //HttpSession session = req.getSession();
-       //User user = (User) session.getAttribute("user");
-                
-        User user = new User();
-       
-        user.setCodEmail("ninanerd15@gmail.com");
-        user.setUserName("Aline Cristina");
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute("user");
         
         // Pega os dados dos inputs
         String id = req.getParameter("getIdItem");

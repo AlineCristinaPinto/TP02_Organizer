@@ -4,6 +4,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id='tagItem' class='java.util.ArrayList' scope="page"/>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
+<%userSessao = (User) request.getSession().getAttribute("user");%>
 
 <html>
     <head>
@@ -235,14 +237,9 @@
                 <div class="panel-body" id="scroll">
                   <ul id="ulTags">
                      
-                      <% 
-                       User user = new User();
-       
-                       user.setCodEmail("ninanerd15@gmail.com");
-                       user.setUserName("Aline Cristina");
-                       
+                      <%
                        KeepTag keepTag = new KeepTag();
-                       tagItem = keepTag.listAlltag(user);
+                       tagItem = keepTag.listAlltag(userSessao);
                        
                        pageContext.setAttribute("list", tagItem);
                       %>
