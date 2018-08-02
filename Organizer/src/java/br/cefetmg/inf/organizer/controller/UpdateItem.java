@@ -50,7 +50,7 @@ public class UpdateItem implements GenericProcess{
         if(datItem == null || datItem.equals("") || datItem.isEmpty()){
             dateItem = null;
         } else {
-            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             dateItem = formatter.parse(datItem);
         }
         
@@ -145,6 +145,7 @@ public class UpdateItem implements GenericProcess{
         item.setNameItem(name);
         item.setDescriptionItem(description);
         item.setDateItem(dateItem);
+        item.setIdentifierItem(null);
         item.setUser(user);
         
         IKeepItem keepItem = new KeepItem();

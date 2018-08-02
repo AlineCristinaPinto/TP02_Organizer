@@ -20,7 +20,7 @@
     } else {
     orderViewMode = request.getSession().getAttribute("orderViewMode").toString();
     typeViewMode = request.getSession().getAttribute("typeViewMode").toString();
-    }%>
+   }%>
 
 
 <html>
@@ -212,7 +212,7 @@
                                         <c:forEach items='${listItemUser}' var='list'>
                                             <c:choose>
                                                 <c:when test = "${list.identifierItem == 'TAR'}">
-                                                    <c:if test="${list.identifierStatus != 'C'}">
+                                                    <c:if test="${list.identifierStatus == 'A'}">
                                                         <li id="${list.identifierItem}" class="open">
                                                             <label class="container" style="float:left">
                                                                 <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">

@@ -60,7 +60,7 @@ public class ItemDAO implements IItemDAO{
     
          try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "UPDATE item SET nom_item=?, des_item=?, dat_item=?"
+            String sql = "UPDATE item SET nom_item=?, des_item=?, dat_item=?, idt_estado=?"
                     + " WHERE cod_email=? and seq_item=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -72,9 +72,14 @@ public class ItemDAO implements IItemDAO{
             } else {
                 preparedStatement.setDate(3, new java.sql.Date(item.getDateItem().getTime()));
             }
-            
-            preparedStatement.setString(4, item.getUser().getCodEmail());
-            preparedStatement.setLong(5, item.getSeqItem());
+            if(item.getIdentifierStatus() == null){
+                preparedStatement.setString(4, null);
+            } else {
+                preparedStatement.setString(4, item.getIdentifierStatus());
+            }
+                        
+            preparedStatement.setString(5, item.getUser().getCodEmail());
+            preparedStatement.setLong(6, item.getSeqItem());
                                     
             preparedStatement.executeUpdate();
             preparedStatement.close();

@@ -50,7 +50,7 @@ public class CreateItem implements GenericProcess{
         if(datItem == null || datItem.equals("") || datItem.isEmpty()){
             dateItem = null;
         } else {
-            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             dateItem = formatter.parse(datItem);
         }
         
