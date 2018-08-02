@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class UserValidation {
     
-    public static boolean validate(HttpServletRequest req, HttpServletResponse res){
-        User user = (User) req.getAttribute("user");
-        
+    public static boolean validate(User user){        
         return (user != null);
     }
 }

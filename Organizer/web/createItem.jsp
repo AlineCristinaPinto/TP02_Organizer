@@ -1,10 +1,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id='tagItem' class='java.util.ArrayList' scope="page"/>
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
 <%userSessao = (User) request.getSession().getAttribute("user");%>
 
 <html>

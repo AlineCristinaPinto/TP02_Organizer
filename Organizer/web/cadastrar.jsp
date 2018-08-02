@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 
 <html class="body-full-height">
     <head>
@@ -47,7 +47,7 @@
                     </div>
                     </form>
                     <div class="login-subtitle">
-                        Já possui uma conta? <a href="login.html">logar</a>
+                        Já possui uma conta? <a href="login.jsp">Logar</a>
                     </div>
                 </div>
             </div>

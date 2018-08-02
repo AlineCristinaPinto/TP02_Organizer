@@ -12,13 +12,13 @@ public class User {
     private String userName;
     private String userPassword;
     private File userPhoto;
-    private Theme currentTheme;
+    private int currentTheme;
 
-    public Theme getCurrentTheme() {
+    public int getCurrentTheme() {
         return currentTheme;
     }
 
-    public void setCurrentTheme(Theme currentTheme) {
+    public void setCurrentTheme(int currentTheme) {
         this.currentTheme = currentTheme;
     }
     

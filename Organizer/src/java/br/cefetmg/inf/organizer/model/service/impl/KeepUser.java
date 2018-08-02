@@ -4,7 +4,9 @@ package br.cefetmg.inf.organizer.model.service.impl;
 import br.cefetmg.inf.organizer.model.dao.IUserDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.TagDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.UserDAO;
+import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
+import br.cefetmg.inf.organizer.model.service.IKeepTag;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
 import br.cefetmg.inf.util.exception.BusinessException;
 import br.cefetmg.inf.util.exception.PersistenceException;
@@ -26,9 +28,20 @@ public class KeepUser implements IKeepUser {
         if(temp != null){
             throw new BusinessException("O cadastro não pode ser realizado: Usuário já existente");
         }
+        IKeepTag keepTag = new KeepTag();
+        Tag concludeTag = new Tag ();
+        concludeTag.setUser(user);
+        concludeTag.setTagName("Concluidos");
             
+        boolean success = keepTag.createTag(concludeTag);
+        
+        if(!success){
+            throw new BusinessException("Não foi possível criar a tag padrão Concluídos");
+        }
+        
+        
         if((user.getCodEmail() == null || user.getCodEmail().isEmpty()) || (user.getUserPassword() == null || user.getUserPassword().isEmpty()) ||
-                (user.getUserName() == null || user.getUserName().isEmpty()) || (user.getCurrentTheme().getIdTheme()== 0)){
+                (user.getUserName() == null || user.getUserName().isEmpty()) || (user.getCurrentTheme()== 0)){
             throw new BusinessException("O cadastro não pode ser realizado: Campos faltando");
         }
         return userDAO.createUser(user);

@@ -14,7 +14,7 @@ public class TagDAO implements ITagDAO {
     @Override
     public boolean createTag(Tag tag) {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
-            String sql = "INSERT INTO tag VALUES (?, ?)";
+            String sql = "INSERT INTO tag(nom_tag,cod_email) VALUES (?, ?)";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, tag.getTagName());
