@@ -1,9 +1,8 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="user1" scope="page" ></jsp:useBean>
-<%user1 = (User) request.getSession().getAttribute("user");%>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
+<%userSessao = (User) request.getSession().getAttribute("user");%>
 
 <%-- 
 Querido Professor,
@@ -178,7 +177,8 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
                                                 </div>
                                             </div>
                                         </div>
-                                        <input id="oldPassword" type="hidden" value="<%=user1.getUserPassword()%>"/>
+                                        <input id="oldPassword" type="hidden" value="<%=userSessao.getUserPassword()%>"/>
+                                        <!--<input id="oldPassword" type="hidden" value="${userSessao.userPassword}"/>-->
                                         <button type="button" class="btn btn-secondary" >Cancelar</button>
                                         <button type="button" class="btn btn-primary pull-right" onclick="validateSettingFields()" >Salvar</button>
                                     </div>
@@ -254,8 +254,8 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" >Cancelar</button>
-                            <button type="button" class="btn btn-primary" class="close" data-miss="modal" onclick="validateFieldsChangePassword()">OK</button>
+                            <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" class="close" data-dismiss="modal" onclick="validateFieldsChangePassword()">OK</button>
                         </div>
                     </form>
                 </div>
