@@ -1,9 +1,6 @@
 
 package br.cefetmg.inf.organizer.model.dao.impl;
-
-import br.cefetmg.inf.organizer.model.dao.IThemeDAO;
 import br.cefetmg.inf.organizer.model.dao.IUserDAO;
-import br.cefetmg.inf.organizer.model.domain.Theme;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.util.db.ConnectionManager;
 import br.cefetmg.inf.util.exception.PersistenceException;
@@ -31,7 +28,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(1, user.getCodEmail());
             preparedStatement.setString(2, user.getUserName());
             preparedStatement.setString(3, user.getUserPassword());
-            preparedStatement.setInt(4, user.getCurrentTheme().getIdTheme());
+            preparedStatement.setInt(4, user.getCurrentTheme());
 
             preparedStatement.execute();
             preparedStatement.close();
@@ -68,10 +65,7 @@ public class UserDAO implements IUserDAO {
                 }
                 */
                 user.setUserPhoto(tempFile);
-
-                IThemeDAO themeDAO = new ThemeDAO();
-                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema")); 
-                user.setCurrentTheme(newTheme);
+                user.setCurrentTheme(rs.getInt("seq_Tema"));
 
             } else {
                 user = null;
@@ -108,7 +102,7 @@ public class UserDAO implements IUserDAO {
                     throw new IOException(ex.getMessage());
                 }
 
-                preparedStatement.setInt(5, user.getCurrentTheme().getIdTheme());
+                preparedStatement.setInt(5, user.getCurrentTheme());
                 preparedStatement.setString(6, user.getCodEmail());
             }else{
                 String sql = "UPDATE usuario SET cod_Email=?, nom_Usuario=?, txt_Senha=?, seq_Tema=? WHERE cod_Email=?";
@@ -117,7 +111,7 @@ public class UserDAO implements IUserDAO {
                 preparedStatement.setString(1, user.getCodEmail());
                 preparedStatement.setString(2, user.getUserName());
                 preparedStatement.setString(3, user.getUserPassword());
-                preparedStatement.setInt(4, user.getCurrentTheme().getIdTheme());
+                preparedStatement.setInt(4, user.getCurrentTheme());
                 preparedStatement.setString(5, user.getCodEmail());
             }
 
@@ -180,10 +174,7 @@ public class UserDAO implements IUserDAO {
                 }*/
 
                 user.setUserPhoto(tempFile);
-
-                IThemeDAO themeDAO = new ThemeDAO();
-                Theme newTheme = themeDAO.readIdTheme(rs.getInt("seq_Tema"));
-                user.setCurrentTheme(newTheme);
+                user.setCurrentTheme(rs.getInt("seq_Tema"));
             }
 
             rs.close();

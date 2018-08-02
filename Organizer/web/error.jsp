@@ -1,3 +1,16 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
+<%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
+<%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean class="java.lang.Long" id="idItem" scope="session" ></jsp:useBean>
+<jsp:useBean class="java.lang.String" id="arrItemTag" scope="session" ></jsp:useBean>
+<%idItem = Long.parseLong(request.getSession().getAttribute("idItem").toString());
+ arrItemTag = request.getSession().getAttribute("itemTag").toString();%>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" id="keepItem" scope="page" ></jsp:useBean>
+<jsp:useBean id='tagItem' class='java.util.ArrayList' scope="page"/>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
+<%userSessao = (User) request.getSession().getAttribute("user");%>   
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,7 +40,7 @@
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do Usuário</div>
+                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
                                 <div class="profile-data-title">email_usuario@gmail.com</div>
                             </div>
                         </div>
@@ -108,7 +121,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
+                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
                     </li>
                     <li>
                         <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
@@ -137,20 +150,23 @@
                         <div class="col-md-12">
                           <p></p>
                           <!-- Form -->
-                          <form class="form-horizontal">
-
+                          <form class="form-horizontal" action="/organizer/servletcontroller?process=UpdateItem" method="post">
+                               
                         <div class="panel panel-default">
 
-                            <div class="panel-body" id="formTarefa">
+                            <div class="panel-body" id="formSimples">
 
-                              <h1 style="text-align:center">Tarefa</h1>
-
+                              <h1 style="text-align:center">Simples</h1>
+                              
+                              <c:set var = "item" scope = "page" value = "${keepItem.searchItemById(idItem)}"/>
+                                                            
+                              <input type="hidden" value="${idItem}" name="getIdItem">
                               <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Nome: </label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input type="text" class="form-control"/>
+                                            <input type="text" class="form-control" name="nameItem" value="${item.nameItem}" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -158,17 +174,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
                                     <div class="col-md-6 col-xs-12">
-                                      <textarea class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Data: </label>
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                            <input type="date" class="form-control">
-                                        </div>
+                                        <textarea class="form-control" rows="5" name="descriptionItem">${item.descriptionItem}</textarea>
                                     </div>
                                 </div>
 
@@ -177,11 +183,11 @@
                                       <div class="col-md-6 col-xs-12">
                                           <div class="input-group">
                                               <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal"/>
+                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal" value="<%= arrItemTag %>" name="inputTag" readonly/>
                                           </div>
                                       </div>
                                   </div>
-
+                                         
                                 <button class="btn btn-primary pull-right">Salvar</button>
                             </div>
                         </div>
@@ -203,11 +209,17 @@
           <h4 class="modal-title">Adicionar Tags:</h4>
         </div>
         <div class="modal-body">
+          <% 
+            KeepTag keepTag = new KeepTag();
+            tagItem = keepTag.listAlltag(userSessao);
+                       
+            pageContext.setAttribute("list", tagItem);
+          %>
           <div class="form-group">
                 <label>Selecionados: </label>
                     <div class="input-group">
                         <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                        <input id="tagSelecionada" type="text" class="form-control" disabled>
+                        <input id="tagSelected" type="text" class="form-control" disabled>
                     </div>
           </div>
           <hr>
@@ -216,14 +228,20 @@
             <div class="panel panel-default">
                 <div class="panel-body" id="scroll">
                   <ul id="ulTags">
-                      <script type="text/javascript" src="js/tags.js"></script>
+                    <c:forEach	items='${list}' var='listTag' >
+                      <c:if test="${listTag.tagName != 'Concluidos'}">
+                        <li>&nbsp #${listTag.tagName}
+                          <input type="checkbox" class="checkTags" value='${listTag.tagName}'>
+                        </li>
+                      </c:if>
+                    </c:forEach> 
                   </ul>
                 </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" >Cancelar</button>
-            <button type="button" class="btn btn-primary">OK</button>
+            <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="insertTagsOnInput()" class="close" data-dismiss="modal">OK</button>
           </div>
           </div>
         </div>
@@ -267,11 +285,13 @@
             <h4 class="modal-title">Logout:</h4>
           </div>
           <div class="modal-body">
-            <p>Até logo! Deseja sair da sua conta? </p>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" >Cancelar</button>
-              <button type="button" class="btn btn-primary">Sair</button>
-            </div>
+            <form method="post" action="/organizer/servletcontroller?process=UserLogout">
+               <p>Até logo! Deseja sair da sua conta? </p>
+               <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" >Cancelar</button>
+                 <button class="btn btn-primary">Sair</button>
+               </div>
+            </form>
             </div>
           </div>
         </div>
@@ -286,6 +306,8 @@
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/tagMenu.js"></script>
         <script type="text/javascript" src="js/configuracoes.js"></script>
-
+        <script type="text/javascript" src="js/tags.js"></script>
+                  
     </body>
 </html>
+

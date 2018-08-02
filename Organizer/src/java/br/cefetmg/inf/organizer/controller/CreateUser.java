@@ -1,63 +1,43 @@
 package br.cefetmg.inf.organizer.controller;
 
-import br.cefetmg.inf.organizer.model.domain.Tag;
-import br.cefetmg.inf.organizer.model.domain.Theme;
+
 import br.cefetmg.inf.organizer.model.domain.User;
-import br.cefetmg.inf.organizer.model.service.IKeepTag;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
-import br.cefetmg.inf.organizer.model.service.impl.KeepTag;
 import br.cefetmg.inf.organizer.model.service.impl.KeepUser;
 import br.cefetmg.inf.util.PasswordCriptography;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-public class CreateUser implements GenericProcess{
+public class CreateUser implements GenericProcess {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         String pageJSP = "";
-        
+
         String email = req.getParameter("email");
-        String name = req.getParameter("name") ;
+        String name = req.getParameter("name");
         String password = PasswordCriptography.generateMd5(req.getParameter("password"));
-        
+
         User user = new User();
-        
+
         user.setCodEmail(email);
         user.setUserName(name);
         user.setUserPassword(password);
         user.setUserPhoto(null);
-        
-        Theme currentTheme = new Theme();
-        currentTheme.setIdTheme(1);
-        
-        user.setCurrentTheme(currentTheme);
+        user.setCurrentTheme(1);
 
         IKeepUser keepUser = new KeepUser();
         boolean success = keepUser.registerUser(user);
-        
-        if(!success){
+
+        if (!success) {
             //trata erros
-        }else{
-            
-            IKeepTag keepTag = new KeepTag();
-            Tag concludeTag = new Tag ();
-            concludeTag.setUser(user);
-            concludeTag.setTagName("Concluidos");
-            
-            success = keepTag.createTag(concludeTag);
-            
-            if(!success){
-            //trata erros
-            }else{
-            
-                pageJSP = "/login.jsp";
-            
-            }
+        } else {
+
+            pageJSP = "/login.jsp";
+
         }
-        
+
         return pageJSP;
     }
-    
+
 }

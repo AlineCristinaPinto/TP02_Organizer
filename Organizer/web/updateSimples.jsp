@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,7 +8,7 @@
  arrItemTag = request.getSession().getAttribute("itemTag").toString();%>
 <jsp:useBean class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" id="keepItem" scope="page" ></jsp:useBean>
 <jsp:useBean id='tagItem' class='java.util.ArrayList' scope="page"/>
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
 <%userSessao = (User) request.getSession().getAttribute("user");%>   
 
 <!DOCTYPE html>
@@ -39,7 +40,7 @@
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do Usuário</div>
+                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
                                 <div class="profile-data-title">email_usuario@gmail.com</div>
                             </div>
                         </div>
@@ -120,7 +121,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
+                        <a href="configuracoes.html"><span class="fa fa-cogs"></span> <span class="xn-text">ConfiguraÃ§Ãµes</span></a>
                     </li>
                     <li>
                         <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
@@ -171,7 +172,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Descri��o: </label>
+                                    <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
                                     <div class="col-md-6 col-xs-12">
                                         <textarea class="form-control" rows="5" name="descriptionItem">${item.descriptionItem}</textarea>
                                     </div>
@@ -199,7 +200,7 @@
             </div>
         </div>
 
-  <!-- Modal de Inserir Tags durante a cria��o de um item-->
+  <!-- Modal de Inserir Tags durante a criação de um item-->
   <div class="modal fade" id="tagsModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -285,7 +286,7 @@
           </div>
           <div class="modal-body">
             <form method="post" action="/organizer/servletcontroller?process=UserLogout">
-               <p>At� logo! Deseja sair da sua conta? </p>
+               <p>Até logo! Deseja sair da sua conta? </p>
                <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" >Cancelar</button>
                  <button class="btn btn-primary">Sair</button>
@@ -296,7 +297,7 @@
         </div>
       </div>
 
-        <!-- Importa��o dos Scripts -->
+        <!-- Importação dos Scripts -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>

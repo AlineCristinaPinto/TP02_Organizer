@@ -2,14 +2,14 @@
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepItem"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id='listItem' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id='listTag' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean id="keepTag" class="br.cefetmg.inf.organizer.model.service.impl.KeepTag" scope="page"/>
 <jsp:useBean id="keepItem" class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" scope="page"/>
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
+<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
 <%userSessao = (User) request.getSession().getAttribute("user");%>
 <jsp:useBean class="java.lang.String" id="orderViewMode" scope="session" ></jsp:useBean>
 <jsp:useBean class="java.lang.String" id="typeViewMode" scope="session" ></jsp:useBean>
