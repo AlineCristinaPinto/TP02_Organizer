@@ -62,7 +62,7 @@ public class ItemFilter implements GenericProcess {
         }else if(typeFiltering){
             itemList = keepItem.searchItemByType(typeList, user);
         }else{
-            itemList = keepItem.listAllItem(user);
+            itemList = keepItem.listAllItem(user, "asc", "dataDeCriacao");
         }
         
         //maybe swap this to response if using ajax

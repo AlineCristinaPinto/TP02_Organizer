@@ -21,7 +21,7 @@ public interface IKeepItem {
     boolean createItem (Item item);
     boolean updateItem(Item item);
     boolean deleteItem(Long idItem, User user);
-    ArrayList<Item> listAllItem(User user);
+    ArrayList<Item> listAllItem(User user, String orderViewMode, String typeViewMode);
     Item searchItemById(Long idItem);
     Item searchItemByName(String nomeItem);
     List<Item> searchItemByTag(List<Tag> tagList, User user) throws PersistenceException;

@@ -27,4 +27,36 @@ $(function() {
       formRegister.submit();
   });
 
+  $("#modoLista").click(function() {
+      let buttonValue;
+      
+      if($( "#asc" ).is( ":visible" )){
+          buttonValue = 'asc';
+      } else {
+          buttonValue = 'dsc';
+      }
+      
+      document.querySelector("#buttonDisplayValue").value = buttonValue;
+  
+      let formDisplay = document.querySelector("#displayItem");
+      formDisplay.action = "/organizer/servletcontroller?process=ItemViewMode";
+      formDisplay.submit();
+  });
+ 
+  $(".button").click(function(){
+      let buttonValue;
+      
+      if($( "#asc" ).is( ":visible" )){
+          buttonValue = 'asc';
+      } else {
+          buttonValue = 'dsc';
+      }
+      
+      document.querySelector("#buttonDisplayValue").value = buttonValue;
+  
+      let formDisplay = document.querySelector("#displayItem");
+      formDisplay.action = "/organizer/servletcontroller?process=ItemViewMode";
+      formDisplay.submit();
+  });
+
 })

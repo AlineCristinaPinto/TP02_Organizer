@@ -11,6 +11,16 @@
 <jsp:useBean id="keepItem" class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" scope="page"/>
 <jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="session" ></jsp:useBean>
 <%userSessao = (User) request.getSession().getAttribute("user");%>
+<jsp:useBean class="java.lang.String" id="orderViewMode" scope="session" ></jsp:useBean>
+<jsp:useBean class="java.lang.String" id="typeViewMode" scope="session" ></jsp:useBean>
+<%
+    if(request.getSession().getAttribute("orderViewMode") == null && request.getSession().getAttribute("typeViewMode") == null){
+    orderViewMode = "asc";
+    typeViewMode = "dataDeCriacao";
+    } else {
+    orderViewMode = request.getSession().getAttribute("orderViewMode").toString();
+    typeViewMode = request.getSession().getAttribute("typeViewMode").toString();
+    }%>
 
 
 <html>
@@ -163,14 +173,17 @@
 
                 <!-- Botão de visualização de lista -->
                 <div class="page-title">
-                    <button class="button">
-                        <img id="asc" class="imgSeta" src="imgs/seta1.png">
-                        <img id="dsc" class="imgSeta" style="display: none" src="imgs/seta2.png">
-                    </button>
-                    <select id="modoLista">
-                        <option value="dataDeCriacao">Data de Criação</option>
-                        <option value="nome">Nome</option>
-                    </select>
+                    <form id="displayItem" method="post">
+                        <button class="button">
+                            <img id="asc" class="imgSeta" src="imgs/seta1.png">
+                            <img id="dsc" class="imgSeta" style="display: none" src="imgs/seta2.png">
+                        </button>
+                        <input type="hidden" id="buttonDisplayValue" name="buttonDisplayValue">
+                        <select id="modoLista" name="display">
+                            <option value="dataDeCriacao">Data de Criação</option>
+                            <option value="nome">Nome</option>
+                        </select>
+                    </form>
                 </div>
 
                 <div class="page-content-wrap">
@@ -188,7 +201,7 @@
                                         </li>
                                         <%
                                             if (request.getAttribute("itemList") == null) {
-                                                listItem = keepItem.listAllItem(userSessao);
+                                                listItem = keepItem.listAllItem(userSessao, orderViewMode, typeViewMode);
                                             } else {
                                                 listItem = (ArrayList) request.getAttribute("itemList");
                                             }
