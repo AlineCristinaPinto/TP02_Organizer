@@ -1,7 +1,8 @@
+<%@page import="br.cefetmg.inf.util.UserValidation"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-<%@page import="br.cefetmg.inf.organizer.controller.UserValidation"%>
+<%@page import="br.cefetmg.inf.util.UserValidation"%>
 
 <%-- 
 Expression Languages também não funcionam quando chamo o método estático abaixo
