@@ -7,7 +7,7 @@ function validateSettingFields() {
     let password = document.querySelector("#password");
 
     if (name.value == "") {
-        alert("O campo namo deve estar preenchido");
+        alert("O campo nome deve estar preenchido");
     } else {
         //Dá submit 
         let formSettings = document.querySelector("#formSettings");

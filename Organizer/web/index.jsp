@@ -53,20 +53,20 @@
                         <a href="#"><span class="fa fa-adjust"></span> <span class="xn-text">Temas</span></a>
                         <ul>
                             <li><a href="#">
-                                    <label class="container">Tema 1
-                                        <input type="radio" name="tema" value="tema1">
+                                    <label class="container">Padrão
+                                        <input type="radio" id="padButton" name="tema">
                                         <span class="checkmark"></span>
                                     </label>
                                 </a></li>
                             <li><a href="#">
-                                    <label class="container">Tema 2
-                                        <input type="radio" name="tema" value="tema2">
+                                    <label class="container">Elegante
+                                        <input type="radio" id="modButton" name="tema">
                                         <span class="checkmark"></span>
                                     </label>
                                 </a></li>
                             <li><a href="#">
-                                    <label class="container">Tema 3
-                                        <input type="radio" name="tema" value="tema3">
+                                    <label class="container">Extravagante
+                                        <input type="radio" id="extButton" name="tema">
                                         <span class="checkmark"></span>
                                     </label>
                                 </a></li>
@@ -192,7 +192,6 @@
                         </form>
                     </li>
                 </ul>
-
 
                 <div class="page-title"></div>
 
