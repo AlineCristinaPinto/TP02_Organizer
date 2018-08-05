@@ -16,7 +16,8 @@ public class DeleteTag implements GenericProcess {
 
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        String nameTag = req.getParameter("name");
+        String nameTag = req.getParameter("tagMenu");
+        System.out.println(nameTag);
 
         IKeepTag keepTag = new KeepTag();
 
@@ -28,7 +29,7 @@ public class DeleteTag implements GenericProcess {
         boolean result = keepTag.deleteTag(tag);
 
         if (result == false) {
-            //exception
+            System.out.println("oi");
         } else {
             pageJSP = "/index.jsp";
         }

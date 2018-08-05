@@ -5,6 +5,7 @@ import br.cefetmg.inf.organizer.model.dao.impl.TagDAO;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepTag;
+import br.cefetmg.inf.util.exception.BusinessException;
 import java.util.ArrayList;
 
 public class KeepTag implements IKeepTag {
@@ -16,14 +17,14 @@ public class KeepTag implements IKeepTag {
     }
 
     @Override
-    public boolean createTag(Tag tag) {
+    public boolean createTag(Tag tag) throws BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
-            //exception    
+            throw new BusinessException("Não foi possível criar a tag: nome não informado");
         }
          Tag temp = tagDAO.readTag(tag);
         
         if(temp != null){
-            //exception
+            throw new BusinessException("Não foi possível criar a tag: já existe uma tag com esse nome");
         }
         
         boolean result = tagDAO.createTag(tag);
@@ -31,10 +32,10 @@ public class KeepTag implements IKeepTag {
     }
 
     @Override
-    public Tag readTag(Tag tag) {
+    public Tag readTag(Tag tag) throws BusinessException {
         
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
-            //exception    
+            throw new BusinessException("Não foi possível ler a tag: nome não informado");  
         }
         
         Tag temp = tagDAO.readTag(tag);
@@ -42,9 +43,9 @@ public class KeepTag implements IKeepTag {
     }
 
     @Override
-    public boolean updateTag(Tag tag) {
+    public boolean updateTag(Tag tag) throws BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
-            //exception    
+            throw new BusinessException("Não foi possível atualizar a tag: nome não informado");   
         }
 
         boolean result = tagDAO.updateTag(tag);
@@ -52,9 +53,9 @@ public class KeepTag implements IKeepTag {
     }
     
     @Override
-    public boolean updateTagId(Tag tag, Long id) {
+    public boolean updateTagId(Tag tag, Long id) throws BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
-            //exception    
+            throw new BusinessException("Não foi possível atualizar a tag: nome não informado");   
         }
 
         boolean result = tagDAO.updateTagId(tag, id);
@@ -63,7 +64,7 @@ public class KeepTag implements IKeepTag {
     
     @Override
     public boolean deleteTag(Tag tag) {
-        boolean result = tagDAO.createTag(tag);
+        boolean result = tagDAO.deleteTag(tag);
         return result;
     }
 

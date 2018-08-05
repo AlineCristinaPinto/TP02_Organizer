@@ -16,12 +16,13 @@ public class UpdateTag implements GenericProcess {
 
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        String nameTag = req.getParameter("name");
+        String oldNameTag = req.getParameter("takeOldName");
+        String nameTag = req.getParameter("nameEdited");
 
         IKeepTag keepTag = new KeepTag();
 
         Tag tag = new Tag();
-        tag.setSeqTag(keepTag.searchTagByName(nameTag, user));
+        tag.setSeqTag(keepTag.searchTagByName(oldNameTag, user));
         tag.setTagName(nameTag);
         tag.setUser(user);
 

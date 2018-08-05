@@ -24,7 +24,6 @@ public class TagDAO implements ITagDAO {
             }
             return true;
         } catch (Exception ex) {
-            //exception
         }
         return false;
     }
@@ -35,6 +34,7 @@ public class TagDAO implements ITagDAO {
             String sql = "SELECT * FROM tag WHERE cod_email=? and nom_tag=?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                System.out.println(tag.getUser().getCodEmail());
                 preparedStatement.setString(1, tag.getUser().getCodEmail());
                 preparedStatement.setString(2, tag.getTagName());
 
@@ -61,9 +61,11 @@ public class TagDAO implements ITagDAO {
             String sql = "UPDATE tag SET nom_tag=? WHERE cod_email=? and seq_tag=?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, tag.getUser().getCodEmail());
-                preparedStatement.setString(2, tag.getTagName());
+                preparedStatement.setString(1, tag.getTagName());
+                preparedStatement.setString(2, tag.getUser().getCodEmail());
                 preparedStatement.setLong(3, tag.getSeqTag());
+                
+                preparedStatement.execute();
             }
             return true;
         } catch (Exception ex) {
@@ -71,16 +73,18 @@ public class TagDAO implements ITagDAO {
         }
         return false;
     }
-    
+
     @Override
     public boolean updateTagId(Tag tag, Long id) {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "UPDATE tag SET seq_tag=? WHERE cod_email=? and nom_tag=?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setLong(1, tag.getSeqTag());                
+                preparedStatement.setLong(1, tag.getSeqTag());
                 preparedStatement.setString(2, tag.getUser().getCodEmail());
                 preparedStatement.setString(3, tag.getTagName());
+                
+                preparedStatement.execute();
             }
             return true;
         } catch (Exception ex) {
@@ -88,7 +92,7 @@ public class TagDAO implements ITagDAO {
         }
         return false;
     }
-    
+
     @Override
     public boolean deleteTag(Tag tag) {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
@@ -114,10 +118,10 @@ public class TagDAO implements ITagDAO {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, user.getCodEmail());
-                
+
                 try (ResultSet result = preparedStatement.executeQuery()) {
                     ArrayList<Tag> listAllTag = null;
-                    
+
                     if (result.next()) {
                         listAllTag = new ArrayList<>();
 
@@ -140,19 +144,19 @@ public class TagDAO implements ITagDAO {
 
     @Override
     public Long searchTagByName(String nomeTag, User user) {
-        
+
         try {
-            Long id=null;
+            Long id = null;
             try (Connection connection = ConnectionManager.getInstance().getConnection()) {
                 String sql = "SELECT seq_tag FROM Tag WHERE nom_tag=? and cod_email=?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     preparedStatement.setString(1, nomeTag);
                     preparedStatement.setString(2, user.getCodEmail());
-                    
+
                     try (ResultSet result = preparedStatement.executeQuery()) {
-                        if(result.next()){
+                        if (result.next()) {
                             id = result.getLong("seq_tag");
-                        }  
+                        }
                     }
                 }
             }
@@ -164,7 +168,7 @@ public class TagDAO implements ITagDAO {
 
         return null;
     }
-    
+
     @Override
     public Tag searchTagById(Long idTag) {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
@@ -172,10 +176,10 @@ public class TagDAO implements ITagDAO {
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setLong(1, idTag);
-                
+
                 try (ResultSet result = preparedStatement.executeQuery()) {
                     Tag tag = new Tag();
-                    
+
                     if (result.next()) {
                         tag.setTagName(result.getString("nom_tag"));
                         tag.setSeqTag(result.getLong("seq_tag"));

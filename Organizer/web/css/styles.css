@@ -228,3 +228,18 @@
   color: black;
 }
 
+/* CSS para botão nas tags */
+
+.buttonStyle{
+    float: right;
+    background: #17191e;
+    padding: 1%;
+    border: none;
+    display: none;
+}
+
+.container:hover .buttonStyle{
+    background-color: #121418;
+}
+
+
