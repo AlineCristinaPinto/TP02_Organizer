@@ -18,12 +18,12 @@ import java.util.List;
  */
 public interface IKeepItem {
     
-    boolean createItem (Item item);
-    boolean updateItem(Item item);
-    boolean deleteItem(Long idItem, User user);
-    ArrayList<Item> listAllItem(User user, String orderViewMode, String typeViewMode);
-    Item searchItemById(Long idItem);
-    Item searchItemByName(String nomeItem);
+    boolean createItem (Item item) throws PersistenceException;
+    boolean updateItem(Item item) throws PersistenceException;
+    boolean deleteItem(Long idItem, User user) throws PersistenceException;
+    ArrayList<Item> listAllItem(User user) throws PersistenceException;
+    Item searchItemById(Long idItem) throws PersistenceException;
+    Item searchItemByName(String nomeItem) throws PersistenceException;
     List<Item> searchItemByTag(List<Tag> tagList, User user) throws PersistenceException;
     List<Item> searchItemByType(List<String> typeList, User user) throws PersistenceException;
     List<Item> searchItemByTagAndType(List<Tag> tagList, List<String> typeList, User user) 

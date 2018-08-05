@@ -49,12 +49,12 @@ public class ConcludeTarefa implements GenericProcess {
         if(result == false){
             // exceção
         } else {
-           /* IKeepTag keepTag = new KeepTag();
+            IKeepTag keepTag = new KeepTag();
             Long idConclude = keepTag.searchTagByName("Concluidos", user);
             Tag concludeTag = keepTag.searchTagById(idConclude);
             ArrayList<Tag> tag = new ArrayList();
             tag.add(concludeTag);
-            
+           
             IKeepItemTag keepItemTag = new KeepItemTag();
             ItemTag itemTag = new ItemTag(); 
             itemTag.setItem(item);
@@ -66,7 +66,7 @@ public class ConcludeTarefa implements GenericProcess {
                 //exceção
             } else {
                 pageJSP = "/index.jsp";
-            }*/
+            }
            pageJSP = "/index.jsp";
         }
        

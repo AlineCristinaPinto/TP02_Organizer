@@ -1,15 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
+<%@page import="br.cefetmg.inf.util.ErrorObject" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean class="java.lang.Long" id="idItem" scope="session" ></jsp:useBean>
 <jsp:useBean class="java.lang.String" id="arrItemTag" scope="session" ></jsp:useBean>
-<%idItem = Long.parseLong(request.getSession().getAttribute("idItem").toString());
- arrItemTag = request.getSession().getAttribute("itemTag").toString();%>
-<jsp:useBean class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" id="keepItem" scope="page" ></jsp:useBean>
 <jsp:useBean id='tagItem' class='java.util.ArrayList' scope="page"/>
 <jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
-<%userSessao = (User) request.getSession().getAttribute("user");%>   
+<%userSessao = (User) request.getSession().getAttribute("user");%>
+
+<jsp:useBean id="error" class="br.cefetmg.inf.util.ErrorObject" scope="page"></jsp:useBean>
+<%error = (ErrorObject) session.getAttribute("error");%>
 
 <!DOCTYPE html>
 <html>
@@ -40,7 +40,7 @@
                                 <img src="imgs/icon.jpg"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Nome do UsuÃ¡rio</div>
+                                <div class="profile-data-name">Nome do Usuário</div>
                                 <div class="profile-data-title">email_usuario@gmail.com</div>
                             </div>
                         </div>
@@ -147,53 +147,20 @@
                 <div class="page-content-wrap">
 
                     <div class="row">
-                        <div class="col-md-12">
-                          <p></p>
-                          <!-- Form -->
-                          <form class="form-horizontal" action="/organizer/servletcontroller?process=UpdateItem" method="post">
-                               
-                        <div class="panel panel-default">
-
-                            <div class="panel-body" id="formSimples">
-
-                              <h1 style="text-align:center">Simples</h1>
-                              
-                              <c:set var = "item" scope = "page" value = "${keepItem.searchItemById(idItem)}"/>
-                                                            
-                              <input type="hidden" value="${idItem}" name="getIdItem">
-                              <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Nome: </label>
-                                    <div class="col-md-6 col-xs-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input type="text" class="form-control" name="nameItem" value="${item.nameItem}" required/>
+                        <div class="error-container">
+                                <div class="error-code"> <%=error.getErrorName()%> </div> 
+                                <div class="error-text"> <%=error.getErrorDescription()%></div>
+                                <div class="error-subtext"><%=error.getErrorSubtext()%></div>
+                                <div class="error-actions">                                
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-info btn-block btn-lg" onClick="document.location.href = 'login.jsp';">Volte a página inicial</button>
                                         </div>
-                                    </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-primary btn-block btn-lg" onClick="history.back();">Página anterior</button>
+                                        </div>
+                                    </div>                                
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Descrição: </label>
-                                    <div class="col-md-6 col-xs-12">
-                                        <textarea class="form-control" rows="5" name="descriptionItem">${item.descriptionItem}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                      <label class="col-md-3 col-xs-12 control-label">Tags: </label>
-                                      <div class="col-md-6 col-xs-12">
-                                          <div class="input-group">
-                                              <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                              <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal" value="<%= arrItemTag %>" name="inputTag" readonly/>
-                                          </div>
-                                      </div>
-                                  </div>
-                                         
-                                <button class="btn btn-primary pull-right">Salvar</button>
-                            </div>
-                        </div>
-                        </form>
-
-                        </div>
                     </div>
 
                 </div>

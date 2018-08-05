@@ -4,6 +4,7 @@ package br.cefetmg.inf.organizer.controller;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
 import br.cefetmg.inf.organizer.model.service.impl.KeepUser;
+import br.cefetmg.inf.util.ErrorObject;
 import br.cefetmg.inf.util.PasswordCriptography;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +31,14 @@ public class CreateUser implements GenericProcess {
         boolean success = keepUser.registerUser(user);
 
         if (!success) {
-            //trata erros
+            ErrorObject error = new ErrorObject();
+            error.setErrorName("Tente novamente");
+            error.setErrorDescription("Erro na criação do usuário");
+            error.setErrorSubtext("Verifique se o usuário já existe ou se ocorreu um erro no preenchimento dos campos");
+            req.getSession().setAttribute("error", error);
+            pageJSP = "/error.jsp";
         } else {
-
             pageJSP = "/login.jsp";
-
         }
 
         return pageJSP;

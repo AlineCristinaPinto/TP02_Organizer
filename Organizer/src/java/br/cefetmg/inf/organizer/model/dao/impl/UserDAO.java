@@ -37,7 +37,7 @@ public class UserDAO implements IUserDAO {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
+            throw new PersistenceException(ex.getMessage(),ex);
         }
     }
 
@@ -77,7 +77,7 @@ public class UserDAO implements IUserDAO {
             return user;
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
+            throw new PersistenceException(ex.getMessage(),ex);
         }
     }
 
@@ -122,7 +122,7 @@ public class UserDAO implements IUserDAO {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
+            throw new PersistenceException(ex.getMessage(),ex);
         }
     }
 
@@ -142,7 +142,7 @@ public class UserDAO implements IUserDAO {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
+            throw new PersistenceException(ex.getMessage(),ex);
         }
     }
 
@@ -183,8 +183,8 @@ public class UserDAO implements IUserDAO {
 
             return user;
         } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new PersistenceException("Ocorreu um erro na execução " + ex.getMessage());
+              ex.printStackTrace();
+              throw new PersistenceException(ex.getMessage(),ex);
         }
     }
 

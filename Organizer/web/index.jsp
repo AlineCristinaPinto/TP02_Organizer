@@ -11,16 +11,6 @@
 <jsp:useBean id="keepItem" class="br.cefetmg.inf.organizer.model.service.impl.KeepItem" scope="page"/>
 <jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
 <%userSessao = (User) request.getSession().getAttribute("user");%>
-<jsp:useBean class="java.lang.String" id="orderViewMode" scope="session" ></jsp:useBean>
-<jsp:useBean class="java.lang.String" id="typeViewMode" scope="session" ></jsp:useBean>
-<%
-    if (request.getSession().getAttribute("orderViewMode") == null && request.getSession().getAttribute("typeViewMode") == null) {
-        orderViewMode = "asc";
-        typeViewMode = "dataDeCriacao";
-    } else {
-        orderViewMode = request.getSession().getAttribute("orderViewMode").toString();
-        typeViewMode = request.getSession().getAttribute("typeViewMode").toString();
-    }%>
 
 
 <html>
@@ -159,7 +149,7 @@
                     </li>
                 </ul>
             </div>
-           
+
             <div class="modal fade" id="editTagModal" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -202,20 +192,8 @@
                     </li>
                 </ul>
 
-                <!-- Botão de visualização de lista -->
-                <div class="page-title">
-                    <form id="displayItem" method="post">
-                        <button class="button">
-                            <img id="asc" class="imgSeta" src="imgs/seta1.png">
-                            <img id="dsc" class="imgSeta" style="display: none" src="imgs/seta2.png">
-                        </button>
-                        <input type="hidden" id="buttonDisplayValue" name="buttonDisplayValue">
-                        <select id="modoLista" name="display">
-                            <option value="dataDeCriacao">Data de Criação</option>
-                            <option value="nome">Nome</option>
-                        </select>
-                    </form>
-                </div>
+
+                <div class="page-title"></div>
 
                 <div class="page-content-wrap">
 
@@ -232,7 +210,7 @@
                                         </li>
                                         <%
                                             if (request.getAttribute("itemList") == null) {
-                                                listItem = keepItem.listAllItem(userSessao, orderViewMode, typeViewMode);
+                                                listItem = keepItem.listAllItem(userSessao);
                                             } else {
                                                 listItem = (ArrayList) request.getAttribute("itemList");
                                             }
@@ -243,25 +221,42 @@
                                         <c:forEach items='${listItemUser}' var='list'>
                                             <c:choose>
                                                 <c:when test = "${list.identifierItem == 'TAR'}">
-                                                    <c:if test="${list.identifierStatus == 'A'}">
-                                                        <li id="${list.identifierItem}" class="open">
-                                                            <label class="container" style="float:left">
-                                                                <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">
-                                                                <span class="checkmark"></span>
-                                                            </label>
-                                                            <button id="${list.seqItem}" class="opcoesItem btOption" value="${list.identifierItem}" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
-                                                            <div class="dropdownlink">${list.nameItem}</div>
-                                                            <ul class="submenuItems" style="display: none;">
-                                                                <c:if test = "${list.descriptionItem != ''}">
-                                                                    <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
-                                                                    </c:if>                                                                
-                                                                <!-- tag <li class="liDescricao"></li>-->
-                                                                <c:if test = "${list.dateItem != null}">
-                                                                    <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
-                                                                    </c:if>                                                                
-                                                            </ul>
-                                                        </li>        
-                                                    </c:if>
+                                                    <c:choose>
+                                                        <c:when test = "${list.identifierStatus == 'A'}">
+                                                            <li id="${list.identifierItem}" class="open">
+                                                                <label class="container" style="float:left">
+                                                                    <input id="${list.seqItem}" class="checkTar" type="checkbox" name="tarefa" value="${list.nameItem}">
+                                                                    <span class="checkmark"></span>
+                                                                </label>
+                                                                <button id="${list.seqItem}" class="opcoesItem btOption" value="${list.identifierItem}" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                                <div class="dropdownlink">${list.nameItem}</div>
+                                                                <ul class="submenuItems" style="display: none;">
+                                                                    <c:if test = "${list.descriptionItem != ''}">
+                                                                        <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                                        </c:if>                                                                
+                                                                    <!-- tag <li class="liDescricao"></li>-->
+                                                                    <c:if test = "${list.dateItem != null}">
+                                                                        <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                                        </c:if>                                                                
+                                                                </ul>
+                                                            </li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <li id="${list.identifierItem}" class="open">
+                                                                <button id="${list.seqItem}" value="${list.identifierItem}" class="opcoesItem btOption" data-toggle="modal" data-target="#btaoOpcaoModal"><i class="fa fa-ellipsis-v"></i></button>
+                                                                <div class="dropdownlink">${list.nameItem}</div>
+                                                                <ul class="submenuItems" style="display: none;">
+                                                                    <c:if test = "${list.descriptionItem != ''}">
+                                                                        <li id="subItem" class="liDescricao">${list.descriptionItem}</li>
+                                                                        </c:if>                                                                
+                                                                    <!-- tag <li class="liDescricao"></li>-->
+                                                                    <c:if test = "${list.dateItem != null}">
+                                                                        <li class="liDescricao" style="text-align: right">${list.dateItem}</li>
+                                                                        </c:if> 
+                                                                </ul>
+                                                            </li>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <li id="${list.identifierItem}" class="open">

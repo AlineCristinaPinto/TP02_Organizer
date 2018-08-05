@@ -2,7 +2,6 @@
 package br.cefetmg.inf.organizer.model.service.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IUserDAO;
-import br.cefetmg.inf.organizer.model.dao.impl.TagDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.UserDAO;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
@@ -26,7 +25,7 @@ public class KeepUser implements IKeepUser {
         User temp = userDAO.readUser(user);
         
         if(temp != null){
-            throw new BusinessException("O cadastro não pode ser realizado: Usuário já existente");
+            return false;
         }
         IKeepTag keepTag = new KeepTag();
         Tag concludeTag = new Tag ();
@@ -36,14 +35,14 @@ public class KeepUser implements IKeepUser {
         boolean success = keepTag.createTag(concludeTag);
         
         if(!success){
-            throw new BusinessException("Não foi possível criar a tag padrão Concluídos");
+            return false;
         }
-        
         
         if((user.getCodEmail() == null || user.getCodEmail().isEmpty()) || (user.getUserPassword() == null || user.getUserPassword().isEmpty()) ||
                 (user.getUserName() == null || user.getUserName().isEmpty()) || (user.getCurrentTheme()== 0)){
-            throw new BusinessException("O cadastro não pode ser realizado: Campos faltando");
+            return false;
         }
+        
         return userDAO.createUser(user);
     }
 
@@ -61,7 +60,7 @@ public class KeepUser implements IKeepUser {
     public boolean updateUser(User user) throws PersistenceException, BusinessException {
         
         if(user.getCodEmail() == null || user.getCodEmail().isEmpty()){
-            throw new BusinessException("As alterações não puderam ser realizadas: Email não informado");
+            return false;
         }
         return userDAO.updateUser(user);
     }
@@ -69,7 +68,7 @@ public class KeepUser implements IKeepUser {
     @Override
     public boolean deleteAccount(User user) throws PersistenceException, BusinessException {
         if(user.getCodEmail() == null || user.getCodEmail().isEmpty()){
-            throw new BusinessException("A exclusão não pode ser realizada: Email não informado");
+            return false;
         }
         return userDAO.deleteUser(user);
     }

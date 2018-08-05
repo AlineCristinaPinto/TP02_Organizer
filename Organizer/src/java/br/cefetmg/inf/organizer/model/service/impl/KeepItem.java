@@ -26,14 +26,14 @@ public class KeepItem implements IKeepItem{
     private final IItemDAO itemDAO = new ItemDAO();
 
     @Override
-    public boolean createItem(Item item) {
+    public boolean createItem(Item item) throws PersistenceException{
         
-        if(itemDAO.checkIfItemAlreadyExists(item) == false){
-            // exceção
+        if(!itemDAO.checkIfItemAlreadyExists(item)){
+            return false;
         }
         
         if((item.getNameItem() == null) || (item.getNameItem().isEmpty())){
-            //exceção
+            return false;
         }
                 
         boolean result=false;
@@ -46,14 +46,14 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public boolean updateItem(Item item) {
+    public boolean updateItem(Item item) throws PersistenceException{
         
-        if(itemDAO.checkIfItemAlreadyExists(item) == false){
-            // exceção
+        if(!itemDAO.checkIfItemAlreadyExists(item)){
+            return false;
         }
         
         if((item.getNameItem() == null) || (item.getNameItem().isEmpty())){
-            //exceção
+            return false;
         }
                 
         boolean result=false;
@@ -67,7 +67,7 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public boolean deleteItem(Long idItem, User user) {
+    public boolean deleteItem(Long idItem, User user) throws PersistenceException{
         
         boolean result=false;
         try {
@@ -80,11 +80,11 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public ArrayList<Item> listAllItem(User user, String orderViewMode, String typeViewMode) {
+    public ArrayList<Item> listAllItem(User user) throws PersistenceException{
         
         ArrayList<Item> result=null;
         try {
-            result = itemDAO.listAllItem(user, orderViewMode, typeViewMode);
+            result = itemDAO.listAllItem(user);
         } catch (PersistenceException ex) {
             Logger.getLogger(KeepItem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -93,7 +93,7 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public Item searchItemByName(String nomeItem) {
+    public Item searchItemByName(String nomeItem) throws PersistenceException{
         
         Item result=null;
         try {
@@ -128,7 +128,7 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public Item searchItemById(Long idItem) {
+    public Item searchItemById(Long idItem) throws PersistenceException{
     
         Item result=null;
         try {
