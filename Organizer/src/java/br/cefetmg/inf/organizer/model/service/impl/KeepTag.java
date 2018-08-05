@@ -6,6 +6,7 @@ import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepTag;
 import br.cefetmg.inf.util.exception.BusinessException;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.util.ArrayList;
 
 public class KeepTag implements IKeepTag {
@@ -17,7 +18,7 @@ public class KeepTag implements IKeepTag {
     }
 
     @Override
-    public boolean createTag(Tag tag) throws BusinessException {
+    public boolean createTag(Tag tag) throws PersistenceException, BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
             throw new BusinessException("Não foi possível criar a tag: nome não informado");
         }
@@ -32,7 +33,7 @@ public class KeepTag implements IKeepTag {
     }
 
     @Override
-    public Tag readTag(Tag tag) throws BusinessException {
+    public Tag readTag(Tag tag) throws PersistenceException, BusinessException {
         
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
             throw new BusinessException("Não foi possível ler a tag: nome não informado");  
@@ -43,7 +44,7 @@ public class KeepTag implements IKeepTag {
     }
 
     @Override
-    public boolean updateTag(Tag tag) throws BusinessException {
+    public boolean updateTag(Tag tag) throws PersistenceException, BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
             throw new BusinessException("Não foi possível atualizar a tag: nome não informado");   
         }
@@ -53,7 +54,7 @@ public class KeepTag implements IKeepTag {
     }
     
     @Override
-    public boolean updateTagId(Tag tag, Long id) throws BusinessException {
+    public boolean updateTagId(Tag tag, Long id) throws PersistenceException, BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
             throw new BusinessException("Não foi possível atualizar a tag: nome não informado");   
         }
@@ -63,25 +64,33 @@ public class KeepTag implements IKeepTag {
     }
     
     @Override
-    public boolean deleteTag(Tag tag) {
+    public boolean deleteTag(Tag tag) throws PersistenceException, BusinessException {
+        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
+            throw new BusinessException("Não foi possível deletar a tag: nome não informado");   
+        }
+        
         boolean result = tagDAO.deleteTag(tag);
         return result;
     }
 
     @Override
-    public ArrayList<Tag> listAlltag(User user) {
+    public ArrayList<Tag> listAlltag(User user) throws PersistenceException, BusinessException {
         ArrayList result = tagDAO.listAlltag(user);
         return result;
     }
     
     @Override
-    public Long searchTagByName(String nomeTag, User user){
+    public Long searchTagByName(String nomeTag, User user) throws PersistenceException, BusinessException {
+        if ((nomeTag == null) || (nomeTag.isEmpty())) {
+            throw new BusinessException("Não foi possível pesquisar a tag: nome não informado");   
+        }
+        
         Long result = tagDAO.searchTagByName(nomeTag, user);
         return result;
     }
 
     @Override
-    public Tag searchTagById(Long idTag) {
+    public Tag searchTagById(Long idTag) throws PersistenceException, BusinessException {
         Tag result = tagDAO.searchTagById(idTag);
         return result;
     }

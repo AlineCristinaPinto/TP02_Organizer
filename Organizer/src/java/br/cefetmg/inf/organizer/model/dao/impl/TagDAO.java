@@ -4,6 +4,7 @@ import br.cefetmg.inf.organizer.model.dao.ITagDAO;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.util.db.ConnectionManager;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class TagDAO implements ITagDAO {
 
     @Override
-    public boolean createTag(Tag tag) {
+    public boolean createTag(Tag tag) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "INSERT INTO tag(nom_tag,cod_email) VALUES (?, ?)";
 
@@ -24,17 +25,17 @@ public class TagDAO implements ITagDAO {
             }
             return true;
         } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-        return false;
     }
 
     @Override
-    public Tag readTag(Tag tag) {
+    public Tag readTag(Tag tag) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "SELECT * FROM tag WHERE cod_email=? and nom_tag=?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                System.out.println(tag.getUser().getCodEmail());
                 preparedStatement.setString(1, tag.getUser().getCodEmail());
                 preparedStatement.setString(2, tag.getTagName());
 
@@ -49,14 +50,13 @@ public class TagDAO implements ITagDAO {
             }
             return tag;
         } catch (Exception ex) {
-            //exception
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-        return tag;
-
     }
 
     @Override
-    public boolean updateTag(Tag tag) {
+    public boolean updateTag(Tag tag) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "UPDATE tag SET nom_tag=? WHERE cod_email=? and seq_tag=?";
 
@@ -64,18 +64,18 @@ public class TagDAO implements ITagDAO {
                 preparedStatement.setString(1, tag.getTagName());
                 preparedStatement.setString(2, tag.getUser().getCodEmail());
                 preparedStatement.setLong(3, tag.getSeqTag());
-                
+
                 preparedStatement.execute();
             }
             return true;
         } catch (Exception ex) {
-            //exception
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-        return false;
     }
 
     @Override
-    public boolean updateTagId(Tag tag, Long id) {
+    public boolean updateTagId(Tag tag, Long id) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "UPDATE tag SET seq_tag=? WHERE cod_email=? and nom_tag=?";
 
@@ -83,18 +83,18 @@ public class TagDAO implements ITagDAO {
                 preparedStatement.setLong(1, tag.getSeqTag());
                 preparedStatement.setString(2, tag.getUser().getCodEmail());
                 preparedStatement.setString(3, tag.getTagName());
-                
+
                 preparedStatement.execute();
             }
             return true;
         } catch (Exception ex) {
-            //exception
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-        return false;
     }
 
     @Override
-    public boolean deleteTag(Tag tag) {
+    public boolean deleteTag(Tag tag) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "DELETE FROM tag WHERE cod_email=? and nom_tag=?";
 
@@ -106,13 +106,13 @@ public class TagDAO implements ITagDAO {
             }
             return true;
         } catch (Exception ex) {
-            //exception
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-        return false;
     }
 
     @Override
-    public ArrayList<Tag> listAlltag(User user) {
+    public ArrayList<Tag> listAlltag(User user) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "SELECT * FROM tag WHERE cod_email=?";
 
@@ -137,40 +137,36 @@ public class TagDAO implements ITagDAO {
                 }
             }
         } catch (Exception ex) {
-            //exception
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-        return null;
     }
 
     @Override
-    public Long searchTagByName(String nomeTag, User user) {
-
-        try {
+    public Long searchTagByName(String nomeTag, User user) throws PersistenceException {
+        try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             Long id = null;
-            try (Connection connection = ConnectionManager.getInstance().getConnection()) {
-                String sql = "SELECT seq_tag FROM Tag WHERE nom_tag=? and cod_email=?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                    preparedStatement.setString(1, nomeTag);
-                    preparedStatement.setString(2, user.getCodEmail());
+            String sql = "SELECT seq_tag FROM Tag WHERE nom_tag=? and cod_email=?";
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, nomeTag);
+                preparedStatement.setString(2, user.getCodEmail());
 
-                    try (ResultSet result = preparedStatement.executeQuery()) {
-                        if (result.next()) {
-                            id = result.getLong("seq_tag");
-                        }
+                try (ResultSet result = preparedStatement.executeQuery()) {
+                    if (result.next()) {
+                        id = result.getLong("seq_tag");
                     }
                 }
             }
-
             return id;
         } catch (Exception ex) {
-            //Adicionar Exceção 
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-
-        return null;
     }
 
     @Override
-    public Tag searchTagById(Long idTag) {
+    public Tag searchTagById(Long idTag) throws PersistenceException {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = "SELECT * FROM tag WHERE seq_tag=?";
 
@@ -188,9 +184,8 @@ public class TagDAO implements ITagDAO {
                 }
             }
         } catch (Exception ex) {
-            //exception
+            ex.printStackTrace();
+            throw new PersistenceException(ex.getMessage(), ex);
         }
-        return null;
     }
-
 }
