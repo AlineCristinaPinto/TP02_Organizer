@@ -19,7 +19,7 @@ function validateSettingFields() {
 
 function insertImageOnInput() {
     let imagePath = document.querySelector("#image").value;
-    document.querySelector('#profileIcon').src = imagePath;
+    document.querySelector('#profileIcon').value = imagePath;
 }
 
 function validateFieldsChangePassword() {

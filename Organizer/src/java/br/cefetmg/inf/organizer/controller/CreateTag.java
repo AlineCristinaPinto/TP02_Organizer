@@ -37,7 +37,6 @@ public class CreateTag implements GenericProcess {
             req.getSession().setAttribute("error", error);
             pageJSP = "/error.jsp";
         } else {
-            keepTag.updateTagId(tag, keepTag.searchTagByName(nameTag, user));
             pageJSP = "/index.jsp";
         }
 
