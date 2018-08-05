@@ -156,7 +156,7 @@ public class ItemDAO implements IItemDAO{
     }
     
     @Override
-    public boolean checkIfItemAlreadyExists(Item item){
+    public boolean checkIfItemAlreadyExists(Item item) throws PersistenceException{
          
         try {
            Connection connection = ConnectionManager.getInstance().getConnection();
@@ -165,22 +165,25 @@ public class ItemDAO implements IItemDAO{
            PreparedStatement preparedStatement = connection.prepareStatement(sql);
            preparedStatement.setString(1, item.getNameItem());
            preparedStatement.setString(2, item.getIdentifierItem());
-           preparedStatement.setString(3, item.getUser().getCodEmail());            
+           preparedStatement.setString(3, item.getUser().getCodEmail());        
            
            ResultSet result = preparedStatement.executeQuery();
+           
+           if(result.next()){
+            if(result.getString("nom_item") == null){
+               return true;
+            } else {
+                return false;
+            }
+           }
            
            result.close();
            preparedStatement.close();
            connection.close();
            
-           if(result.getString("nom_item") == null)
-               return true;
-           
         } catch (Exception ex) {
-           //Adicionar Exceção 
+           throw new PersistenceException(ex.getMessage()); 
         }
-        
-        return false;
     }
     
     @Override

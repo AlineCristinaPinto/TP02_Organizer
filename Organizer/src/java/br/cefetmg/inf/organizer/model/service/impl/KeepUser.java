@@ -2,7 +2,6 @@
 package br.cefetmg.inf.organizer.model.service.impl;
 
 import br.cefetmg.inf.organizer.model.dao.IUserDAO;
-import br.cefetmg.inf.organizer.model.dao.impl.TagDAO;
 import br.cefetmg.inf.organizer.model.dao.impl.UserDAO;
 import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
