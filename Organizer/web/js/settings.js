@@ -7,7 +7,7 @@ function validateSettingFields() {
     let password = document.querySelector("#password");
 
     if (name.value == "") {
-        alert("O campo namo deve estar preenchido");
+        alert("O campo nome deve estar preenchido");
     } else {
         //Dá submit 
         let formSettings = document.querySelector("#formSettings");
@@ -19,7 +19,7 @@ function validateSettingFields() {
 
 function insertImageOnInput() {
     let imagePath = document.querySelector("#image").value;
-    document.querySelector('#profileIcon').src = imagePath;
+    document.querySelector('#profileIcon').value = imagePath;
 }
 
 function validateFieldsChangePassword() {

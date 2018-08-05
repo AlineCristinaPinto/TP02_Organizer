@@ -1,8 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<jsp:useBean class="br.cefetmg.inf.organizer.model.domain.User" id="userSessao" scope="page" ></jsp:useBean>
-<%userSessao = (User) request.getSession().getAttribute("user");%>
 
 <%-- 
 Querido Professor,
@@ -23,111 +20,8 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
     <body>
         <div class="page-container">
             <!-- Menu lateral -->
-            <div class="page-sidebar">
-                <ul class="x-navigation">
-                    <li class="xn-logo">
-                        <a href="#">Organizer</a>
-                        <a href="#" class="x-navigation-control"></a>
-                    </li>
-                    <li class="xn-profile">
-                        <a href="#" class="profile-mini">
-                            <img src="imgs/icon.jpg" />
-                        </a>
-                        <div class="profile">
-                            <div class="profile-image">
-                                <img src="imgs/icon.jpg"/>
-                            </div>
-                            <div class="profile-data">
-                                <div class="profile-data-name">Nome do Usuário</div>
-                                <div class="profile-data-title">email_usuario@gmail.com</div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-comments"></span> <span class="xn-text">Falar com o MAX</span></a>
-                    </li>
-                    <li class="xn-openable">
-                        <a href="#"><span class="fa fa-adjust"></span> <span class="xn-text">Temas</span></a>
-                        <ul>
-                            <li><a href="#">
-                                    <label class="container">Tema 1
-                                        <input type="radio" name="tema" value="tema1">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Tema 2
-                                        <input type="radio" name="tema" value="tema2">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Tema 3
-                                        <input type="radio" name="tema" value="tema3">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </a></li>
-                        </ul>
-                    </li>
-                    <li class="xn-openable">
-                        <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Tipos</span></a>
-                        <ul>
-                            <li><a href="#">
-                                    <label class="container">Simples
-                                        <input type="checkbox" name="tipo" value="simples">
-                                        <span class="checkmarkSimples"></span>
-                                    </label>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Tarefa
-                                        <input type="checkbox" name="tipo" value="tarefa">
-                                        <span class="checkmarkTarefa"></span>
-                                    </label>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Lembrete
-                                        <input type="checkbox" name="tipo" value="lembrete">
-                                        <span class="checkmarkLembrete"></span>
-                                    </label>
-                                </a></li>
-                        </ul>
-                    </li>
-                    <li class="xn-openable">
-                        <a href="#"><span class="fa fa-tag"></span> <span class="xn-text">Tags</span></a>
-                        <ul id="ulTagMenu">
-                            <li><a href="#" id="novaTag">
-                                    <span class="fa fa-plus-square-o"></span> <span class="xn-text">Nova Tag</span>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Tag 1
-                                        <input type="checkbox" name="tag" value="Tag 1">
-                                        <span class="checkmarkTarefa"></span>
-                                    </label>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Tag 2
-                                        <input type="checkbox" name="tag" value="Tag 2">
-                                        <span class="checkmarkTarefa"></span>
-                                    </label>
-                                </a></li>
-                            <li><a href="#">
-                                    <label class="container">Tag 3
-                                        <input type="checkbox" name="tag" value="Tag 3">
-                                        <span class="checkmarkTarefa"></span>
-                                    </label>
-                                </a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><span class="fa fa-cogs"></span> <span class="xn-text">Configurações</span></a>
-                    </li>
-                    <li>
-                        <a href="#" id="logout"><span class="fa fa-sign-out"></span> <span class="xn-text">Sair</span></a>
-                    </li>
-                </ul>
-            </div>
+            <%@include file="sideMenu.jsp"%>
 
-            <!-- Menu Horizontal -->
             <div class="page-content">
                 <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
                     <li class="xn-icon-button">
@@ -218,138 +112,94 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
             </div>
 
         </div>
-    </div>
 
-    <!-- Modal de trocar senha-->
-    <div class="modal fade" id="sennhaModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Alterar Senha:</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="" action="" method="post">
-                        <div class="form-group">
-                            <label>Senha atual:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                                <input id="currentPassword" type="password" class="form-control"/>
+        <!-- Modal de trocar senha-->
+        <div class="modal fade" id="sennhaModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Alterar Senha:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="" action="" method="post">
+                            <div class="form-group">
+                                <label>Senha atual:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                                    <input id="currentPassword" type="password" class="form-control"/>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <label>Nova senha:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                                <input id="newPassword" type="password" class="form-control"/>
+                            <hr>
+                            <div class="form-group">
+                                <label>Nova senha:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                                    <input id="newPassword" type="password" class="form-control"/>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <label>Confirmar nova senha:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                                <input id="confirmNewPassword" type="password" class="form-control"/>
+                            <hr>
+                            <div class="form-group">
+                                <label>Confirmar nova senha:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                                    <input id="confirmNewPassword" type="password" class="form-control"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" class="close" data-dismiss="modal" onclick="validateFieldsChangePassword()">OK</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" class="close" data-dismiss="modal" onclick="validateFieldsChangePassword()">OK</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Modal de exclusÃ£o de conta-->
+        <div class="modal fade" id="excluirModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Excluir conta:</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Você tem certeza que deseja excluir sua conta? </p>
+                        <form  id="formDelete" method="post">
+                            <div class="form-group">
+                                <label>Senha :</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                                    <input id="deleteAccountPassword" name="password" type="password" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" >Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="validateFieldsDeleteAccount()">Excluir</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
 
-    </div>
-</div>
-
-<!-- Modal de Inserir Tags no menu-->
-<div class="modal fade" id="tagsMenu" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Adicionar Tags:</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Nome: </label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" >Cancelar</button>
-                    <button type="button" class="btn btn-primary">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de exclusÃ£o de conta-->
-<div class="modal fade" id="excluirModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Excluir conta:</h4>
-            </div>
-            <div class="modal-body">
-                <p>Você tem certeza que deseja excluir sua conta? </p>
-                <form  id="formDelete" method="post">
-                    <div class="form-group">
-                        <label>Senha :</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                            <input id="deleteAccountPassword" name="password" type="password" class="form-control"/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" >Cancelar</button>
-                        <button type="button" class="btn btn-primary" onclick="validateFieldsDeleteAccount()">Excluir</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de logout-->
-<div class="modal fade" id="logoutModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Logout:</h4>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="/organizer/servletcontroller?process=UserLogout">
-                    <p>Até logo! Deseja sair da sua conta? </p>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" >Cancelar</button>
-                        <button class="btn btn-primary">Sair</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ImportaÃ§Ã£o dos Scripts -->
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/plugins.js"></script>
-<script type="text/javascript" src="js/actions.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
-<script type="text/javascript" src="js/tagMenu.js"></script>
-<script type="text/javascript" src="js/configuracoes.js"></script>
-<script type="text/javascript" src="js/settings.js"></script>
-<script type="text/javascript" src="js/CryptoJSMD5/core-min.js"></script>
-<script type="text/javascript" src="js/CryptoJSMD5/md5.js"></script>
-</body>
+        <<!-- Importação dos Scripts -->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/plugins.js"></script>
+        <script type="text/javascript" src="js/actions.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript" src="js/tagMenu.js"></script>
+        <script type="text/javascript" src="js/tags.js"></script>
+        <script type="text/javascript" src="js/configuracoes.js"></script>
+        <script type="text/javascript" src="js/modalOptions.js"></script>
+        <script type="text/javascript" src="js/filter.js"></script>
+        <script type="text/javascript" src="js/theme.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>
+        <script type="text/javascript" src="js/CryptoJSMD5/core-min.js"></script>
+        <script type="text/javascript" src="js/CryptoJSMD5/md5.js"></script>
+    </body>
 </html>

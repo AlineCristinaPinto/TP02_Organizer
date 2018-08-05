@@ -437,11 +437,7 @@ public class ItemDAO implements IItemDAO {
             ResultSet result = preparedStatement.executeQuery();
 
             if (result.next()) {
-                if (result.getString("nom_item") == null) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return true;
             }
 
             result.close();
