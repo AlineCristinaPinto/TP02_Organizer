@@ -80,11 +80,11 @@ public class KeepItem implements IKeepItem{
     }
 
     @Override
-    public ArrayList<Item> listAllItem(User user, String orderViewMode, String typeViewMode) {
+    public ArrayList<Item> listAllItem(User user) {
         
         ArrayList<Item> result=null;
         try {
-            result = itemDAO.listAllItem(user, orderViewMode, typeViewMode);
+            result = itemDAO.listAllItem(user);
         } catch (PersistenceException ex) {
             Logger.getLogger(KeepItem.class.getName()).log(Level.SEVERE, null, ex);
         }

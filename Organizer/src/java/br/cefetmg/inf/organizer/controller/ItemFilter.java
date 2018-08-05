@@ -62,7 +62,29 @@ public class ItemFilter implements GenericProcess {
         }else if(typeFiltering){
             itemList = keepItem.searchItemByType(typeList, user);
         }else{
-            itemList = keepItem.listAllItem(user, "asc", "dataDeCriacao");
+            itemList = keepItem.listAllItem(user);
+        }
+        
+        boolean concluidoExists = false;
+        for(Tag tag : tagList){
+            if(tag.getTagName().equals("Concluidos")){
+                concluidoExists = true;
+                for(Item item : new ArrayList<>(itemList)){
+                    if(item.getIdentifierItem().equals("TAR") && 
+                            item.getIdentifierStatus().equals("A")){
+                        itemList.remove(item);
+                    }
+                }
+            }
+        }
+        
+        if(!concluidoExists){
+            for(Item item : new ArrayList<>(itemList)){
+                if(item.getIdentifierItem().equals("TAR") && 
+                        item.getIdentifierStatus().equals("C")){
+                    itemList.remove(item);
+                }
+            }
         }
         
         //maybe swap this to response if using ajax

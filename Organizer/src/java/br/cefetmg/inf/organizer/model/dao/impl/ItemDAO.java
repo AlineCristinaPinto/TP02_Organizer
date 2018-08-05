@@ -115,26 +115,12 @@ public class ItemDAO implements IItemDAO{
     }
 
     @Override
-    public ArrayList<Item> listAllItem(User user, String orderViewMode, String typeViewMode) throws PersistenceException{
+    public ArrayList<Item> listAllItem(User user) throws PersistenceException{
         
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql;
-            
-            if(orderViewMode.equals("asc")){
-                if(typeViewMode.equals("dataDeCriacao")){
-                    sql = "SELECT * FROM item WHERE cod_email=? ORDER BY dat_item";
-                } else {
-                    sql = "SELECT * FROM item WHERE cod_email=? ORDER BY nom_item";
-                }
-            } else {
-                if(typeViewMode.equals("dataDeCriacao")){
-                    sql = "SELECT * FROM item WHERE cod_email=? ORDER BY dat_item DESC";
-                } else {
-                    sql = "SELECT * FROM item WHERE cod_email=? ORDER BY nom_item DESC";
-                }
-            }           
-
+            String sql = "SELECT * FROM item WHERE cod_email=? AND idt_estado <> 'C' OR idt_estado IS NULL ORDER BY dat_item";
+                
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             
             preparedStatement.setString(1, user.getCodEmail());
