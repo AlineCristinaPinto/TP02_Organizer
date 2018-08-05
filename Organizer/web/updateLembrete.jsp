@@ -178,13 +178,13 @@
                                       <textarea class="form-control" rows="5" name="descriptionItem">${item.descriptionItem}</textarea>
                                     </div>
                                 </div>
-
+                                
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Data: </label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                            <input type="date" class="form-control" value="">
+                                              <input type="date" class="form-control" value="">              
                                         </div>
                                     </div>
                                 </div>
