@@ -4864,10 +4864,10 @@ background: #1caf9a !important;
 .error-container .error-code {
   float: left;
   width: 100%;
-  font-size: 135px;
+  font-size: 60px;
   line-height: 130px;
   text-align: center;
-  color: #333;
+  color: #a8130b;
   font-weight: 300;
 }
 .error-container .error-text {
