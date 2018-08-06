@@ -67,6 +67,9 @@ public class UpdateItem implements GenericProcess{
             IKeepTag keepTag = new KeepTag();
 
             for (String vetTag1 : vetTag) {
+                if(vetTag1.equals(" ")){
+                    break;
+                } else {
                 if (keepTag.searchTagByName(vetTag1.trim(), user) == null) {
                     //exceção
                 } else {
@@ -77,6 +80,7 @@ public class UpdateItem implements GenericProcess{
                     tagOfUser.setUser(user);
 
                     tagItem.add(tagOfUser);
+                }
                 }
             }
         }
