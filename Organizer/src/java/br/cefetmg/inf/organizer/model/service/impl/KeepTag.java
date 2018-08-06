@@ -20,12 +20,12 @@ public class KeepTag implements IKeepTag {
     @Override
     public boolean createTag(Tag tag) throws PersistenceException, BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
-            throw new BusinessException("Não foi possível criar a tag: nome não informado");
+            return false;
         }
          Tag temp = tagDAO.readTag(tag);
         
         if(temp != null){
-            throw new BusinessException("Não foi possível criar a tag: já existe uma tag com esse nome");
+            return false;
         }
         
         boolean result = tagDAO.createTag(tag);
@@ -46,7 +46,7 @@ public class KeepTag implements IKeepTag {
     @Override
     public boolean updateTag(Tag tag) throws PersistenceException, BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
-            throw new BusinessException("Não foi possível atualizar a tag: nome não informado");   
+            return false;
         }
 
         boolean result = tagDAO.updateTag(tag);
@@ -56,7 +56,7 @@ public class KeepTag implements IKeepTag {
     @Override
     public boolean updateTagId(Tag tag, Long id) throws PersistenceException, BusinessException {
         if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
-            throw new BusinessException("Não foi possível atualizar a tag: nome não informado");   
+            return false;  
         }
 
         boolean result = tagDAO.updateTagId(tag, id);
@@ -65,8 +65,9 @@ public class KeepTag implements IKeepTag {
     
     @Override
     public boolean deleteTag(Tag tag) throws PersistenceException, BusinessException {
-        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty()) || tag.getTagName() == "Concluidos") {
-            throw new BusinessException("Não foi possível deletar a tag: nome não informado");   
+
+        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
+            return false; 
         }
         
         boolean result = tagDAO.deleteTag(tag);

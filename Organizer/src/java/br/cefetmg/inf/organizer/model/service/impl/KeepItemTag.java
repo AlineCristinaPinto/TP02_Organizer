@@ -45,22 +45,6 @@ public class KeepItemTag implements IKeepItemTag {
     }
 
     @Override
-    public boolean updateTagInItem(ItemTag itemTag) {
-        
-        if((itemTag.getItem().getSeqItem() == null)){
-            //exceção
-        }
-        
-        if((itemTag.getListTags() == null) || (itemTag.getListTags().isEmpty())){
-            //exceção
-        }
-        
-        boolean result = itemTagDAO.updateTagInItem(itemTag);
-        return result;
-        
-    }
-
-    @Override
     public boolean deleteTagInItem(ArrayList<Tag> itemTag, Long id) {
         
         boolean result=false;

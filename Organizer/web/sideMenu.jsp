@@ -36,7 +36,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="fa fa-comments"></span> <span class="xn-text">Falar com o MAX</span></a>
+            <a href="/organizer/servletcontroller?process=LoadMax"><span class="fa fa-comments"></span> <span class="xn-text">Falar com o MAX</span></a>
         </li>
 
         <li class="xn-openable">

@@ -39,12 +39,13 @@
 
                                 <div class="panel panel-default">
 
-                                    <div class="panel-body" id="formSimples">
-
-                                        <h1 style="text-align:center">Simples</h1>
-
+                                    <h1 style="text-align:center">Simples</h1>
+                              
                                         <c:set var = "item" scope = "page" value = "${keepItem.searchItemById(idItem)}"/>
 
+                                        <input type="hidden" value="${idItem}" name="getIdItem">
+                                        <input type="hidden" value="${item.identifierItem}" name="getIdentifierItem">
+                            
                                         <input type="hidden" value="${idItem}" name="getIdItem">
                                         <div class="form-group">
                                             <label class="col-md-3 col-xs-12 control-label">Nome: </label>

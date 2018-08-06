@@ -119,7 +119,8 @@ public class ItemDAO implements IItemDAO {
 
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "SELECT * FROM item WHERE cod_email=? AND idt_estado <> 'C' OR idt_estado IS NULL ORDER BY dat_item";
+ 
+            String sql = "SELECT * FROM item WHERE cod_email=? AND (idt_estado <> 'C' OR idt_estado IS NULL) ORDER BY dat_item";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -424,7 +425,7 @@ public class ItemDAO implements IItemDAO {
     }
 
     @Override
-    public boolean checkIfItemAlreadyExists(Item item) throws PersistenceException {
+    public boolean checkIfItemAlreadyExistsToCreate(Item item) throws PersistenceException {
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
             String sql = "SELECT nom_item FROM item WHERE nom_item=? and idt_item=? and cod_email=?";
@@ -433,7 +434,35 @@ public class ItemDAO implements IItemDAO {
             preparedStatement.setString(1, item.getNameItem());
             preparedStatement.setString(2, item.getIdentifierItem());
             preparedStatement.setString(3, item.getUser().getCodEmail());
+            
+            ResultSet result = preparedStatement.executeQuery();
 
+            if (result.next()) {
+                return true;
+            }
+
+            result.close();
+            preparedStatement.close();
+            connection.close();
+
+            return false;
+        } catch (Exception ex) {
+            throw new PersistenceException(ex.getMessage());
+        }
+    }
+    
+    @Override
+    public boolean checkIfItemAlreadyExistsToUpdate(Item item) throws PersistenceException {
+        try {
+            Connection connection = ConnectionManager.getInstance().getConnection();
+            String sql = "SELECT nom_item FROM item WHERE nom_item=? and idt_item=? and cod_email=? and seq_item <> ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, item.getNameItem());
+            preparedStatement.setString(2, item.getIdentifierItem());
+            preparedStatement.setString(3, item.getUser().getCodEmail());
+            preparedStatement.setLong(4, item.getSeqItem());
+            
             ResultSet result = preparedStatement.executeQuery();
 
             if (result.next()) {

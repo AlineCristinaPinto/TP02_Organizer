@@ -1,3 +1,6 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" session="true"%>
 <%@page import="br.cefetmg.inf.organizer.model.service.impl.KeepTag"%>
 <%@page import="br.cefetmg.inf.organizer.model.domain.User"%>
@@ -58,6 +61,7 @@
                                         <c:set var = "item" scope = "page" value = "${keepItem.searchItemById(idItem)}"/>
 
                                         <input type="hidden" value="${idItem}" name="getIdItem">
+                                        <input type="hidden" value="${item.identifierItem}" name="getIdentifierItem">
 
                                         <div class="form-group">
                                             <label class="col-md-3 col-xs-12 control-label">Nome: </label>
@@ -76,12 +80,28 @@
                                             </div>
                                         </div>
 
+                                        <%
+                                            Date bdDate = keepItem.searchItemById(idItem).getDateItem();
+                                            String strDate = "";
+                                            if(bdDate != null){
+                                                DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+                                                strDate = date.format(bdDate);
+                                            }                                        
+                                        %>
+
                                         <div class="form-group">
                                             <label class="col-md-3 col-xs-12 control-label">Data: </label>
                                             <div class="col-md-6 col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                                    <input type="date" class="form-control" value="">
+                                                    <c:choose>
+                                                        <c:when test = "${item.dateItem == null}">
+                                                            <input type="date" class="form-control" name="dateItem">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input type="date" class="form-control" value="<%= strDate %>" name="dateItem">
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +111,7 @@
                                             <div class="col-md-6 col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-tag"></span></span>
-                                                    <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal" value="<%= arrItemTag%>" name="inputTag" readonly/>
+                                                    <input id="tags" type="text" class="form-control" data-toggle="modal" data-target="#tagsModal" value="<%= arrItemTag %>" name="inputTag" readonly/>
                                                 </div>
                                             </div>
                                         </div>

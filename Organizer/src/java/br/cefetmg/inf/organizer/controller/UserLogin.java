@@ -4,6 +4,7 @@ package br.cefetmg.inf.organizer.controller;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepUser;
 import br.cefetmg.inf.organizer.model.service.impl.KeepUser;
+import br.cefetmg.inf.util.ErrorObject;
 import br.cefetmg.inf.util.PasswordCriptography;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,12 @@ public class UserLogin implements GenericProcess{
         User user = keepUser.getUserLogin(email, password);
         
         if(user == null){
-            //Tratamento de erros (COMO FAZER?)
+            ErrorObject error = new ErrorObject();
+            error.setErrorName("Tente novamente");
+            error.setErrorDescription("Erro no login");
+            error.setErrorSubtext("Verifique se você já está cadastrado, senão crie uma conta");
+            req.getSession().setAttribute("error", error);
+            pageJSP = "/errorLogin.jsp";
         }else{
             HttpSession session = req.getSession();
             session.setAttribute("user", user);

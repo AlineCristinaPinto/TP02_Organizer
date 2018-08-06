@@ -47,35 +47,6 @@ public class ItemTagDAO implements IItemTagDAO{
     }
 
     @Override
-    public boolean updateTagInItem(ItemTag itemTag) {
-        
-        try {
-            Connection connection = ConnectionManager.getInstance().getConnection();
-            String sql = "UPDATE Item_Tag SET seq_tag=?"
-                    + " WHERE seq_item=?";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-         
-            for(Tag t : itemTag.getListTags()){
-                
-                preparedStatement.setLong(1, t.getSeqTag());
-                preparedStatement.setLong(2, itemTag.getItem().getSeqItem());
-            
-            }
-           
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-            connection.close();
-            
-            return true;
-        } catch (Exception ex) {
-            //Adicionar Exceção 
-        }
-         
-         return false;
-    }
-
-    @Override
     public boolean deleteTagInItem(ArrayList<Tag> itemTag, Long id) throws PersistenceException{
         
         try {

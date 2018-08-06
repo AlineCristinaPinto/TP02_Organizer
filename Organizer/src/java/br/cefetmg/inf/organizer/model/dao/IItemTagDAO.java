@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public interface IItemTagDAO {
     
     boolean createTagInItem (ItemTag itemTag) throws PersistenceException;
-    boolean updateTagInItem(ItemTag itemTag);
     boolean deleteTagInItem(ArrayList<Tag> itemTag, Long id) throws PersistenceException;
     ArrayList<Tag> listAllTagInItem(Long seqItem) throws PersistenceException;
     boolean deleteTagByItemId(Long idItem) throws PersistenceException;

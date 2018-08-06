@@ -44,6 +44,7 @@ public class UpdateItem implements GenericProcess{
         Long idItem = Long.parseLong(id);
         String name = req.getParameter("nameItem");
         String description = req.getParameter("descriptionItem");
+        String identifierItem = req.getParameter("getIdentifierItem");
         
         // Tratamento de data
         String datItem = req.getParameter("dateItem");
@@ -66,6 +67,9 @@ public class UpdateItem implements GenericProcess{
             IKeepTag keepTag = new KeepTag();
 
             for (String vetTag1 : vetTag) {
+                if(vetTag1.equals(" ")){
+                    break;
+                } else {
                 if (keepTag.searchTagByName(vetTag1.trim(), user) == null) {
                     //exceção
                 } else {
@@ -76,6 +80,7 @@ public class UpdateItem implements GenericProcess{
                     tagOfUser.setUser(user);
 
                     tagItem.add(tagOfUser);
+                }
                 }
             }
         }
@@ -146,7 +151,10 @@ public class UpdateItem implements GenericProcess{
         item.setNameItem(name);
         item.setDescriptionItem(description);
         item.setDateItem(dateItem);
-        item.setIdentifierItem(null);
+        item.setIdentifierItem(identifierItem);
+        if(identifierItem.equals("TAR")){
+            item.setIdentifierStatus("A");
+        }
         item.setUser(user);
         
         IKeepItem keepItem = new KeepItem();
@@ -156,7 +164,7 @@ public class UpdateItem implements GenericProcess{
             ErrorObject error = new ErrorObject();
             error.setErrorName("Tente novamente");
             error.setErrorDescription("Item já existe");
-            error.setErrorSubtext("Não é possível inserir um item de mesmo tipo com o mesmo nome.");
+            error.setErrorSubtext("Não é possível atualizar um item de mesmo tipo com o mesmo nome.");
             req.getSession().setAttribute("error", error);
             pageJSP = "/error.jsp";
         } else {
