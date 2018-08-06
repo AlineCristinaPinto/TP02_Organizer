@@ -5,6 +5,8 @@ $(document).on('input', "[name='pesquisar']", search);
 //função para enviar as tags e tipos selecionados para a Servlet
 function sendTagsAndTypes(){
     var form = document.createElement("form");
+    form.setAttribute('id',"formSendFilter");
+    
     form.setAttribute('method',"POST");
     var caminhourl = "servletcontroller?process=ItemFilter";
     form.setAttribute('action', caminhourl);
@@ -19,6 +21,7 @@ function sendTagsAndTypes(){
         form.appendChild(li[i]);
     }
     document.getElementsByTagName('body')[0].appendChild(form);
+    document.getElementById("formSendFilter").style.display="none";
     form.submit();
 }
 
