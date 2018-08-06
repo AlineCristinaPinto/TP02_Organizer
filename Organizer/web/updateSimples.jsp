@@ -161,6 +161,8 @@
                               <c:set var = "item" scope = "page" value = "${keepItem.searchItemById(idItem)}"/>
                                                             
                               <input type="hidden" value="${idItem}" name="getIdItem">
+                              <input type="hidden" value="${item.identifierItem}" name="getIdentifierItem">
+                              
                               <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">Nome: </label>
                                     <div class="col-md-6 col-xs-12">

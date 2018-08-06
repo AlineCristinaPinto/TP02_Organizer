@@ -28,7 +28,7 @@ public class KeepItem implements IKeepItem{
     @Override
     public boolean createItem(Item item) throws PersistenceException{
         
-        if(itemDAO.checkIfItemAlreadyExists(item)){
+        if(itemDAO.checkIfItemAlreadyExistsToCreate(item)){
             return false;
         }
         
@@ -48,7 +48,7 @@ public class KeepItem implements IKeepItem{
     @Override
     public boolean updateItem(Item item) throws PersistenceException{
         
-        if(itemDAO.checkIfItemAlreadyExists(item)){
+        if(itemDAO.checkIfItemAlreadyExistsToUpdate(item)){
             return false;
         }
         
