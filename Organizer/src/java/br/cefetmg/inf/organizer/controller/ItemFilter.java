@@ -5,6 +5,8 @@ import br.cefetmg.inf.organizer.model.domain.Tag;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepItem;
 import br.cefetmg.inf.organizer.model.service.impl.KeepItem;
+import br.cefetmg.inf.util.ErrorObject;
+import br.cefetmg.inf.util.exception.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,7 @@ public class ItemFilter implements GenericProcess {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        String pageJSP = "";
+        String pageJSP = "/index.jsp";
         ArrayList<Tag> tagList = new ArrayList<>();
         ArrayList<String> typeList = new ArrayList<>();
         List<Item> itemList;
@@ -31,8 +33,10 @@ public class ItemFilter implements GenericProcess {
         
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        //User user = new User();
-        //user.setCodEmail("lgthxt@gmail.com");
+        
+        if(user == null){
+            return "/login.jsp";
+        }
         
         //checking if there is any tag to filter
         if(tags != null){
@@ -55,36 +59,55 @@ public class ItemFilter implements GenericProcess {
         
         IKeepItem keepItem = new KeepItem();
         
-        if(tagFiltering && typeFiltering){
-            itemList = keepItem.searchItemByTagAndType(tagList, typeList, user);
-        }else if(tagFiltering){
-            itemList = keepItem.searchItemByTag(tagList, user);
-        }else if(typeFiltering){
-            itemList = keepItem.searchItemByType(typeList, user);
-        }else{
-            itemList = keepItem.listAllItem(user);
+        try{
+            if(tagFiltering && typeFiltering){
+                itemList = keepItem.searchItemByTagAndType(tagList, typeList, user);
+            }else if(tagFiltering){
+                itemList = keepItem.searchItemByTag(tagList, user);
+            }else if(typeFiltering){
+                itemList = keepItem.searchItemByType(typeList, user);
+            }else{
+                itemList = keepItem.listAllItem(user);
+            }
+        }catch(PersistenceException ex){
+            ErrorObject error = new ErrorObject();
+            error.setErrorName("Filtragem indevida");
+            error.setErrorDescription("Erro na filtragem de itens");
+            error.setErrorSubtext("Tente novamente mais tarde ou entre em contato conosco");
+            req.getSession().setAttribute("error", error);
+            return "/error.jsp";
         }
         
         boolean concluidoExists = false;
-        for(Tag tag : tagList){
-            if(tag.getTagName().equals("Concluidos")){
-                concluidoExists = true;
+        
+        try{
+            for(Tag tag : tagList){
+                if(tag.getTagName().equals("Concluidos") && (itemList != null)){
+                    concluidoExists = true;
+                    for(Item item : new ArrayList<>(itemList)){
+                        if(item.getIdentifierItem().equals("TAR") && 
+                                item.getIdentifierStatus().equals("A")){
+                            itemList.remove(item);
+                        }
+                    }
+                }
+            }
+
+            if(!concluidoExists && (itemList != null)){
                 for(Item item : new ArrayList<>(itemList)){
                     if(item.getIdentifierItem().equals("TAR") && 
-                            item.getIdentifierStatus().equals("A")){
+                            item.getIdentifierStatus().equals("C")){
                         itemList.remove(item);
                     }
                 }
             }
-        }
-        
-        if(!concluidoExists){
-            for(Item item : new ArrayList<>(itemList)){
-                if(item.getIdentifierItem().equals("TAR") && 
-                        item.getIdentifierStatus().equals("C")){
-                    itemList.remove(item);
-                }
-            }
+        }catch(NullPointerException ex){
+            ErrorObject error = new ErrorObject();
+            error.setErrorName("Tarefa incorreta");
+            error.setErrorDescription("Erro na filtragem de tarefas concluídas");
+            error.setErrorSubtext("Tente novamente mais tarde ou entre em contato conosco");
+            req.getSession().setAttribute("error", error);
+            return "/error.jsp";
         }
         
         //maybe swap this to response if using ajax
@@ -94,8 +117,6 @@ public class ItemFilter implements GenericProcess {
         }else{
             req.setAttribute("itemList", itemList);
         }
-        
-        pageJSP = "/index.jsp";
         
         return pageJSP;
     }
