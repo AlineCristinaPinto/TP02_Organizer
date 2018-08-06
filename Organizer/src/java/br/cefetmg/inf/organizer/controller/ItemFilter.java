@@ -82,7 +82,7 @@ public class ItemFilter implements GenericProcess {
         
         try{
             for(Tag tag : tagList){
-                if(tag.getTagName().equals("Concluidos")){
+                if(tag.getTagName().equals("Concluidos") && (itemList != null)){
                     concluidoExists = true;
                     for(Item item : new ArrayList<>(itemList)){
                         if(item.getIdentifierItem().equals("TAR") && 
@@ -93,7 +93,7 @@ public class ItemFilter implements GenericProcess {
                 }
             }
 
-            if(!concluidoExists){
+            if(!concluidoExists && (itemList != null)){
                 for(Item item : new ArrayList<>(itemList)){
                     if(item.getIdentifierItem().equals("TAR") && 
                             item.getIdentifierStatus().equals("C")){
