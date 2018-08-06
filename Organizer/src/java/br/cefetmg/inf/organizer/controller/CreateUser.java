@@ -36,7 +36,7 @@ public class CreateUser implements GenericProcess {
             error.setErrorDescription("Erro na criação do usuário");
             error.setErrorSubtext("Verifique se o usuário já existe ou se ocorreu um erro no preenchimento dos campos");
             req.getSession().setAttribute("error", error);
-            pageJSP = "/error.jsp";
+            pageJSP = "/errorLogin.jsp";
         } else {
             pageJSP = "/login.jsp";
         }
