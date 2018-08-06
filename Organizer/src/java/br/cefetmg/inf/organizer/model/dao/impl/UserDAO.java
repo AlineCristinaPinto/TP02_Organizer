@@ -63,6 +63,7 @@ public class UserDAO implements IUserDAO {
                     byte[] buf = rs.getBytes("blb_Imagem");
                     fos.write(buf, 0, len);
                 }
+                Essa funcionalidade deveria funcionar, porém tivemos dificuldade com ela, e em pegar a imagem da web para o BD, então não funciona
                 */
                 user.setUserPhoto(tempFile);
                 user.setCurrentTheme(rs.getInt("seq_Tema"));
@@ -171,6 +172,7 @@ public class UserDAO implements IUserDAO {
                     int len = rs.getInt("tamanho");
                     byte[] buf = rs.getBytes("blb_Imagem");
                     fos.write(buf, 0, len);
+                Essa funcionalidade deveria funcionar, porém tivemos dificuldade com ela, e em pegar a imagem da web para o BD, então não funciona
                 }*/
 
                 user.setUserPhoto(tempFile);

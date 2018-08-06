@@ -119,6 +119,7 @@ public class ItemDAO implements IItemDAO {
 
         try {
             Connection connection = ConnectionManager.getInstance().getConnection();
+ 
             String sql = "SELECT * FROM item WHERE cod_email=? AND (idt_estado <> 'C' OR idt_estado IS NULL) ORDER BY dat_item";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
