@@ -29,7 +29,7 @@ public class UserLogin implements GenericProcess{
             error.setErrorDescription("Erro no login");
             error.setErrorSubtext("Verifique se você já está cadastrado, senão crie uma conta");
             req.getSession().setAttribute("error", error);
-            pageJSP = "/error.jsp";
+            pageJSP = "/errorLogin.jsp";
         }else{
             HttpSession session = req.getSession();
             session.setAttribute("user", user);

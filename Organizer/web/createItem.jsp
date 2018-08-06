@@ -123,8 +123,8 @@
                                     <ul id="ulTags">
 
                                         <%
-                                            KeepTag keepTag = new KeepTag();
-                                            tagItem = keepTag.listAlltag(userSessao);
+                                            KeepTag keepTag1 = new KeepTag();
+                                            tagItem = keepTag1.listAlltag(userSessao);
 
                                             pageContext.setAttribute("list", tagItem);
                                         %>
