@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/web/css/theme-01.css</file>
+            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/src/java/br/cefetmg/inf/organizer/model/service/impl/KeepTag.java</file>
+            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/web/horizontalMenu.jsp</file>
+            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/web/configuracoes.jsp</file>
+            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/web/createItem.jsp</file>
             <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/web/index.jsp</file>
-            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/web/js/settings.js</file>
+            <file>file:/C:/Users/Pedro%20H/Desktop/TP02_Organizer/Organizer/web/error.jsp</file>
         </group>
     </open-files>
 </project-private>

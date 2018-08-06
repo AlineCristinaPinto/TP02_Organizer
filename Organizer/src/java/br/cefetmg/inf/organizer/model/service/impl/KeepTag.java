@@ -65,7 +65,7 @@ public class KeepTag implements IKeepTag {
     
     @Override
     public boolean deleteTag(Tag tag) throws PersistenceException, BusinessException {
-        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty())) {
+        if ((tag.getTagName() == null) || (tag.getTagName().isEmpty()) || tag.getTagName() == "Concluidos") {
             throw new BusinessException("Não foi possível deletar a tag: nome não informado");   
         }
         

@@ -2,7 +2,6 @@
 function validateSettingFields() {
 
     //Não sei se precisa dos ifs, to chutando
-    let profileIcon = document.querySelector("#profileIcon");
     let name = document.querySelector("#name");
     let password = document.querySelector("#password");
 
@@ -15,11 +14,6 @@ function validateSettingFields() {
         formSettings.submit();
         return true;
     }
-}
-
-function insertImageOnInput() {
-    let imagePath = document.querySelector("#image").value;
-    document.querySelector('#profileIcon').value = imagePath;
 }
 
 function validateFieldsChangePassword() {

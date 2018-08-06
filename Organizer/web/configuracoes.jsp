@@ -14,7 +14,7 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" type="text/css" href="css/theme-default.css"/>
+        <link rel="stylesheet" type="text/css" href="css/theme-default.css" id="themeStyle"/>
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
@@ -57,7 +57,7 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
                                             <div class="col-md-6 col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                                    <input id="name" name="name" type="text" class="form-control"/>
+                                                    <input id="name" name="name" type="text" class="form-control" value="<%=userSessao.getUserName()%>"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,29 +88,6 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
 
                 </div>
             </div>
-        </div>
-
-        <!-- Modal de trocar imagem de perfil-->
-        <div class="modal fade" id="trocarImgPerfil" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Trocar imagem:</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="" action="" method="post">
-                            <input id="image" type="file" name="imagem"/>
-                            <p></p>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" class="close" data-dismiss="modal" >Cancelar</button>
-                                <button type="button" class="btn btn-primary" onclick="insertImageOnInput()" class="close" data-dismiss="modal">OK</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <!-- Modal de trocar senha-->
