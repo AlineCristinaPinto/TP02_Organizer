@@ -1,11 +1,13 @@
 
 package br.cefetmg.inf.organizer.model.service;
 
+import br.cefetmg.inf.organizer.model.domain.MaxDataObject;
 import br.cefetmg.inf.organizer.model.domain.User;
+import br.cefetmg.inf.util.exception.PersistenceException;
 
 
 public interface IKeepMaxData {
-    boolean updateAllItems(User user, String[] itemsID, String[] itemsDate, String[] itemsName, String[] itemsDescription, String[] itemsStatus, String[] itemsType); //Olhar parametros
-    boolean updateAllTags(User user, String[] tagsID, String[] tagsName); //Olhar parametros
-    boolean updateAllItemTag(User user, String[] tagsItems, String[] itemsTags, String[] tagsID);
+    boolean updateAllItems(MaxDataObject maxDataObject)  throws PersistenceException; 
+    boolean updateAllTags(MaxDataObject maxDataObject) throws PersistenceException; //Olhar parametros
+    boolean updateAllItemTag(MaxDataObject maxDataObject) throws PersistenceException;
 }

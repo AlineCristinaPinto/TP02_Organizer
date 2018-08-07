@@ -5,6 +5,7 @@
  */
 package br.cefetmg.inf.organizer.controller;
 
+import br.cefetmg.inf.organizer.model.domain.MaxDataObject;
 import br.cefetmg.inf.organizer.model.domain.User;
 import br.cefetmg.inf.organizer.model.service.IKeepMaxData;
 import br.cefetmg.inf.organizer.model.service.impl.KeepMaxData;
@@ -41,12 +42,27 @@ public class UpdateMaxBD implements GenericProcess{
         String[] tagsItems = gson.fromJson( req.getParameter("tagsItems"), String[].class );
         String[] itemsTags = gson.fromJson( req.getParameter("itemsTags"), String[].class );
         
+        MaxDataObject maxDataObject = new MaxDataObject();
+        
+        maxDataObject.setUser(user);
+        maxDataObject.setItemsID(itemsID);
+        maxDataObject.setItemsType(itemsType);
+        maxDataObject.setItemsName(itemsName);
+        maxDataObject.setItemsDescription(itemsDescription);
+        maxDataObject.setItemsDate(itemsDate);
+        maxDataObject.getItemsStatus();
+        
+        maxDataObject.setTagsID(tagsID);
+        maxDataObject.setTagsName(tagsName);
+                
+        maxDataObject.setTagsItems(tagsItems);
+        maxDataObject.setItemsTags(itemsTags);
         
         IKeepMaxData keepMaxData = new KeepMaxData();
         
-        boolean itemSuccess = keepMaxData.updateAllItems(user, itemsID, itemsDate, itemsName, itemsDescription, itemsStatus, itemsType);//PARAMETROS
-        boolean tagSuccess = keepMaxData.updateAllTags(user, tagsID, tagsName);//PARAMETROS
-        boolean itemTagSuccess = keepMaxData.updateAllItemTag(user, tagsItems, itemsTags, tagsID);//PARAMETROS
+        boolean itemSuccess = keepMaxData.updateAllItems(maxDataObject);//PARAMETROS
+        boolean tagSuccess = keepMaxData.updateAllTags(maxDataObject);//PARAMETROS
+        boolean itemTagSuccess = keepMaxData.updateAllItemTag(maxDataObject);//PARAMETROS
         
         if(itemSuccess && tagSuccess && itemTagSuccess){
             pageJSP = "/index.jsp";

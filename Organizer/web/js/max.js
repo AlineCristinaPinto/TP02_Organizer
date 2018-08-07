@@ -219,7 +219,7 @@ function updateBD() {
         url : '/organizer/servletcontroller',
         type: "POST",
         data : {
-            process : "UpdateBD",
+            process : "UpdateMaxBD",
             itemsID  : JSON.stringify( itemsID ),
             itemsType : JSON.stringify( convertedItemsType( itemsType ) ),
             itemsName : JSON.stringify( itemsName ),
