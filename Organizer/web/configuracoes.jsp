@@ -57,7 +57,7 @@ Tento fazer um value="${user.userName}" e também não funciona. Por isso, infel
                                             <div class="col-md-6 col-xs-12">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                                    <input id="name" name="name" type="text" class="form-control" value="<%=userSessao.getUserName()%>"/>
+                                                    <input id="userName" name="name" type="text" class="form-control" value="<%=userSessao.getUserName()%>"/>
                                                 </div>
                                             </div>
                                         </div>

@@ -23,9 +23,10 @@ public class MaxDAO implements IMaxDAO {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql;
 
-            sql = "DELETE FROM item";
+            sql = "DELETE FROM item WHERE cod_email =?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, maxDataObject.getUser().getCodEmail());
                 preparedStatement.execute();
             }
 
@@ -67,9 +68,10 @@ public class MaxDAO implements IMaxDAO {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql;
 
-            sql = "DELETE FROM tag";
+            sql = "DELETE FROM tag WHERE cod_email =?";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, maxDataObject.getUser().getCodEmail());
                 preparedStatement.execute();
             }
 

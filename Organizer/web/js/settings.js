@@ -2,7 +2,7 @@
 function validateSettingFields() {
 
     //Não sei se precisa dos ifs, to chutando
-    let name = document.querySelector("#name");
+    let name = document.querySelector("#userName");
     let password = document.querySelector("#password");
 
     if (name.value == "") {
