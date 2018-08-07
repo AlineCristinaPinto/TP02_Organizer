@@ -49,7 +49,8 @@ public class LoadMax implements GenericProcess{
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             
             String sql = 
-            "SELECT A.nom_item, C.nom_tag FROM item A JOIN item_tag B ON (A.seq_item = B.seq_item) JOIN tag C ON (B.seq_tag = C.seq_tag) WHERE A.cod_email = '?' AND C.cod_email = '?'";
+            "SELECT A.nom_item, C.nom_tag FROM item A JOIN item_tag B ON (A.seq_item = B.seq_item) "
+                    + "JOIN tag C ON (B.seq_tag = C.seq_tag) WHERE A.cod_email = ? AND C.cod_email = ?";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 
@@ -65,6 +66,7 @@ public class LoadMax implements GenericProcess{
                     }
                 }
             }
+            /*
             sql = "SELECT * FROM item_TAG";
             
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -78,6 +80,7 @@ public class LoadMax implements GenericProcess{
                     }
                 }
             }
+            */
         } catch (Exception ex) {
             //exception
         }

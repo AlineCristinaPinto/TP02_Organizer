@@ -52,7 +52,7 @@ public class UpdateBD implements GenericProcess{
         
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql = null;
-            if(itemsID != null){
+            if(itemsID.length > 0){
                 sql = "DELETE FROM item";
             
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -72,6 +72,7 @@ public class UpdateBD implements GenericProcess{
                             itemDate = new java.sql.Date( date.getTime() );
                         }
                                                
+                        //preparedStatement.setString(1, itemsID[i]);
                         preparedStatement.setString(1, itemsName[i]);
                         preparedStatement.setString(2, itemsDescription[i]);
                         preparedStatement.setDate(3, itemDate);
@@ -84,7 +85,7 @@ public class UpdateBD implements GenericProcess{
                 }
             }
             
-            if(tagsID != null){
+            if(tagsID.length > 0){
                 sql = "DELETE FROM tag";
             
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -104,7 +105,7 @@ public class UpdateBD implements GenericProcess{
                     }               
                 }
             }
-            if(tagsItems != null){
+            if(tagsItems.length > 0){
                 sql = "DELETE FROM item_tag";
             
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -116,6 +117,7 @@ public class UpdateBD implements GenericProcess{
 
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     for(int i = 0; i < tagsID.length; i++){
+                        //preparedStatement.setString(1, tagsID[i]);
                         preparedStatement.setInt(1, Integer.valueOf( tagsItems[i]) );
                         preparedStatement.setInt(2, Integer.valueOf( itemsTags[i]) );
 
