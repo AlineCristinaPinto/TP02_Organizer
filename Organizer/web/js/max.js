@@ -41,7 +41,12 @@ var itemsTags = [];
 //Função de conversão de String para o formato que o MAX entende
 
 function convertString( str ){
-    return str.replace( str.charAt(0), str.charAt(0).toUpperCase() );
+    if(typeof str === "string"){
+        return str.replace( str.charAt(0), str.charAt(0).toUpperCase() );
+    }else{
+        alert(str);
+        return str;
+    }
 }
 
 // - Entendimento-Associação de palavras - 
@@ -112,7 +117,7 @@ function convertDateToBDFormat( date ){
 function convertDateToMaxFormat( date ){
     if( date == null ) return null;
     date = date.split("");
-    date.splice(6, 1);
+    date.splice(5, 1);
     date = date.join("");
     date = date.split(" ");
 
@@ -128,7 +133,6 @@ function convertDateToMaxFormat( date ){
     else if( compare( date[0], "out" ) == 0 ) date[0] = "10";
     else if( compare( date[0], "nov" ) == 0 ) date[0] = "11";
     else if( compare( date[0], "dez" ) == 0 ) date[0] = "12";
-
     return date[1] + "-" + date[0] + "-" + date[2];
 }
 
@@ -332,11 +336,12 @@ function alterItemDate( itemName, newDate ){
 
 function deleteItem( itemName ){
     var i = itemsName.indexOf( convertString( itemName ) );
-    itemsID.splice( i, 1);
+    itemsID.splice( i, 1 );
     itemsType.splice( i, 1);
     itemsName.splice( i, 1 );
     itemsDescription.splice( i, 1 );
     itemsDate.splice( i, 1 );
+    itemsStatus.splice( i, 1 );
     for( i = tagsItems.length-1; i >= 0; i-- ){
         if( compare( tagsItems[i], itemName ) == 0 ){
             tagsItems.splice(i, 1);
@@ -2063,4 +2068,4 @@ else{
         btn2.classList.remove('is-loading'); 
         textareaIsFilled = 0;
     }
-} 
+}

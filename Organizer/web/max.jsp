@@ -20,7 +20,11 @@
     <meta charset="utf-8">
 	<title>MAX</title>
     <link rel="stylesheet" type="text/css" href="css/max.css" />
-    <script src="https://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <script type="text/javascript" src="js/actions.js"></script>
 </head>
 <body> 
 	<div class="scroll">
