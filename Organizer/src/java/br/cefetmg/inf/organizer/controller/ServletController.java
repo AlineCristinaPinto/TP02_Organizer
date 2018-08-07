@@ -7,6 +7,7 @@ package br.cefetmg.inf.organizer.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletController extends HttpServlet {
 
    @Override
-   protected void service(HttpServletRequest request,HttpServletResponse response) throws ServletException{
+   protected void service(HttpServletRequest request,HttpServletResponse response) throws ServletException, UnsupportedEncodingException{
+       
+       request.setCharacterEncoding("UTF-8");
        
        String parameter = request.getParameter("process");//nome do campo que deve-se passar no form, seja por js ou html
        String className = "br.cefetmg.inf.organizer.controller." + parameter;
