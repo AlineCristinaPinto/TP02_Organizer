@@ -16,7 +16,7 @@
     <ul class="x-navigation">
 
         <li class="xn-logo">
-            <a href="#">Organizer</a>
+            <a href="index.jsp">Organizer</a>
             <a href="#" class="x-navigation-control"></a>
         </li>
 

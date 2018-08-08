@@ -9,7 +9,7 @@
     <!-- Pesquisa -->
     <li class="xn-search">
         <form role="form">
-            <input type="text" name="pesquisar" placeholder="Perquisar..."/>
+            <input type="text" name="pesquisar" placeholder="Pesquisar..."/>
         </form>
     </li>
 </ul>

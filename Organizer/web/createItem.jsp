@@ -159,8 +159,12 @@
         <script type="text/javascript" src="js/actions.js"></script>
         <script type="text/javascript" src="js/script.js"></script>
         <script type="text/javascript" src="js/tagMenu.js"></script>
-        <script type="text/javascript" src="js/configuracoes.js"></script>
         <script type="text/javascript" src="js/tags.js"></script>
+        <script type="text/javascript" src="js/configuracoes.js"></script>
+        <script type="text/javascript" src="js/modalOptions.js"></script>
+        <script type="text/javascript" src="js/filter.js"></script>
+        <script type="text/javascript" src="js/theme.js"></script>
+        <script type="text/javascript" src="js/settings.js"></script>
 
     </body>
 </html>
