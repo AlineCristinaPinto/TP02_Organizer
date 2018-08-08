@@ -46,7 +46,11 @@ public class MaxDAO implements IMaxDAO {
                     preparedStatement.setString(2, maxDataObject.getItemsDescription()[i]);
                     preparedStatement.setDate(3, itemDate);
                     preparedStatement.setString(4, maxDataObject.getItemsType()[i]);
-                    preparedStatement.setString(5, maxDataObject.getItemsStatus()[i]);
+                    if(maxDataObject.getItemsType()[i].equals("TAR")){
+                        preparedStatement.setString(5, "A");
+                    } else {
+                        preparedStatement.setString(5, null);
+                    }
                     preparedStatement.setString(6, maxDataObject.getUser().getCodEmail());
 
                     preparedStatement.execute();
@@ -103,9 +107,10 @@ public class MaxDAO implements IMaxDAO {
         try (Connection connection = ConnectionManager.getInstance().getConnection()) {
             String sql;
 
-            sql = "DELETE FROM item_tag";
+            sql = "DELETE FROM item_tag WHERE seq_item IN (SELECT seq_item FROM item WHERE cod_email = ?)";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, maxDataObject.getUser().getCodEmail());
                 preparedStatement.execute();
             }
 
@@ -113,7 +118,7 @@ public class MaxDAO implements IMaxDAO {
                     + " VALUES (?, ?)";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                for (int i = 0; i < maxDataObject.getTagsID().length; i++) {
+                for (int i = 0; i < maxDataObject.getTagsItems().length; i++) {
                     preparedStatement.setInt(1, Integer.valueOf(maxDataObject.getTagsItems()[i]));
                     preparedStatement.setInt(2, Integer.valueOf(maxDataObject.getItemsTags()[i]));
 
